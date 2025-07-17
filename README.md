@@ -1,2 +1,2 @@
-# Youtube_Display_Small_Fixes
-Fixes for small display elements on youtube
+# YouTube UI Customizer
+Customize some aspects of YouTube display.

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                width: fit-content;
+                padding: 10px;
+                font-family: consolas;
+                text-align: center;
+                border: 1px solid black;
+            }
+
+            .info {
+                margin: 0 0 10px 0;
+            }
+
+            .name {
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .version {
+                text-align: center;
+                margin: 0;
+            }
+
+            .checkbox-group {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin: 0 0 10px 0;
+                text-align: left;
+            }
+
+            .type {
+                margin: 0.5em 1em;
+            }
+
+            label {
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="info">
+            <h2 class="name">YouTube UI Customizer</h2>
+            <h3 class="version">v<span id="version"></span></h3>
+        </div>
+
+        <hr>
+
+        <div class="checkbox-group">
+            <h4 class="type">Video</h4>
+            <label><input type="checkbox" id="video-title-home" /> Show full Video title in Home page</label>
+            <label><input type="checkbox" id="video-title-player" /> Show full Video title in Player side panel</label>
+            <label><input type="checkbox" id="video-title-playlist" /> Show full Video title inside Playlist side panel</label>
+
+            <h4 class="type">Playlist</h4>
+            <label><input type="checkbox" id="playlist-title-home" /> Show full Playlist title in Home page</label>
+            <label><input type="checkbox" id="playlist-title-player" /> Show full Playlist title in Player side panel</label>
+            <label><input type="checkbox" id="playlist-info" /> Show full Playlist info</label>
+
+            <h4 class="type">Short</h4>
+            <label><input type="checkbox" id="shorts-title" /> Show full Shorts title</label>
+
+            <h4 class="type">Other</h4>
+            <label><input type="checkbox" id="channel-info-player" /> Show full channel info in Player</label>
+            <label><input type="checkbox" id="joinMembership-button-player" /> Fix "Join Membership" button in Player</label>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
+</html>
+<!DOCTYPE html>
