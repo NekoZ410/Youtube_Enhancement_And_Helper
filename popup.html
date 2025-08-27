@@ -14,20 +14,24 @@
                 color: whitesmoke;
                 background-color: rgba(27, 27, 35, 1);
                 width: fit-content;
-                min-width: 500px;
+                min-width: 525px;
             }
 
-            .info {
-                margin: 0 0 10px 0;
+            .groups {
+                max-height: 600px;
+                overflow-y: auto;
             }
 
-            .name {
-                margin-bottom: 10px;
+            .groups::-webkit-scrollbar {
+                width: 5px;
             }
 
-            .version {
-                text-align: center;
-                margin: 0;
+            .groups::-webkit-scrollbar-thumb {
+                background-color: gray;
+            }
+
+            .groups::-webkit-scrollbar-thumb:hover {
+                background-color: lightgray;
             }
 
             .group {
@@ -39,11 +43,12 @@
             }
 
             .type {
-                margin: 0.5em 1em;
+                margin: 0.5em 2em;
             }
 
             label {
                 font-size: 15px;
+                width: fit-content;
             }
 
             input[type="text"],
@@ -63,53 +68,52 @@
     <body>
         <div class="container">
             <div class="info">
-                <h2 class="name">YouTube UI Customizer</h2>
-                <h3 class="version">v<span id="version"></span></h3>
+                <h2 class="name" style="margin: 10px 0">YouTube UI Customizer v<span id="version"></span></h2>
             </div>
             <hr />
-            <section class="group">
-                <h4 class="type">Texts</h4>
-                <label><input type="checkbox" id="text-video-title-home" /> Show full Video title (Home)</label>
-                <label><input type="checkbox" id="text-video-title-player" /> Show full Video title (Player sidebar)</label>
-                <label><input type="checkbox" id="text-video-title-playlist" /> Show full Video title (inside Playlist panel)</label>
-                <br />
-                <label><input type="checkbox" id="text-playlist-title-home" /> Show full Playlist title (Home)</label>
-                <label><input type="checkbox" id="text-playlist-info" /> Show full Playlist info</label>
-                <label><input type="checkbox" id="text-playlist-title-player" /> Show full Playlist title (inside Playlist panel)</label>
-                <br />
-                <label><input type="checkbox" id="text-shorts-title" /> Show full Shorts title</label>
-                <br />
-                <label><input type="checkbox" id="text-channel-info-player" /> Show full channel info (under Player)</label>
-                <label><input type="checkbox" id="text-joinMembership-button-player" /> Fix "Join Membership" button (under Player)</label>
-            </section>
+            <div class="groups">
+                <section class="group">
+                    <h4 class="type">Texts</h4>
+                    <label><input type="checkbox" id="text-video-title-home" /> Show full Video title (Home)</label>
+                    <label><input type="checkbox" id="text-video-title-player" /> Show full Video title (Player sidebar)</label>
+                    <label><input type="checkbox" id="text-video-title-playlist" /> Show full Video title (inside Playlist panel)</label>
+                    <br />
+                    <label><input type="checkbox" id="text-playlist-title-home" /> Show full Playlist title (Home)</label>
+                    <label><input type="checkbox" id="text-playlist-info" /> Show full Playlist info</label>
+                    <label><input type="checkbox" id="text-playlist-title-player" /> Show full Playlist title (inside Playlist panel)</label>
+                    <br />
+                    <label><input type="checkbox" id="text-shorts-title" /> Show full Shorts title</label>
+                    <br />
+                    <label><input type="checkbox" id="text-channel-info-player" /> Show full channel info (under Player)</label>
+                    <label><input type="checkbox" id="text-joinMembership-button-player" /> Fix "Join Membership" button (under Player)</label>
+                </section>
 
-            <section class="group">
-                <h4 class="type">Player</h4>
-                <label>
-                    <input type="checkbox" id="player-controls-background-height-enabled" /> Controls background height:
-                    <!-- <input type="number" id="player-controls-background-height" value="1.5" step="0.5" min="0.5" onmousewheel="e.preventDefault();" /> % -->
-                    <!-- <input type="text" id="player-controls-background-height" value="12px" step="0.5" min="0.5" onmousewheel="e.preventDefault();" /> -->
-                    <input type="number" id="player-controls-background-height" value="12" step="1" min="0" onmousewheel="e.preventDefault();" />
-                    <select id="player-controls-background-height-unit">
-                        <option value="px">px</option>
-                        <option value="%">%</option>
-                        <option value="em">em</option>
-                        <option value="rem">rem</option>
-                    </select>
-                    <button id="player-controls-background-height-reset">Reset</button>
-                </label>
+                <section class="group">
+                    <h4 class="type">Player</h4>
+                    <label>
+                        <input type="checkbox" id="player-controls-background-height-enabled" /> Controls background height:
+                        <input type="number" id="player-controls-background-height" value="12" step="1" min="0" onmousewheel="e.preventDefault();" />
+                        <select id="player-controls-background-height-unit">
+                            <option value="px">px</option>
+                            <option value="%">%</option>
+                            <option value="em">em</option>
+                            <option value="rem">rem</option>
+                        </select>
+                        <button id="player-controls-background-height-reset">Reset</button>
+                    </label>
 
-                <label>
-                    <input type="checkbox" id="player-controls-background-color-enabled" /> Controls background color:
-                    <input type="color" id="player-controls-background-color" value="#484848" /> - Alpha:
-                    <input type="number" id="player-controls-background-colorAlpha" value="0.3" step="0.05" min="0" max="1" onmousewheel="e.preventDefault();" />
-                    <button id="player-controls-background-color-reset">Reset</button>
-                </label>
-            </section>
+                    <label>
+                        <input type="checkbox" id="player-controls-background-color-enabled" /> Controls background color:
+                        <input type="color" id="player-controls-background-color" value="#484848" /> - Alpha:
+                        <input type="number" id="player-controls-background-colorAlpha" value="0.3" step="0.05" min="0" max="1" onmousewheel="e.preventDefault();" />
+                        <button id="player-controls-background-color-reset">Reset</button>
+                    </label>
+                </section>
 
-            <!-- <section class="group">
-                <h4 class="type"></h4>
-            </section> -->
+                <!-- <section class="group">
+                    <h4 class="type"></h4>
+                </section> -->
+            </div>
         </div>
 
         <script src="popup-core.js"></script>
