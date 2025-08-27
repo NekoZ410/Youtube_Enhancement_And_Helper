@@ -32,6 +32,9 @@ const textStyleSettings = {
         styleId: "text-playlist-info-display-full",
         css: `.yt-content-metadata-view-model-wiz__metadata-text {
                 white-space: unset !important;
+            }
+            #next-video-title yt-formatted-string {
+                white-space: unset !important;
             }`,
     },
     "text-playlist-title-player": {
