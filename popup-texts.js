@@ -2,12 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // settings for text customizations
     const textSettings = [
         "text-video-title-home",
-        "text-video-title-player",
-        "text-video-title-playlist",
+        "text-video-title-playerSidebar",
+        "text-video-title-playlistPanel",
+
         "text-playlist-title-home",
-        "text-playlist-title-player",
+        "text-playlist-title-playerSidebar",
+        "text-playlist-title-playlistPanel",
         "text-playlist-info",
+
         "text-shorts-title",
+
         "text-channel-info-player",
         "text-joinMembership-button-player",
     ];

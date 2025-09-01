@@ -2,48 +2,57 @@
 const textStyleSettings = {
     "text-video-title-home": {
         styleId: "text-video-title-home-display-full",
-        css: `.ytd-rich-item-renderer .yt-lockup-metadata-view-model-wiz__title:not([href*="&list="]) {
+        css: `#contents #content .yt-lockup-metadata-view-model__title:not([href*="&list="]) {
                 display: block !important;
                 max-height: unset !important;
             }`,
     },
-    "text-video-title-player": {
-        styleId: "text-video-title-player-display-full",
-        css: `.ytd-item-section-renderer .yt-lockup-metadata-view-model-wiz__title {
+    "text-video-title-playerSidebar": {
+        styleId: "text-video-title-playerSidebar-display-full",
+        css: `#items #contents .yt-lockup-metadata-view-model__title:not([href*="&list="]) {
                 display: block !important;
                 max-height: unset !important;
             }`,
     },
-    "text-video-title-playlist": {
-        styleId: "text-video-title-playlist-display-full",
+    "text-video-title-playlistPanel": {
+        styleId: "text-video-title-playlistPanel-display-full",
         css: `#video-title.ytd-playlist-panel-video-renderer {
                 display: block !important;
                 max-height: unset !important;
             }`,
     },
+
     "text-playlist-title-home": {
         styleId: "text-playlist-title-home-display-full",
-        css: `.ytd-rich-item-renderer .yt-lockup-metadata-view-model-wiz__title[href*="&list="] {
+        css: `#contents #content  .yt-lockup-metadata-view-model__title[href*="&list="] {
+                display: block !important;
+                max-height: unset !important;
+            }`,
+    },
+    "text-playlist-title-playerSidebar": {
+        styleId: "text-playlist-title-playerSidebar-display-full",
+        css: `#items #contents .yt-lockup-metadata-view-model__title[href*="&list="] {
+                display: block !important;
+                max-height: unset !important;
+            }`,
+    },
+    "text-playlist-title-playlistPanel": {
+        styleId: "text-playlist-title-playlistPanel-display-full",
+        css: `.title.ytd-playlist-panel-renderer {
                 display: block !important;
                 max-height: unset !important;
             }`,
     },
     "text-playlist-info": {
         styleId: "text-playlist-info-display-full",
-        css: `.yt-content-metadata-view-model-wiz__metadata-text {
+        css: `#contents.yt-content-metadata-view-model > .yt-content-metadata-view-model__metadata-row:first-child .yt-core-attributed-string[role="text"] {
                 white-space: unset !important;
             }
             #next-video-title yt-formatted-string {
                 white-space: unset !important;
             }`,
     },
-    "text-playlist-title-player": {
-        styleId: "text-playlist-title-player-display-full",
-        css: `.title.ytd-playlist-panel-renderer {
-                display: block !important;
-                max-height: unset !important;
-            }`,
-    },
+
     "text-shorts-title": {
         styleId: "text-shorts-title-display-full",
         css: `.shortsLockupViewModelHostMetadataTitle {
@@ -51,6 +60,7 @@ const textStyleSettings = {
                 max-height: unset !important;
             }`,
     },
+
     "text-channel-info-player": {
         styleId: "text-channel-info-player-display-full",
         css: `#upload-info {
