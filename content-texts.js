@@ -30,7 +30,7 @@ const textStyleSettings = {
 
     "text-playlist-title-home": {
         styleId: "text-playlist-title-home-display-full",
-        css: `#contents #content  .yt-lockup-metadata-view-model__title[href*="&list="] {
+        css: `#contents #content .yt-lockup-metadata-view-model__title[href*="&list="] {
                 display: block !important;
                 max-height: unset !important;
             }`,

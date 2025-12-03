@@ -1,9 +1,14 @@
-// global: display version from manifest
-function displayVersion() {
-    const manifest = chrome.runtime.getManifest();
-    document.getElementById("version").textContent = manifest.version;
-}
-displayVersion();
+// global: display info from manifest
+(function () {
+    const manifest = chrome.runtime.getManifest(); // get manifest object
+    const versionElement = document.getElementById("ext-ver");
+    if (versionElement) versionElement.textContent = manifest.version; // extension version
+    const nameElement = document.getElementById("ext-name");
+    if (nameElement) nameElement.textContent = manifest.name; // extension name
+    document.title = manifest.name; // set popup HTML title
+    const repoLink = document.getElementById("ext-repo");
+    if (repoLink && manifest.homepage_url) repoLink.href = manifest.homepage_url; // extension repo URL
+})();
 
 // global: send message to update styles
 function sendUpdateStylesMessage(changedId = null) {

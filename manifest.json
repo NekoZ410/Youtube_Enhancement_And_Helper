@@ -3,11 +3,13 @@
     "name": "YouTube UI Customizer",
     "version": "1.6.0",
     "description": "Customize some aspects of YouTube display.",
+    "homepage_url": "https://github.com/NekoZ410/YouTube_UI_Customizer",
+    "permissions": ["activeTab", "storage"],
+    "host_permissions": ["*://*.youtube.com/*"],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {}
     },
-    "permissions": ["activeTab", "storage"],
     "content_scripts": [
         {
             "matches": ["*://*.youtube.com/*"],

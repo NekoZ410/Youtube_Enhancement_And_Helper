@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>YouTube UI Customizer</title>
+        <title>(Extension Name)</title>
         <style>
+            /* core: global styles */
+            :root {
+                --clr-fg-white: whitesmoke;
+                --clr-fg-black: black;
+                --clr-bg-dark: rgba(25, 25, 35, 1);
+                --clr-bg-dark2: rgba(55, 55, 60, 1);
+                --btn-red: crimson;
+                --btn-red-hover: brown;
+                --btn-green: forestgreen;
+                --btn-green-hover: darkgreen;
+                --btn-blue: dodgerblue;
+                --btn-blue-hover: royalblue;
+            }
+
+            /* core: body */
             body {
                 padding: 10px;
                 margin: 10px;
                 font-family: consolas;
                 text-align: center;
-                border: 1px solid whitesmoke;
-                color: whitesmoke;
-                background-color: rgba(27, 27, 35, 1);
+                border: 1px solid var(--clr-fg-white);
+                color: var(--clr-fg-white);
+                background-color: var(--clr-bg-dark);
                 width: fit-content;
-                min-width: 525px;
+                min-width: 600px;
+                max-width: 600px;
             }
 
+            /* core: info */
+            .info h2 {
+                margin: 10px 0;
+            }
+
+            .info h2 a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            /* core: groups */
             .groups {
                 /* max-height: 600px; */
                 overflow-y: auto;
@@ -34,6 +62,7 @@
                 background-color: lightgray;
             }
 
+            /* core: group */
             .group {
                 flex-direction: column;
                 gap: 8px;
@@ -42,15 +71,60 @@
                 display: flex;
             }
 
+            /* group: type */
             .type {
                 margin: 0.5em 2em;
             }
 
-            label {
+            .status {
+                margin: 0.5em 2em;
+                color: green;
+            }
+
+            .status-details {
+                margin: 0 2em;
+                text-align: left;
+                font-size: 12px;
+                background: var(--clr-bg-dark2);
+                padding: 10px;
+                border-radius: 5px;
+                white-space: pre-wrap;
+                color: coral;
+                display: none;
+            }
+
+            /* group: segment */
+            .group-segment-item {
+                gap: 8px;
                 font-size: 15px;
+                /* only margin when needed */
+                /* margin: 0 2em; */
+                align-items: center;
+                display: flex;
                 width: fit-content;
             }
 
+            .group-segment-button {
+                gap: 8px;
+                font-size: 15px;
+                margin: 0 2em;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                width: calc(100% - 4em);
+            }
+
+            .group-segment-input {
+                gap: 8px;
+                font-size: 15px;
+                margin: 0 2em;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                width: calc(100% - 4em);
+            }
+
+            /* group: inputs */
             input[type="text"],
             input[type="number"] {
                 vertical-align: middle;
@@ -63,59 +137,125 @@
                 width: 30px;
                 height: 30px;
             }
+
+            .input-full {
+                border: none;
+                padding: 0 0.5em;
+                border-radius: 5px;
+                width: 100%;
+                height: 25px;
+            }
+
+            /* group: guide button */
+            .btn-guide {
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                vertical-align: middle;
+                font-size: xx-small;
+                padding: 5px;
+                color: black;
+                background-color: whitesmoke;
+                min-width: 20px;
+                min-height: 20px;
+
+                :disabled {
+                    color: black;
+                    background-color: whitesmoke;
+                }
+            }
+
+            /* group: action button */
+            .btn-action-fit {
+                padding: 10px;
+                background-color: var(--btn-green);
+                color: white;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                font-family: inherit;
+                font-weight: bold;
+
+                :hover {
+                    background-color: var(--btn-green-hover);
+                }
+            }
+
+            .btn-action-full {
+                padding: 10px;
+                background-color: var(--btn-blue);
+                color: white;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                font-family: inherit;
+                font-weight: bold;
+                width: 100%;
+
+                :hover {
+                    background-color: var(--btn-blue-hover);
+                }
+            }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     </head>
+
     <body>
         <div class="container">
             <div class="info">
-                <h2 class="name" style="margin: 10px 0">YouTube UI Customizer v<span id="version"></span></h2>
+                <h2>
+                    <span id="ext-name">(Extension Name)</span> v<span id="ext-ver">(Extension Version)</span>
+                    <a id="ext-repo" href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                </h2>
             </div>
             <hr />
+
             <div class="groups">
                 <section class="group">
                     <h4 class="type">UI</h4>
-                    <label>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="ui-videosPerRow-home-toggle" /> Videos per row (Home):
                         <input type="number" id="ui-videosPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
                         <button id="ui-videosPerRow-home-reset">Reset</button>
-                    </label>
-                    <label>
+                    </div>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="ui-shortsPerRow-home-toggle" /> Shorts per row (Home):
                         <input type="number" id="ui-shortsPerRow-home" value="5" step="1" min="1" onmousewheel="e.preventDefault();" />
                         <button id="ui-shortsPerRow-home-reset">Reset</button>
-                    </label>
-                    <label>
+                    </div>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="ui-postsPerRow-home-toggle" /> Posts per row (Home):
                         <input type="number" id="ui-postsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
                         <button id="ui-postsPerRow-home-reset">Reset</button>
-                    </label>
-                    <label>
+                    </div>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="ui-newsPerRow-home-toggle" /> News per row (Home):
                         <input type="number" id="ui-newsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
                         <button id="ui-newsPerRow-home-reset">Reset</button>
-                    </label>
+                    </div>
                 </section>
 
                 <section class="group">
                     <h4 class="type">Texts</h4>
-                    <label><input type="checkbox" id="text-video-title-home" /> Show full Video title (Home)</label>
-                    <label><input type="checkbox" id="text-video-title-playerSidebar" /> Show full Video title (Player sidebar)</label>
-                    <label><input type="checkbox" id="text-video-title-playlistPanel" /> Show full Video title (inside Playlist panel)</label>
-                    <br />
-                    <label><input type="checkbox" id="text-playlist-title-home" /> Show full Playlist title (Home)</label>
-                    <label><input type="checkbox" id="text-playlist-title-playerSidebar" /> Show full Playlist title (Player sidebar)</label>
-                    <label><input type="checkbox" id="text-playlist-title-playlistPanel" /> Show full Playlist title (inside Playlist panel)</label>
-                    <label><input type="checkbox" id="text-playlist-info-all" /> Show full Playlist info</label>
-                    <br />
-                    <label><input type="checkbox" id="text-shorts-title-all" /> Show full Shorts title</label>
-                    <br />
-                    <label><input type="checkbox" id="text-channel-info-player" /> Show full channel info (under Player)</label>
-                    <label><input type="checkbox" id="text-joinMembership-button-player" /> Fix "Join Membership" button (under Player)</label>
+                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-home" />Video - Full title (Home)</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-playerSidebar" />Video - Full title (Player sidebar)</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-playlistPanel" />
+                        Video - Full title (inside Playlist panel)
+                    </div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-home" />Playlist - Full title (Home)</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-playerSidebar" />Playlist - Full title (Player sidebar)</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-playlistPanel" />
+                        Playlist - Full title (inside Playlist panel)
+                    </div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-info-all" />Playlist - Full info</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-shorts-title-all" />Shorts - Full title</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-channel-info-player" />Other - Full channel name</div>
+                    <div class="group-segment-item"><input type="checkbox" id="text-joinMembership-button-player" />Other - Fix "Join Membership" button</div>
                 </section>
 
                 <section class="group">
                     <h4 class="type">Player</h4>
-                    <label>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="player-controls-background-height-enabled" /> Controls background height:
                         <input type="number" id="player-controls-background-height" value="12" step="1" min="0" onmousewheel="e.preventDefault();" />
                         <select id="player-controls-background-height-unit">
@@ -125,23 +265,30 @@
                             <option value="rem">rem</option>
                         </select>
                         <button id="player-controls-background-height-reset">Reset</button>
-                    </label>
+                    </div>
 
-                    <label>
+                    <div class="group-segment-item">
                         <input type="checkbox" id="player-controls-background-color-enabled" /> Controls background color:
                         <input type="color" id="player-controls-background-color" value="#484848" /> - Alpha:
-                        <input type="number" id="player-controls-background-colorAlpha" value="0.3" step="0.05" min="0" max="1" onmousewheel="e.preventDefault();" />
+                        <input type="number" id="player-controls-background-colorAlpha" value="0.3" step="0.05" min="0" max="1"
+                            onmousewheel="e.preventDefault();" />
                         <button id="player-controls-background-color-reset">Reset</button>
-                    </label>
+                    </div>
                 </section>
 
                 <section class="group">
                     <h4 class="type">Utilities</h4>
-                    <label><input type="checkbox" id="utilities-shortsToVideo" /> Convert Shorts to Video</label>
+                    <div class="group-segment-item">
+                        <input type="checkbox" id="utilities-shortsToVideo" /> Convert Shorts to Video
+                    </div>
                 </section>
 
                 <!-- <section class="group">
                     <h4 class="type"></h4>
+                    <div class="group-segment-button">
+                        <input type="checkbox" id="xxx-checkbox" /> Checkbox 01
+                        <button class="btn-guide" title="Hover to see guide" disabled><i class="fa-solid fa-info"></i></button>
+                    </div>
                 </section> -->
             </div>
         </div>
@@ -152,4 +299,5 @@
         <script src="popup-utilities.js"></script>
         <script src="popup-ui.js"></script>
     </body>
+
 </html>
