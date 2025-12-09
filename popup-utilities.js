@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // settings for utility customizations
-    const utilsSettings = ["utilities-shortsToVideo"];
+    // settings for module: utilities
+    const utilsSettings = ["utilities-shortsToWatch", "utilities-noPlaylistTrap", "utilities-channelRedirImprove"];
 
-    // initialize utility settings
+    // init settings on load
     chrome.storage.local.get(utilsSettings, (data) => {
         const defaultUtilsSettings = {};
         utilsSettings.forEach((id) => {
-            defaultUtilsSettings[id] = data[id] !== undefined ? data[id] : false;
+            defaultUtilsSettings[id] = data[id] !== undefined ? data[id] : true;
             const checkbox = document.getElementById(id);
             if (checkbox) {
                 checkbox.checked = defaultUtilsSettings[id];
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.storage.local.set(defaultUtilsSettings);
     });
 
-    // update utility settings
+    // update settings
     utilsSettings.forEach((id) => {
         const checkbox = document.getElementById(id);
         if (checkbox) {

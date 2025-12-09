@@ -1,9 +1,9 @@
 {
     "manifest_version": 3,
-    "name": "YouTube UI Customizer",
-    "version": "1.6.0",
+    "name": "Youtube Enhancement And Helper",
+    "version": "1.7.0",
     "description": "Customize some aspects of YouTube display.",
-    "homepage_url": "https://github.com/NekoZ410/YouTube_UI_Customizer",
+    "homepage_url": "https://github.com/NekoZ410/Youtube_Enhancement_And_Helper",
     "permissions": ["activeTab", "storage"],
     "host_permissions": ["*://*.youtube.com/*"],
     "action": {
@@ -13,7 +13,7 @@
     "content_scripts": [
         {
             "matches": ["*://*.youtube.com/*"],
-            "js": ["content-core.js", "content-texts.js", "content-player.js", "content-ui.js"],
+            "js": ["content_const.js", "content-core.js", "content-texts.js", "content-player.js", "content-ui.js"],
             "run_at": "document_start"
         },
         {
