@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Youtube Enhancement And Helper",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "description": "Customize some aspects of YouTube display.",
     "homepage_url": "https://github.com/NekoZ410/Youtube_Enhancement_And_Helper",
     "permissions": ["activeTab", "storage"],
@@ -13,7 +13,7 @@
     "content_scripts": [
         {
             "matches": ["*://*.youtube.com/*"],
-            "js": ["content_const.js", "content-core.js", "content-texts.js", "content-player.js", "content-ui.js"],
+            "js": ["DEFAULT_SETTINGS.js", "MAIN_SELECTORS.js", "content-core.js", "content-ui.js", "content-texts.js", "content-player.js"],
             "run_at": "document_start"
         },
         {

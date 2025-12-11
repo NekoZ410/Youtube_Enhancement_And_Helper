@@ -1,8 +1,10 @@
-// settings for UI customizations
+// ui: style settings
 const uiStyleSettings = {
     "ui-videosPerRow-home": {
-        styleId: "ui-videosPerRow-home-custom",
-        generateCss: (settings) => {
+        toggleKey: "ui-videosPerRow-home-toggle",
+        styleIdDynamic: "ui-videosPerRow-home-custom",
+        cssDynamicGen: (isEnabled, settings) => {
+            if (!isEnabled) return "";
             const videosPerRow = settings["ui-videosPerRow-home"];
             return `#contents.ytd-rich-grid-renderer {
                         --ytd-rich-grid-items-per-row: ${videosPerRow} !important;
@@ -10,8 +12,10 @@ const uiStyleSettings = {
         },
     },
     "ui-shortsPerRow-home": {
-        styleId: "ui-shortsPerRow-home-custom",
-        generateCss: (settings) => {
+        toggleKey: "ui-shortsPerRow-home-toggle",
+        styleIdDynamic: "ui-shortsPerRow-home-custom",
+        cssDynamicGen: (isEnabled, settings) => {
+            if (!isEnabled) return "";
             const shortsPerRow = settings["ui-shortsPerRow-home"];
             return `ytd-rich-shelf-renderer[is-shorts] {
                         --ytd-rich-grid-items-per-row: ${shortsPerRow} !important;
@@ -19,8 +23,10 @@ const uiStyleSettings = {
         },
     },
     "ui-postsPerRow-home": {
-        styleId: "ui-postsPerRow-home-custom",
-        generateCss: (settings) => {
+        toggleKey: "ui-postsPerRow-home-toggle",
+        styleIdDynamic: "ui-postsPerRow-home-custom",
+        cssDynamicGen: (isEnabled, settings) => {
+            if (!isEnabled) return "";
             const postsPerRow = settings["ui-postsPerRow-home"];
             return `ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) {
                         --ytd-rich-grid-items-per-row: ${postsPerRow} !important;
@@ -28,8 +34,10 @@ const uiStyleSettings = {
         },
     },
     "ui-newsPerRow-home": {
-        styleId: "ui-newsPerRow-home-custom",
-        generateCss: (settings) => {
+        toggleKey: "ui-newsPerRow-home-toggle",
+        styleIdDynamic: "ui-newsPerRow-home-custom",
+        cssDynamicGen: (isEnabled, settings) => {
+            if (!isEnabled) return "";
             const newsPerRow = settings["ui-newsPerRow-home"];
             return `ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) {
                         --ytd-rich-grid-items-per-row: ${newsPerRow} !important;
@@ -38,8 +46,8 @@ const uiStyleSettings = {
     },
 };
 
-// dynamic shorts display based on setting value
-function dynamicShortsDisplay(settings) {
+// ui: dynamic shorts display based on setting value
+function processDynamicShortsDisplay(settings) {
     try {
         const SHORTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer[is-shorts] #contents";
         const SHORTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
@@ -74,8 +82,8 @@ function dynamicShortsDisplay(settings) {
     }
 }
 
-// dynamic posts display based on setting value
-function dynamicPostsDisplay(settings) {
+// ui: dynamic posts display based on setting value
+function processDynamicPostsDisplay(settings) {
     try {
         const POSTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) #contents";
         const POSTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
@@ -139,8 +147,8 @@ function dynamicPostsDisplay(settings) {
     }
 }
 
-// dynamic news display based on setting value
-function dynamicNewsDisplay(settings) {
+// ui: dynamic news display based on setting value
+function processDynamicNewsDisplay(settings) {
     try {
         const NEWS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) #contents";
         const NEWS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
@@ -204,7 +212,7 @@ function dynamicNewsDisplay(settings) {
     }
 }
 
-// check and apply dynamic display
+// ui: check and apply dynamic display
 function checkAndApplyDynamicDisplay() {
     try {
         // console.log("DEBUG: Starting checkAndApplyDynamicDisplay");
@@ -222,9 +230,9 @@ function checkAndApplyDynamicDisplay() {
                 const currentSettings = { ...defaultSettings, ...settings };
 
                 // console.log("DEBUG: Applying dynamic display with settings:", currentSettings);
-                dynamicShortsDisplay(currentSettings);
-                dynamicPostsDisplay(currentSettings);
-                dynamicNewsDisplay(currentSettings);
+                processDynamicShortsDisplay(currentSettings);
+                processDynamicPostsDisplay(currentSettings);
+                processDynamicNewsDisplay(currentSettings);
                 // console.log("DEBUG: Finished applying dynamic display");
             }
         );
@@ -233,7 +241,7 @@ function checkAndApplyDynamicDisplay() {
     }
 }
 
-// handle posts "show less" button
+// ui: handle posts "show less" button
 function setupPostsShowLessListener() {
     // wait for page to load before adding listener
     if (document.readyState === "loading") {
@@ -331,7 +339,7 @@ function setupPostsShowLessListener() {
     }
 }
 
-// handle news "show less" button
+// ui: handle news "show less" button
 function setupNewsShowLessListener() {
     // wait for page to load before adding listener
     if (document.readyState === "loading") {
@@ -430,6 +438,7 @@ function setupNewsShowLessListener() {
     }
 }
 
+// ui: wait for element to render
 function waitForElementToRender(selector, callback = null, maxAttempts = 50, interval = 100) {
     let attempts = 0;
     const checkExist = setInterval(() => {
@@ -444,76 +453,7 @@ function waitForElementToRender(selector, callback = null, maxAttempts = 50, int
     }, interval);
 }
 
-// apply UI styles based on settings
-function applyUIStyles(settings) {
-    removeAllStyles(uiStyleSettings);
-    Object.keys(uiStyleSettings).forEach((id) => {
-        const toggleKey = `${id}-toggle`;
-        if (settings[toggleKey] === true) {
-            const { styleId, generateCss } = uiStyleSettings[id];
-            const css = generateCss(settings);
-            injectCustomStyle(styleId, css);
-        }
-    });
-}
-
-// init and caching settings on load
-const relevantUIKeys = Object.keys(uiStyleSettings)
-    .concat("ui-videosPerRow-home-toggle")
-    .concat("ui-shortsPerRow-home-toggle")
-    .concat("ui-postsPerRow-home-toggle")
-    .concat("ui-newsPerRow-home-toggle");
-
-chrome.storage.local.get(relevantUIKeys, (settings) => {
-    const defaultSettings = {
-        "ui-videosPerRow-home-toggle": true,
-        "ui-videosPerRow-home": 3,
-        "ui-shortsPerRow-home-toggle": true,
-        "ui-shortsPerRow-home": 5,
-        "ui-postsPerRow-home-toggle": true,
-        "ui-postsPerRow-home": 3,
-        "ui-newsPerRow-home-toggle": true,
-        "ui-newsPerRow-home": 3,
-    };
-    const currentSettings = { ...defaultSettings, ...settings };
-    chrome.storage.local.set(currentSettings, () => {
-        applyUIStyles(currentSettings);
-
-        if (currentSettings["ui-shortsPerRow-home-toggle"]) {
-            waitForElementToRender("ytd-rich-shelf-renderer[is-shorts]");
-        }
-        if (currentSettings["ui-postsPerRow-home-toggle"]) {
-            waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):has([is-post])");
-        }
-        if (currentSettings["ui-newsPerRow-home-toggle"]) {
-            waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post]))");
-        }
-
-        setupPostsShowLessListener();
-        setupNewsShowLessListener();
-    });
-});
-
-// setup storage listener for UI styles
-chrome.storage.onChanged.addListener((changes, namespace) => {
-    if (namespace === "local") {
-        const relevantKeys = Object.keys(uiStyleSettings)
-            .concat("ui-videosPerRow-home-toggle")
-            .concat("ui-shortsPerRow-home-toggle")
-            .concat("ui-postsPerRow-home-toggle")
-            .concat("ui-newsPerRow-home-toggle");
-
-        const hasRelevantChange = relevantKeys.some((key) => changes[key] !== undefined);
-        if (hasRelevantChange) {
-            chrome.storage.local.get(relevantUIKeys, (fullSettings) => {
-                applyUIStyles(fullSettings);
-                checkAndApplyDynamicDisplay();
-            });
-        }
-    }
-});
-
-// observer for dynamic settings
+// ui: observer for dynamic settings
 function setupDynamicDisplayObserver() {
     if (!document.body) {
         requestAnimationFrame(setupDynamicDisplayObserver);
@@ -589,3 +529,49 @@ function setupDynamicDisplayObserver() {
     dynamicDisplayObserver.observe(targetNode, config);
 }
 setupDynamicDisplayObserver();
+
+// ui: apply all UI logic based on settings
+function applyUILogic(settings) {
+    // apply styles
+    applyModuleStyles(settings, uiStyleSettings);
+
+    // handle dynamic display
+    processDynamicShortsDisplay(settings);
+    processDynamicPostsDisplay(settings);
+    processDynamicNewsDisplay(settings);
+
+    // init listeners
+    if (settings["ui-shortsPerRow-home-toggle"]) {
+        waitForElementToRender("ytd-rich-shelf-renderer[is-shorts]");
+    }
+    if (settings["ui-postsPerRow-home-toggle"]) {
+        waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):has([is-post])");
+    }
+    if (settings["ui-newsPerRow-home-toggle"]) {
+        waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post]))");
+    }
+}
+
+// ui: init settings on load
+initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
+    applyUILogic(settings);
+
+    // setup listeners
+    setupPostsShowLessListener();
+    setupNewsShowLessListener();
+    setupDynamicDisplayObserver();
+});
+
+// ui: listen for storage changes
+setupModuleStorageListener(UI_DEFAULT_SETTINGS, (settings) => {
+    applyUILogic(settings);
+});
+
+// ui: check and apply dynamic display
+function checkAndApplyDynamicDisplay() {
+    initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
+        processDynamicShortsDisplay(settings);
+        processDynamicPostsDisplay(settings);
+        processDynamicNewsDisplay(settings);
+    });
+}

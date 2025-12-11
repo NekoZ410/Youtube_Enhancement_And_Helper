@@ -1,23 +1,21 @@
 // utilities: style settings
 const utilityStyleSettings = {
-    "utilities-shortsToWatch-layout": {
-        styleId: "utilities-shortsToWatch-layout-css",
-        css: `
+    "utilities-shortsToWatch": {
+        styleIdStatic: "utilities-shortsToWatch-inject-static",
+        cssStatic: `
             ${HOME_ITEMS_SHORTS} div[role="presentation"],
             ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} div[role="presentation"],
             ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS_ALT} div[role="presentation"] {
                 min-height: 72px !important;
             }`,
-    },
-    "utilities-shortsToWatch-visibility": {
-        styleId: "utilities-shortsToWatch-visibility-css",
-        generateCss: (isEnabled) => {
+        styleIdDynamic: "utilities-shortsToWatch-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
             return isEnabled ? `.utilities-shortsToWatch-btn { display: inline-flex !important; }` : `.utilities-shortsToWatch-btn { display: none !important; }`;
         },
     },
-    "utilities-noPlaylistTrap-layout": {
-        styleId: "utilities-noPlaylistTrap-layout-css",
-        css: `
+    "utilities-noPlaylistTrap": {
+        styleIdStatic: "utilities-noPlaylistTrap-inject-static",
+        cssStatic: `
             ${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__menu-button,
             ${HOME_ITEMS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
             ${WATCH_SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
@@ -34,22 +32,27 @@ const utilityStyleSettings = {
             .utilities-noPlaylistTrap-btn {
                 display: inline-flex;
             }`,
-    },
-    "utilities-noPlaylistTrap-visibility": {
-        styleId: "utilities-noPlaylistTrap-visibility-css",
-        generateCss: (isEnabled) => {
+        styleIdDynamic: "utilities-noPlaylistTrap-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
             return isEnabled ? `.utilities-noPlaylistTrap-btn { display: inline-flex !important; }` : `.utilities-noPlaylistTrap-btn { display: none !important; }`;
         },
     },
-    "utilities-channelRedirImprove-layout": {
-        styleId: "utilities-channelRedirImprove-layout-css",
-        css: `
+    "utilities-channelRedirImprove": {
+        styleIdStatic: "utilities-channelRedirImprove-inject-static",
+        cssStatic: `
             a.utilities-channelRedirImprove-a {
                 text-decoration: none;
-            }
-            a.utilities-channelRedirImprove-a span.yt-core-attributed-string {
-                color: #327CC8 !important;
+                cursor: pointer;
+                color: inherit;
             }`,
+        styleIdDynamic: "utilities-channelRedirImprove-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
+            if (!isEnabled) return "";
+            return `
+                a.utilities-channelRedirImprove-a span.yt-core-attributed-string {
+                    color: #327CC8 !important;
+                }`;
+        },
     },
 };
 
@@ -75,7 +78,7 @@ const SHORTS_TO_VIEW_BTN = `
     </button>`;
 
 // utilities - noPlaylistTrap: custom button HTML
-const PLTRAP_ESCAPE_BTN = `
+const NO_PLAYLIST_TRAP_BTN = `
     <button class="yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment utilities-noPlaylistTrap-btn" title="[Youtube Enhancement And Helper]&#10;Click to watch video without trapped into a playlist.&#10;Middle mouse click to open in new tab." aria-disabled="false">
         <div aria-hidden="true" class="yt-spec-button-shape-next__icon">
             <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
@@ -98,6 +101,7 @@ const PLTRAP_ESCAPE_BTN = `
 // utilities: oembed cache and fetcher
 const oembedCache = new Map();
 let isChannelRedirImproveEnabled = true;
+
 async function getChannelUrlFromOembed(videoUrl) {
     if (!videoUrl) return null;
 
@@ -187,7 +191,7 @@ function processNoPlaylistTrap() {
         // process button
         if (menuContainer.querySelector(".utilities-noPlaylistTrap-btn")) return; // prevent duplicates
         const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = PLTRAP_ESCAPE_BTN.trim();
+        tempDiv.innerHTML = NO_PLAYLIST_TRAP_BTN.trim();
         const customButton = tempDiv.firstChild;
 
         customButton.addEventListener("click", (e) => {
@@ -307,65 +311,28 @@ function setupUtilitiesObserver() {
     });
 }
 
-// utilities: apply styles based on settings
-function applyUtilityStyles(settingsKey, isEnabled) {
-    if (settingsKey === "utilities-shortsToWatch") {
-        // layout style
-        injectCustomStyle(utilityStyleSettings["utilities-shortsToWatch-layout"].styleId, utilityStyleSettings["utilities-shortsToWatch-layout"].css);
-
-        // visibility style
-        const visibilitySetting = utilityStyleSettings["utilities-shortsToWatch-visibility"];
-        const visibilityCss = visibilitySetting.generateCss(isEnabled);
-        injectCustomStyle(visibilitySetting.styleId, visibilityCss);
-    } else if (settingsKey === "utilities-noPlaylistTrap") {
-        // layout style
-        injectCustomStyle(utilityStyleSettings["utilities-noPlaylistTrap-layout"].styleId, utilityStyleSettings["utilities-noPlaylistTrap-layout"].css);
-
-        // visibility style
-        const visibilitySetting = utilityStyleSettings["utilities-noPlaylistTrap-visibility"];
-        const visibilityCss = visibilitySetting.generateCss(isEnabled);
-        injectCustomStyle(visibilitySetting.styleId, visibilityCss);
-    } else if (settingsKey === "utilities-channelRedirImprove") {
-        if (isEnabled) {
-            injectCustomStyle(utilityStyleSettings["utilities-channelRedirImprove-layout"].styleId, utilityStyleSettings["utilities-channelRedirImprove-layout"].css);
-        }
+// utilities: init settings on load
+initModuleSettings(UTILITIES_DEFAULT_SETTINGS, (settings) => {
+    // update global variable
+    if (settings["utilities-channelRedirImprove"] !== undefined) {
+        isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"];
     }
-}
 
-// utilities: main initialization
-chrome.storage.local.get(["utilities-noPlaylistTrap", "utilities-shortsToWatch", "utilities-channelRedirImprove"], (result) => {
-    const isShortsEnabled = result["utilities-shortsToWatch"] !== undefined ? result["utilities-shortsToWatch"] : true;
-    const isTrapEnabled = result["utilities-noPlaylistTrap"] !== undefined ? result["utilities-noPlaylistTrap"] : true;
-    const isRedirEnabled = result["utilities-channelRedirImprove"] !== undefined ? result["utilities-channelRedirImprove"] : true;
-
-    isChannelRedirImproveEnabled = isRedirEnabled;
-
-    applyUtilityStyles("utilities-shortsToWatch", isShortsEnabled);
-    applyUtilityStyles("utilities-noPlaylistTrap", isTrapEnabled);
-    applyUtilityStyles("utilities-channelRedirImprove", isRedirEnabled);
-
+    applyModuleStyles(settings, utilityStyleSettings);
     processShortsToWatch();
     processNoPlaylistTrap();
-    if (isRedirEnabled) processChannelRedirImprove();
+    if (isChannelRedirImproveEnabled) processChannelRedirImprove();
     setupUtilitiesObserver();
 });
 
 // utilities: listen for storage changes
-chrome.storage.onChanged.addListener((changes, namespace) => {
-    if (namespace === "local") {
-        if (changes["utilities-shortsToWatch"]) {
-            applyUtilityStyles("utilities-shortsToWatch", changes["utilities-shortsToWatch"].newValue);
-        }
-
-        if (changes["utilities-noPlaylistTrap"]) {
-            applyUtilityStyles("utilities-noPlaylistTrap", changes["utilities-noPlaylistTrap"].newValue);
-        }
-
-        if (changes["utilities-channelRedirImprove"]) {
-            const isEnabled = changes["utilities-channelRedirImprove"].newValue;
-            isChannelRedirImproveEnabled = isEnabled;
-            applyUtilityStyles("utilities-channelRedirImprove", isEnabled);
-            if (isEnabled) processChannelRedirImprove();
-        }
+setupModuleStorageListener(UTILITIES_DEFAULT_SETTINGS, (settings) => {
+    // update global variable
+    if (settings["utilities-channelRedirImprove"] !== undefined) {
+        isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"];
+        // re-process if enabled
+        if (isChannelRedirImproveEnabled) processChannelRedirImprove();
     }
+
+    applyModuleStyles(settings, utilityStyleSettings);
 });

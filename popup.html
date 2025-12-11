@@ -5,305 +5,337 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>(Extension Name)</title>
+        <link href="libs/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="libs/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" defer></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
         <style>
-            /* core: global styles */
-            :root {
-                --clr-fg-white: whitesmoke;
-                --clr-fg-black: black;
-                --clr-bg-dark: rgba(25, 25, 35, 1);
-                --clr-bg-dark2: rgba(55, 55, 60, 1);
-                --btn-red: crimson;
-                --btn-red-hover: brown;
-                --btn-green: forestgreen;
-                --btn-green-hover: darkgreen;
-                --btn-blue: dodgerblue;
-                --btn-blue-hover: royalblue;
-            }
-
-            /* core: body */
+            /* main body */
             body {
-                padding: 10px;
-                margin: 10px;
                 font-family: consolas;
-                text-align: center;
-                border: 1px solid var(--clr-fg-white);
-                color: var(--clr-fg-white);
-                background-color: var(--clr-bg-dark);
-                width: fit-content;
-                min-width: 600px;
-                max-width: 600px;
+                width: 600px;
+                max-height: 750px;
             }
 
-            /* core: info */
-            .info h2 {
-                margin: 10px 0;
+            /* tab bar */
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+                white-space: nowrap;
+                scrollbar-width: auto;
             }
 
-            .info h2 a {
-                text-decoration: none;
-                color: inherit;
+            .nav-tabs::-webkit-scrollbar {
+                height: 3px;
             }
 
-            /* core: groups */
-            .groups {
-                /* max-height: 600px; */
+            .nav-tabs::-webkit-scrollbar-thumb {
+                background-color: #0d6efd;
+                border-radius: 10px;
+            }
+
+            .nav-tabs::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            /* tab bar items */
+            .nav-link {
+                outline: none !important;
+            }
+
+            .nav-link.active {
+                color: black !important;
+            }
+
+            /* tab content */
+            /* tab content pane */
+            .tab-pane {
                 overflow-y: auto;
+                max-height: 400px;
             }
 
-            .groups::-webkit-scrollbar {
-                width: 5px;
+            .tab-pane::-webkit-scrollbar {
+                width: 3px;
+                height: 3px;
             }
 
-            .groups::-webkit-scrollbar-thumb {
-                background-color: gray;
+            .tab-pane::-webkit-scrollbar-thumb {
+                background-color: #0d6efd;
+                border-radius: 10px;
             }
 
-            .groups::-webkit-scrollbar-thumb:hover {
-                background-color: lightgray;
+            .tab-pane::-webkit-scrollbar-track {
+                background: transparent;
             }
 
-            /* core: group */
-            .group {
-                flex-direction: column;
-                gap: 8px;
-                margin: 0 0 10px 0;
-                text-align: left;
-                display: flex;
+            .tab-pane .row {
+                place-self: center;
             }
 
-            /* group: type */
-            .type {
-                margin: 0.5em 2em;
+            /* tab contents pane items */
+            .pane-items .btn-guide {
+                padding: 0 8px;
+                font-size: 0.8em;
+                font-weight: bolder;
             }
 
-            .status {
-                margin: 0.5em 2em;
-                color: green;
-            }
-
-            .status-details {
-                margin: 0 2em;
-                text-align: left;
-                font-size: 12px;
-                background: var(--clr-bg-dark2);
-                padding: 10px;
-                border-radius: 5px;
-                white-space: pre-wrap;
-                color: coral;
-                display: none;
-            }
-
-            /* group: segment */
-            .group-segment-item {
-                gap: 8px;
-                font-size: 15px;
-                /* only margin when needed */
-                /* margin: 0 2em; */
-                align-items: center;
-                display: flex;
-                width: fit-content;
-            }
-
-            .group-segment-button {
-                gap: 8px;
-                font-size: 15px;
-                margin: 0 2em;
-                align-items: center;
-                justify-content: center;
-                display: flex;
-                width: calc(100% - 4em);
-            }
-
-            .group-segment-input {
-                gap: 8px;
-                font-size: 15px;
-                margin: 0 2em;
-                align-items: center;
-                justify-content: center;
-                display: flex;
-                width: calc(100% - 4em);
-            }
-
-            /* group: inputs */
-            input[type="text"],
-            input[type="number"] {
-                vertical-align: middle;
-                width: 50px;
-                height: 20px;
-            }
-
+            .pane-items input[type="text"],
+            input[type="number"],
             input[type="color"] {
-                vertical-align: middle;
-                width: 30px;
-                height: 30px;
+                height: 24px;
             }
 
-            .input-full {
-                border: none;
-                padding: 0 0.5em;
-                border-radius: 5px;
-                width: 100%;
-                height: 25px;
+            .pane-items input[type="number"] {
+                width: 50px;
             }
 
-            /* group: guide button */
-            .btn-guide {
-                border: none;
-                border-radius: 25px;
-                cursor: pointer;
-                vertical-align: middle;
-                font-size: xx-small;
-                padding: 5px;
-                color: black;
-                background-color: whitesmoke;
-                min-width: 20px;
-                min-height: 20px;
-
-                :disabled {
-                    color: black;
-                    background-color: whitesmoke;
-                }
+            .pane-items input[type="color"] {
+                width: 24px;
             }
 
-            /* group: action button */
-            .btn-action-fit {
-                padding: 10px;
-                background-color: var(--btn-green);
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-                font-family: inherit;
-                font-weight: bold;
-
-                :hover {
-                    background-color: var(--btn-green-hover);
-                }
-            }
-
-            .btn-action-full {
-                padding: 10px;
-                background-color: var(--btn-blue);
-                color: white;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-                font-family: inherit;
-                font-weight: bold;
-                width: 100%;
-
-                :hover {
-                    background-color: var(--btn-blue-hover);
-                }
+            .pane-items select {
+                height: 24px;
             }
         </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     </head>
 
-    <body>
-        <div class="container">
-            <div class="info">
-                <h2>
-                    <span id="ext-name">(Extension Name)</span> v<span id="ext-ver">(Extension Version)</span>
-                    <a id="ext-repo" href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
-                </h2>
-            </div>
-            <hr />
+    <body class="p-2 bg-dark border border-1 border-white h-auto">
+        <div class="container-fluid p-0 border border-1 border-white h-auto">
+            <!-- info -->
+            <h5 class="my-2 text-center text-white" id="ext-info">
+                <span id="ext-name">(Extension Name)</span> v<span id="ext-ver">(Extension Version)</span>
+                <a id="ext-repo" href="https://github.com" target="_blank"><i class="fa-brands fa-github text-white"></i></a>
+            </h5>
 
-            <div class="groups">
-                <section class="group">
-                    <h4 class="type">UI</h4>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="ui-videosPerRow-home-toggle" /> Videos per row (Home):
-                        <input type="number" id="ui-videosPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
-                        <button id="ui-videosPerRow-home-reset">Reset</button>
-                    </div>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="ui-shortsPerRow-home-toggle" /> Shorts per row (Home):
-                        <input type="number" id="ui-shortsPerRow-home" value="5" step="1" min="1" onmousewheel="e.preventDefault();" />
-                        <button id="ui-shortsPerRow-home-reset">Reset</button>
-                    </div>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="ui-postsPerRow-home-toggle" /> Posts per row (Home):
-                        <input type="number" id="ui-postsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
-                        <button id="ui-postsPerRow-home-reset">Reset</button>
-                    </div>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="ui-newsPerRow-home-toggle" /> News per row (Home):
-                        <input type="number" id="ui-newsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();" />
-                        <button id="ui-newsPerRow-home-reset">Reset</button>
-                    </div>
-                </section>
+            <!-- tab bar -->
+            <ul class="nav nav-tabs nav-justified bg-dark border border-top" id="tabBar" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active text-white rounded-0" id="tab-UI" data-bs-toggle="tab" data-bs-target="#tabUI" type="button" role="tab"
+                        aria-selected="true" title="[Youtube Enhancement And Helper]&#10;This tab contains UI related features">
+                        UI
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-white rounded-0" id="tab-texts" data-bs-toggle="tab" data-bs-target="#tabTexts" type="button" role="tab"
+                        aria-selected="true" title="[Youtube Enhancement And Helper]&#10;This tab contains Texts related features">
+                        Texts
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-white rounded-0" id="tab-player" data-bs-toggle="tab" data-bs-target="#tabPlayer" type="button" role="tab"
+                        aria-selected="true" title="[Youtube Enhancement And Helper]&#10;This tab contains Player related features">
+                        Player
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-white rounded-0" id="tab-utilities" data-bs-toggle="tab" data-bs-target="#tabUtilities" type="button"
+                        role="tab" aria-selected="true" title="[Youtube Enhancement And Helper]&#10;This tab contains Utilities related features">
+                        Utilities
+                    </button>
+                </li>
+            </ul>
 
-                <section class="group">
-                    <h4 class="type">Texts</h4>
-                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-home" />Video - Full title (Home)</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-playerSidebar" />Video - Full title (Player sidebar)</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-video-title-playlistPanel" />
-                        Video - Full title (inside Playlist panel)
+            <div class="tab-content bg-dark p-2" id="tabContent">
+                <!-- Tab UI -->
+                <div class="tab-pane fade show active text-white" id="tabUI" role="tabpanel" aria-labelledby="tab-UI">
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-videosPerRow-home-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="ui-videosPerRow-home-toggle">Videos per row (Home):</label>
+                            <input class="ms-2" type="number" id="ui-videosPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-videosPerRow-home-reset">Reset</button>
+                        </div>
                     </div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-home" />Playlist - Full title (Home)</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-playerSidebar" />Playlist - Full title (Player sidebar)</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-title-playlistPanel" />
-                        Playlist - Full title (inside Playlist panel)
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-shortsPerRow-home-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="ui-shortsPerRow-home-toggle">Shorts per row (Home):</label>
+                            <input class="ms-2" type="number" id="ui-shortsPerRow-home" value="5" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-shortsPerRow-home-reset">Reset</button>
+                        </div>
                     </div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-playlist-info-all" />Playlist - Full info</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-shorts-title-all" />Shorts - Full title</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-channel-info-player" />Other - Full channel name</div>
-                    <div class="group-segment-item"><input type="checkbox" id="text-joinMembership-button-player" />Other - Fix "Join Membership" button</div>
-                </section>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-postsPerRow-home-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="ui-postsPerRow-home-toggle">Posts per row (Home):</label>
+                            <input class="ms-2" type="number" id="ui-postsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-postsPerRow-home-reset">Reset</button>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-newsPerRow-home-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="ui-newsPerRow-home-toggle">News per row (Home):</label>
+                            <input class="ms-2" type="number" id="ui-newsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-newsPerRow-home-reset">Reset</button>
+                        </div>
+                    </div>
+                </div>
 
-                <section class="group">
-                    <h4 class="type">Player</h4>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="player-controls-background-height-enabled" /> Controls background height:
-                        <input type="number" id="player-controls-background-height" value="12" step="1" min="0" onmousewheel="e.preventDefault();" />
-                        <select id="player-controls-background-height-unit">
-                            <option value="px">px</option>
-                            <option value="%">%</option>
-                            <option value="em">em</option>
-                            <option value="rem">rem</option>
-                        </select>
-                        <button id="player-controls-background-height-reset">Reset</button>
+                <!-- Tab Texts -->
+                <div class="tab-pane fade text-white" id="tabTexts" role="tabpanel" aria-labelledby="tab-texts">
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-home" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-videoTitleFull-home">Video - Full title (Home)</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-sidebar" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-videoTitleFull-sidebar">Video - Full title (Player sidebar)</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-plPanel" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-videoTitleFull-plPanel">Video - Full title (inside Playlist panel)</label>
+                        </div>
                     </div>
 
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="player-controls-background-color-enabled" /> Controls background color:
-                        <input type="color" id="player-controls-background-color" value="#484848" /> - Alpha:
-                        <input type="number" id="player-controls-background-colorAlpha" value="0.3" step="0.05" min="0" max="1"
-                            onmousewheel="e.preventDefault();" />
-                        <button id="player-controls-background-color-reset">Reset</button>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plTitleFull-home" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-plTitleFull-home">Playlist - Full title (Home)</label>
+                        </div>
                     </div>
-                </section>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plTitleFull-sidebar" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-plTitleFull-sidebar">Playlist - Full title (Player sidebar)</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plTitleFull-plPanel" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-plTitleFull-plPanel">Playlist - Full title (inside Playlist panel)</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plInfoFull-all" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-plInfoFull-all">Playlist - Full info</label>
+                        </div>
+                    </div>
 
-                <section class="group">
-                    <h4 class="type">Utilities</h4>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="utilities-shortsToWatch" /> Watch shorts in '/watch' view
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-shortsTitleFull-all" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-shortsTitleFull-all">Shorts - Full title</label>
+                        </div>
                     </div>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="utilities-noPlaylistTrap" /> Watch video without trapped into a playlist
-                    </div>
-                    <div class="group-segment-item">
-                        <input type="checkbox" id="utilities-channelRedirImprove" /> Improve channel redirection
-                    </div>
-                </section>
 
-                <!-- <section class="group">
-                    <h4 class="type"></h4>
-                    <div class="group-segment-button">
-                        <input type="checkbox" id="xxx-checkbox" /> Checkbox 01
-                        <button class="btn-guide" title="Hover to see guide" disabled><i class="fa-solid fa-info"></i></button>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-channelInfoFull-player" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-channelInfoFull-player">Full channel info (Under player)</label>
+                        </div>
                     </div>
-                </section> -->
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="text-joinMbsBtnFix-player" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="text-joinMbsBtnFix-player">Fix "Join Membership" button</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Player -->
+                <div class="tab-pane fade text-white" id="tabPlayer" role="tabpanel" aria-labelledby="tab-player">
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-controlsBgHeight-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="player-controlsBgHeight-toggle">Controls background height:</label>
+                            <input class="ms-2" type="number" id="player-controlsBgHeight" value="12" step="1" min="0"
+                                onmousewheel="e.preventDefault();">
+                            <select class="ms-2" id="player-controlsBgHeight-unit">
+                                <option value="px">px</option>
+                                <option value="%">%</option>
+                                <option value="em">em</option>
+                                <option value="rem">rem</option>
+                            </select>
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="player-controlsBgHeight-reset">Reset</button>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-controlsBgClr-toggle" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="player-controlsBgClr-toggle">Controls background color:</label>
+                            <input class="ms-2" type="color" id="player-controlsBgClr" value="#484848" />&nbsp;- Alpha:
+                            <input class="ms-2" type="number" id="player-controlsBgClrAlpha" value="0.3" step="0.05" min="0" max="1"
+                                onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="player-controlsBgClr-reset">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Utilities -->
+                <div class="tab-pane fade text-white" id="tabUtilities" role="tabpanel" aria-labelledby="tab-utilities">
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-shortsToWatch" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="utilities-shortsToWatch">Watch shorts in '/watch' view</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-noPlaylistTrap" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="utilities-noPlaylistTrap">Watch video without trapped into a playlist</label>
+                        </div>
+                    </div>
+                    <div class="pane-items row w-100 mb-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-channelRedirImprove" />
+                        </div>
+                        <div class="col-11 d-flex align-items-center flex-wrap">
+                            <label class="form-check-label" for="utilities-channelRedirImprove">Improve channel redirection</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <script src="DEFAULT_SETTINGS.js"></script>
         <script src="popup-core.js"></script>
+        <script src="popup-ui.js"></script>
         <script src="popup-texts.js"></script>
         <script src="popup-player.js"></script>
         <script src="popup-utilities.js"></script>
-        <script src="popup-ui.js"></script>
     </body>
 
 </html>

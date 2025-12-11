@@ -24,4 +24,3 @@ const WATCH_SIDEBAR_VIDEOS_NORMAL_ALT = WATCH_SIDEBAR_VIDEOS_ALT + ':not(:has(.y
 const WATCH_SIDEBAR_VIDEOS_PLTRAP_ALT = WATCH_SIDEBAR_VIDEOS_ALT + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
 const WATCH_SIDEBAR_SHELVES_SHORTS_ALT = "#related #items ytd-reel-shelf-renderer";
 const WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS_ALT = WATCH_SIDEBAR_SHELVES_SHORTS_ALT + " ytm-shorts-lockup-view-model";
-

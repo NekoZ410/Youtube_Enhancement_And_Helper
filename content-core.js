@@ -1,52 +1,64 @@
-// global: inject or update a custom style into DOM
+// core: inject or update a custom style into DOM
 function injectCustomStyle(styleId, cssRules) {
     const existingStyle = document.getElementById(styleId);
     if (existingStyle) {
-        existingStyle.remove();
+        if (existingStyle.textContent === cssRules) return; // avoid unnecessary updates
+        existingStyle.textContent = cssRules;
+    } else {
+        const styleElement = document.createElement("style");
+        styleElement.id = styleId;
+        styleElement.textContent = cssRules;
+        (document.head || document.documentElement).appendChild(styleElement);
     }
-
-    const styleElement = document.createElement("style");
-    styleElement.id = styleId;
-    styleElement.textContent = cssRules;
-    (document.head || document.documentElement).appendChild(styleElement);
 }
 
-// global: remove all styles from DOM
-function removeAllStyles(styleSettings) {
-    Object.values(styleSettings).forEach(({ styleId }) => {
-        const style = document.getElementById(styleId);
-        if (style) {
-            style.remove();
+// core: initialize module settings
+function initModuleSettings(defaultSettings, callback) {
+    const keys = Object.keys(defaultSettings);
+
+    chrome.storage.local.get(keys, (result) => {
+        const mergedSettings = {};
+        keys.forEach((key) => {
+            mergedSettings[key] = result[key] !== undefined ? result[key] : defaultSettings[key]; // use default if not set
+        });
+        chrome.storage.local.set(mergedSettings); // save merged settings
+        callback(mergedSettings);
+    });
+}
+
+// core: apply styles based on settings
+function applyModuleStyles(settings, styleConfig) {
+    Object.keys(styleConfig).forEach((key) => {
+        const config = styleConfig[key];
+        const toggleKey = config.toggleKey || key; // if no toggleKey specified, use the style key itself
+        const isEnabled = settings[toggleKey];
+
+        // static values, only inject once
+        if (config.styleIdStatic && config.cssStatic) {
+            injectCustomStyle(config.styleIdStatic, config.cssStatic);
+        }
+
+        // dynamic values, inject based on state
+        if (config.styleIdDynamic && config.cssDynamicGen) {
+            const css = config.cssDynamicGen(isEnabled, settings);
+            injectCustomStyle(config.styleIdDynamic, css);
         }
     });
 }
 
-// global: apply styles based on settings
-function applyStyles(settings, styleSettings) {
-    removeAllStyles(styleSettings);
-    Object.keys(styleSettings).forEach((id) => {
-        if (settings[id] === true) {
-            const { styleId, css } = styleSettings[id];
-            injectCustomStyle(styleId, css);
-        }
-    });
-}
+// core: listen for storage changes
+function setupModuleStorageListener(defaultSettings, callback) {
+    const keys = Object.keys(defaultSettings);
 
-// global: listen for storage changes
-function setupStorageListener(styleSettings) {
     chrome.storage.onChanged.addListener((changes, namespace) => {
         if (namespace === "local") {
-            const changedSettings = {};
-            let hasRelevantChange = false;
-            Object.keys(changes).forEach((key) => {
-                if (styleSettings[key]) {
-                    changedSettings[key] = changes[key].newValue;
-                    hasRelevantChange = true;
-                }
-            });
-            if (hasRelevantChange) {
-                chrome.storage.local.get(Object.keys(styleSettings), (fullSettings) => {
-                    applyStyles(fullSettings, styleSettings);
+            const relevantChange = keys.some((key) => changes[key] !== undefined); // check relevant changes in a module
+
+            // if module have relevant changes, reload whole module
+            if (relevantChange) {
+                chrome.storage.local.get(keys, (result) => {
+                    const mergedSettings = { ...defaultSettings, ...result };
+                    callback(mergedSettings);
                 });
             }
         }
