@@ -16,12 +16,10 @@ const TEXTS_DEFAULT_SETTINGS = {
     "text-videoTitleFull-sidebar": true,
     "text-videoTitleFull-plPanel": true,
     "text-plTitleFull-home": true,
-    "text-plTitleFull-sidebar": true,
-    "text-plTitleFull-plPanel": true,
     "text-plInfoFull-all": true,
     "text-shortsTitleFull-all": true,
-    "text-channelInfoFull-player": true,
-    "text-joinMbsBtnFix-player": true,
+    "text-channelInfoFull-player": false,
+    "text-joinMbsBtnFix-player": false,
 };
 
 // player: default settings

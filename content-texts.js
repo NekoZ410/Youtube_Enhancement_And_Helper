@@ -4,7 +4,7 @@ const textStyleSettings = {
         styleIdDynamic: "text-videoTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `#contents #content .yt-lockup-metadata-view-model__title:not([href*="&list="]) {
+            return `${HOME_ITEMS_VIDEOS} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
             }`;
@@ -14,12 +14,12 @@ const textStyleSettings = {
         styleIdDynamic: "text-videoTitleFull-sidebar-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `#items #contents .yt-lockup-metadata-view-model__title:not([href*="&list="]) {
+            return `${WATCH_SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
             }
-            #items #contents .yt-lockup-view-model__content-image:not([href*="&list="]) .ytThumbnailViewModelHost {
-                align-self: center;
+            ${WATCH_SIDEBAR_VIDEOS} .yt-lockup-view-model__content-image .ytThumbnailViewModelHost {
+                align-self: center !important;
             }`;
         },
     },
@@ -27,12 +27,12 @@ const textStyleSettings = {
         styleIdDynamic: "text-videoTitleFull-plPanel-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `#video-title.ytd-playlist-panel-video-renderer {
+            return `${WATCH_SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #video-title {
                 display: block !important;
                 max-height: unset !important;
             }                
-            #items #thumbnail-container {
-                align-self: anchor-center;
+            ${WATCH_SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #thumbnail-container {
+                align-self: center !important;
             }`;
         },
     },
@@ -41,42 +41,9 @@ const textStyleSettings = {
         styleIdDynamic: "text-plTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `#contents #content .yt-lockup-metadata-view-model__title[href*="&list="] {
+            return `${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
-            }`;
-        },
-    },
-    "text-plTitleFull-sidebar": {
-        styleIdDynamic: "text-plTitleFull-sidebar-inject-dynamic",
-        cssDynamicGen: (isEnabled) => {
-            if (!isEnabled) return "";
-            return `#items #contents .yt-lockup-metadata-view-model__title[href*="&list="] {
-                display: block !important;
-                max-height: unset !important;
-            }
-            #items #contents .yt-lockup-view-model__content-image[href*="&list="] .ytThumbnailViewModelHost {
-                align-self: center;
-            }
-            #items #contents .yt-lockup-view-model__content-image[href*="&list="] .ytCollectionThumbnailViewModelHost {
-                align-content: center;
-            }`;
-        },
-    },
-    "text-plTitleFull-plPanel": {
-        styleIdDynamic: "text-plTitleFull-plPanel-inject-dynamic",
-        cssDynamicGen: (isEnabled) => {
-            if (!isEnabled) return "";
-            return `.title.ytd-playlist-panel-renderer {
-                display: block !important;
-                max-height: unset !important;
-            }
-            #next-video-title yt-formatted-string {
-                white-space: unset !important;
-            }
-            #publisher-container yt-formatted-string {
-                white-space: unset;
-                max-height: unset;
             }`;
         },
     },
@@ -84,8 +51,19 @@ const textStyleSettings = {
         styleIdDynamic: "text-plInfoFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `#contents .yt-content-metadata-view-model > .yt-content-metadata-view-model__metadata-row:first-child .yt-core-attributed-string[role="text"] {
+            return `${HOME_ITEMS_PLAYLIST} .yt-content-metadata-view-model__metadata-text{
                 white-space: unset !important;
+            }
+            ${WATCH_SIDEBAR_PLPANEL} #header-description h3:has([link-inherit-color]) yt-formatted-string {
+                display: block !important;
+                max-height: unset !important;
+            }
+            ${WATCH_SIDEBAR_PLPANEL} #header-description h3:not(:has([link-inherit-color])) yt-formatted-string {
+                white-space: unset !important;
+            }
+            ${WATCH_SIDEBAR_PLPANEL} #publisher-container yt-formatted-string.byline-title {
+                white-space: unset !important;
+                max-height: unset !important;
             }`;
         },
     },
@@ -94,7 +72,8 @@ const textStyleSettings = {
         styleIdDynamic: "text-shortsTitleFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `.shortsLockupViewModelHostMetadataTitle {
+            return `${HOME_ITEMS_SHORTS} .shortsLockupViewModelHostMetadataTitle,
+            ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} .shortsLockupViewModelHostMetadataTitle {
                 display: block !important;
                 max-height: unset !important;
             }`;
