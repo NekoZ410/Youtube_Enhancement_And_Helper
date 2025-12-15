@@ -6,6 +6,9 @@ const utilityStyleSettings = {
             ${HOME_ITEMS_SHORTS} div[role="presentation"],
             ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} div[role="presentation"] {
                 min-height: 72px !important;
+            }
+            .utilities-shortsToWatch-btn {
+                cursor: help !important;
             }`,
         styleIdDynamic: "utilities-shortsToWatch-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
@@ -27,7 +30,7 @@ const utilityStyleSettings = {
                 align-items: center;
             }
             .utilities-noPlaylistTrap-btn {
-                display: inline-flex;
+                cursor: help !important;
             }`,
         styleIdDynamic: "utilities-noPlaylistTrap-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
@@ -39,7 +42,7 @@ const utilityStyleSettings = {
         cssStatic: `
             a.utilities-channelRedirImprove-a {
                 text-decoration: none;
-                cursor: pointer;
+                cursor: help;
                 color: inherit;
             }`,
         styleIdDynamic: "utilities-channelRedirImprove-inject-dynamic",
@@ -236,9 +239,7 @@ function processChannelRedirImprove() {
     });
 
     // process watch sidebar channel names
-    const sidebarSelector = `${WATCH_SIDEBAR_VIDEOS}`;
-    const sidebarNodes = document.querySelectorAll(sidebarSelector);
-
+    const sidebarNodes = document.querySelectorAll(WATCH_SIDEBAR_VIDEOS);
     sidebarNodes.forEach(async (node) => {
         const videoLinkEl = node.querySelector(".yt-lockup-view-model__content-image");
         const textElements = node.querySelectorAll(".yt-core-attributed-string");
@@ -247,22 +248,47 @@ function processChannelRedirImprove() {
         if (videoLinkEl && videoLinkEl.href && channelNameEl) {
             if (channelNameEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
 
-            const match = videoLinkEl.href.match(PATTERN_YT_VIDEO_URL);
-            const cleanVideoUrl = match ? match[0] : null;
-            if (cleanVideoUrl) {
-                if (node.dataset.processingRedir) return; // prevent duplicates
-                node.dataset.processingRedir = "true";
+            const videoUrl = videoLinkEl.href;
 
-                const channelUrl = await getChannelUrlFromOembed(cleanVideoUrl);
-                if (channelUrl) {
-                    const wrapper = document.createElement("a");
-                    wrapper.href = channelUrl;
-                    wrapper.className = "utilities-channelRedirImprove-a";
-                    wrapper.onclick = (e) => e.stopPropagation();
+            if (node.dataset.processingRedir) return; // prevent duplicates
+            node.dataset.processingRedir = "true";
 
-                    channelNameEl.parentNode.insertBefore(wrapper, channelNameEl);
-                    wrapper.appendChild(channelNameEl);
-                }
+            const channelUrl = await getChannelUrlFromOembed(videoUrl);
+            if (channelUrl) {
+                const wrapper = document.createElement("a");
+                wrapper.href = channelUrl;
+                wrapper.className = "utilities-channelRedirImprove-a";
+                wrapper.onclick = (e) => e.stopPropagation();
+
+                channelNameEl.parentNode.insertBefore(wrapper, channelNameEl);
+                wrapper.appendChild(channelNameEl);
+            }
+        }
+    });
+
+    // process playlist panel channel names
+    const plPanelNodes = document.querySelectorAll(WATCH_SIDEBAR_PLPANEL_VIDEOS);
+    plPanelNodes.forEach(async (node) => {
+        const videoLinkEl = node.querySelector("#wc-endpoint");
+        const bylineEl = node.querySelector("#byline");
+
+        if (videoLinkEl && videoLinkEl.href && bylineEl) {
+            if (bylineEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
+
+            const videoUrl = videoLinkEl.href;
+
+            if (node.dataset.processingRedir) return; // prevent duplicates
+            node.dataset.processingRedir = "true";
+
+            const channelUrl = await getChannelUrlFromOembed(videoUrl);
+            if (channelUrl) {
+                const wrapper = document.createElement("a");
+                wrapper.href = channelUrl;
+                wrapper.className = "utilities-channelRedirImprove-a";
+                wrapper.onclick = (e) => e.stopPropagation();
+
+                bylineEl.parentNode.insertBefore(wrapper, bylineEl);
+                wrapper.appendChild(bylineEl);
             }
         }
     });
