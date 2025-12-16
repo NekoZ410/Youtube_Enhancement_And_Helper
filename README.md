@@ -10,7 +10,7 @@ Add some enhancements and helper features to YouTube.
 Just click this extension icon to open popup menu when you're on youtube.com
 
 ## UI Features
-### 1. Custom number of videos per row (in Home page) [^First row issue]
+### 1. Custom number of videos per row (in Home page) [^1]
 - Disabled: Default with 3 videos per row
 
 ![ui-videosPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-videosPerRow-home_disabled.png?raw=true)
@@ -19,7 +19,7 @@ Just click this extension icon to open popup menu when you're on youtube.com
 
 ![ui-videosPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-videosPerRow-home_enabled.png?raw=true)
 
-### 2. Custom number of shorts per row (in Home page) [^Maximum shorts numbers issue]
+### 2. Custom number of shorts per row (in Home page) [^2]
 - Disabled: Default with 5 shorts per row
 
 ![ui-shortsPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-shortsPerRow-home_disabled.png?raw=true)
@@ -201,5 +201,5 @@ Just click this extension icon to open popup menu when you're on youtube.com
 ## Issues
 If you encounter any bugs or have suggestions for new features, please submit an Issue.
 
-[^First row issue]: Because this extension only overrides YouTube's default interface, the first row may sometimes only display 3 videos or fewer. Other rows below are unaffected.
-[^Maximum shorts numbers issue]: Because YouTube's default interface only renders a maximum of 9 shorts per row, the recommended maximum number should be 9.
+[^1]: Because this extension only overrides YouTube's default interface, the first row may sometimes only display 3 videos or fewer. Other rows below are unaffected.
+[^2]: Because YouTube's default interface only renders a maximum of 9 shorts per row, the recommended maximum number should be 9.
