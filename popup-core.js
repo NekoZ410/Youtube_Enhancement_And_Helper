@@ -34,7 +34,7 @@ function initPopupSettings(defaultSettings) {
     chrome.storage.local.get(keys, (savedSettings) => {
         const currentSettings = { ...defaultSettings, ...savedSettings }; // merge default with saved settings
 
-        // Bind UI Elements
+        // bind UI elements
         keys.forEach((id) => {
             const element = document.getElementById(id);
             if (!element) return;
@@ -76,4 +76,51 @@ function initPopupSettings(defaultSettings) {
             });
         });
     });
+}
+
+// core: setup reset button
+function setupResetButton(buttonId, settingKeys, defaultSettingsObject) {
+    const resetButton = document.getElementById(buttonId);
+    if (!resetButton) return;
+
+    resetButton.addEventListener("click", () => {
+        const defaults = {};
+        settingKeys.forEach((key) => {
+            defaults[key] = defaultSettingsObject[key];
+        });
+
+        // save and send update message
+        chrome.storage.local.set(defaults, () => {
+            settingKeys.forEach((key) => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === "checkbox") {
+                        element.checked = defaults[key];
+                        element.dispatchEvent(new Event("change"));
+                    } else {
+                        element.value = defaults[key];
+                    }
+                }
+            });
+
+            sendUpdateStylesMessage();
+        });
+    });
+}
+
+// core: setup toggle interaction
+function setupToggleInteraction(toggleId, targetInputIds) {
+    const toggle = document.getElementById(toggleId);
+    if (!toggle) return;
+
+    const updateState = () => {
+        const isChecked = toggle.checked;
+        targetInputIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.disabled = !isChecked;
+        });
+    };
+    toggle.addEventListener("change", updateState);
+
+    setTimeout(updateState, 10);
 }

@@ -135,59 +135,60 @@
                 </li>
             </ul>
 
+            <!-- tab content -->
             <div class="tab-content bg-dark p-2" id="tabContent">
-                <!-- Tab UI -->
+                <!-- tab UI -->
                 <div class="tab-pane fade show active text-white" id="tabUI" role="tabpanel" aria-labelledby="tab-UI">
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-videosPerRow-home-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-videosPerRow-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="ui-videosPerRow-home-toggle">Videos per row (Home):</label>
-                            <input class="ms-2" type="number" id="ui-videosPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-videosPerRow-home-reset">Reset</button>
+                            <label class="form-check-label me-1" for="ui-videosPerRow-home">Videos per row (Home):</label>
+                            <input class="me-2" type="number" id="ui-videosPerRow-home-count" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 py-0 px-1" id="ui-videosPerRow-home-reset">Reset</button>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-shortsPerRow-home-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-shortsPerRow-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="ui-shortsPerRow-home-toggle">Shorts per row (Home):</label>
-                            <input class="ms-2" type="number" id="ui-shortsPerRow-home" value="5" step="1" min="1" onmousewheel="e.preventDefault();">
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-shortsPerRow-home-reset">Reset</button>
+                            <label class="form-check-label me-1" for="ui-shortsPerRow-home">Shorts per row (Home):</label>
+                            <input class="me-2" type="number" id="ui-shortsPerRow-home-count" value="5" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 py-0 px-1" id="ui-shortsPerRow-home-reset">Reset</button>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-postsPerRow-home-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-postsPerRow-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="ui-postsPerRow-home-toggle">Posts per row (Home):</label>
-                            <input class="ms-2" type="number" id="ui-postsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-postsPerRow-home-reset">Reset</button>
+                            <label class="form-check-label me-1" for="ui-postsPerRow-home">Posts per row (Home):</label>
+                            <input class="me-2" type="number" id="ui-postsPerRow-home-count" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 py-0 px-1" id="ui-postsPerRow-home-reset">Reset</button>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-newsPerRow-home-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="ui-newsPerRow-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="ui-newsPerRow-home-toggle">News per row (Home):</label>
-                            <input class="ms-2" type="number" id="ui-newsPerRow-home" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="ui-newsPerRow-home-reset">Reset</button>
+                            <label class="form-check-label me-1" for="ui-newsPerRow-home">News per row (Home):</label>
+                            <input class="me-2" type="number" id="ui-newsPerRow-home-count" value="3" step="1" min="1" onmousewheel="e.preventDefault();">
+                            <button class="btn btn-info border-0 py-0 px-1" id="ui-newsPerRow-home-reset">Reset</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab Texts -->
+                <!-- tab Texts -->
                 <div class="tab-pane fade text-white" id="tabTexts" role="tabpanel" aria-labelledby="tab-texts">
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-videoTitleFull-home">Video - Full title (Home)</label>
+                            <label class="form-check-label me-1" for="text-videoTitleFull-home">Video - Full title (Home)</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -195,7 +196,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-sidebar" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-videoTitleFull-sidebar">Video - Full title (Player sidebar)</label>
+                            <label class="form-check-label me-1" for="text-videoTitleFull-sidebar">Video - Full title (Player sidebar)</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -203,7 +204,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-videoTitleFull-plPanel" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-videoTitleFull-plPanel">Video - Full title (inside Playlist panel)</label>
+                            <label class="form-check-label me-1" for="text-videoTitleFull-plPanel">Video - Full title (inside Playlist panel)</label>
                         </div>
                     </div>
 
@@ -212,7 +213,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plTitleFull-home" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-plTitleFull-home">Playlist - Full title (Home)</label>
+                            <label class="form-check-label me-1" for="text-plTitleFull-home">Playlist - Full title (Home)</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -220,7 +221,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-plInfoFull-all" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-plInfoFull-all">Playlist - Full info</label>
+                            <label class="form-check-label me-1" for="text-plInfoFull-all">Playlist - Full info</label>
                         </div>
                     </div>
 
@@ -229,7 +230,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-shortsTitleFull-all" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-shortsTitleFull-all">Shorts - Full title</label>
+                            <label class="form-check-label me-1" for="text-shortsTitleFull-all">Shorts - Full title</label>
                         </div>
                     </div>
 
@@ -238,7 +239,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-channelInfoFull-player" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-channelInfoFull-player">Full channel info (Under player)</label>
+                            <label class="form-check-label me-1" for="text-channelInfoFull-player">Full channel info (Under player)</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -246,52 +247,74 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="text-joinMbsBtnFix-player" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="text-joinMbsBtnFix-player">Fix "Join Membership" button</label>
+                            <label class="form-check-label me-1" for="text-joinMbsBtnFix-player">Fix "Join Membership" button</label>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab Player -->
+                <!-- tab Player -->
                 <div class="tab-pane fade text-white" id="tabPlayer" role="tabpanel" aria-labelledby="tab-player">
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-controlsBgHeight-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-controlsBgCustom" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="player-controlsBgHeight-toggle">Controls background height:</label>
-                            <input class="ms-2" type="number" id="player-controlsBgHeight" value="12" step="1" min="0"
-                                onmousewheel="e.preventDefault();">
-                            <select class="ms-2" id="player-controlsBgHeight-unit">
-                                <option value="px">px</option>
-                                <option value="%">%</option>
-                                <option value="em">em</option>
-                                <option value="rem">rem</option>
-                            </select>
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="player-controlsBgHeight-reset">Reset</button>
+                            <label class="form-check-label me-1" for="player-controlsBgCustom">Controls background custom:</label>
+
+                            <div class="d-flex align-items-center mt-1 w-100">
+                                <span class="me-1" style="min-width: 45px;">Color:</span>
+                                <input class="me-1" type="color" id="player-controlsBgCustom-color" value="#484848" />
+                                <span class="me-1">|</span>
+                                <span class="me-1">Alpha:</span>
+                                <input class="me-1" type="number" id="player-controlsBgCustom-colorAlpha" value="0.3" step="0.05" min="0" max="1"
+                                    onmousewheel="e.preventDefault();">
+                                <span class="me-1">|</span>
+                                <span class="me-1" style="min-width: 45px;">Height:</span>
+                                <input class="me-1" type="number" id="player-controlsBgCustom-height" value="12" step="1" min="0"
+                                    onmousewheel="e.preventDefault();">
+                                <select class="me-1 d-flex flex-column" id="player-controlsBgCustom-heightUnit">
+                                    <option value="px">px</option>
+                                    <option value="%">%</option>
+                                    <option value="em">em</option>
+                                    <option value="rem">rem</option>
+                                </select>
+                                <span class="me-1">|</span>
+                                <button class="btn btn-info border-0 py-0 px-1" id="player-controlsBgCustom-reset">Reset</button>
+                            </div>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
-                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-controlsBgClr-toggle" />
+                            <input class="form-check-input m-0" type="checkbox" role="switch" id="player-persistentProgressBar" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="player-controlsBgClr-toggle">Controls background color:</label>
-                            <input class="ms-2" type="color" id="player-controlsBgClr" value="#484848" />&nbsp;- Alpha:
-                            <input class="ms-2" type="number" id="player-controlsBgClrAlpha" value="0.3" step="0.05" min="0" max="1"
-                                onmousewheel="e.preventDefault();">
-                            <button class="btn btn-info border-0 ms-2 py-0 px-1" id="player-controlsBgClr-reset">Reset</button>
+                            <label class="form-check-label me-1" for="player-persistentProgressBar">Persistent Progress Bar:</label>
+                            <div class="d-flex align-items-center mt-1 w-100">
+                                <span class="me-1">Color:</span>
+                                <input class="me-1" type="color" id="player-persistentProgressBar-color" value="#B2071D">
+                                <span class="me-1">|</span>
+                                <span class="me-1">Height:</span>
+                                <input class="me-1" type="number" id="player-persistentProgressBar-height" value="3" step="1" min="1" style="width: 50px;">
+                                <span class="me-1">px</span>
+                                <span class="me-1">|</span>
+                                <span class="me-1">Delay:</span>
+                                <input class="me-1" type="number" id="player-persistentProgressBar-delay" value="1000" step="1" min="100" style="width: 60px;">
+                                <span class="me-1">ms</span>
+                                <span class="me-1">|</span>
+                                <button class="btn btn-info border-0 py-0 px-1" id="player-persistentProgressBar-reset">Reset</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab Utilities -->
+                <!-- tab Utilities -->
                 <div class="tab-pane fade text-white" id="tabUtilities" role="tabpanel" aria-labelledby="tab-utilities">
                     <div class="pane-items row w-100 mb-2">
                         <div class="col-1 d-flex align-items-center justify-content-center form-check form-switch p-0 m-0">
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-shortsToWatch" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="utilities-shortsToWatch">Watch shorts in '/watch' view</label>
+                            <label class="form-check-label me-1" for="utilities-shortsToWatch">Watch shorts in '/watch' view</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -299,7 +322,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-noPlaylistTrap" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="utilities-noPlaylistTrap">Watch video without trapped into a playlist</label>
+                            <label class="form-check-label me-1" for="utilities-noPlaylistTrap">Watch video without trapped into a playlist</label>
                         </div>
                     </div>
                     <div class="pane-items row w-100 mb-2">
@@ -307,7 +330,7 @@
                             <input class="form-check-input m-0" type="checkbox" role="switch" id="utilities-channelRedirImprove" />
                         </div>
                         <div class="col-11 d-flex align-items-center flex-wrap">
-                            <label class="form-check-label" for="utilities-channelRedirImprove">Improve channel redirection</label>
+                            <label class="form-check-label me-1" for="utilities-channelRedirImprove">Improve channel redirection</label>
                         </div>
                     </div>
                 </div>

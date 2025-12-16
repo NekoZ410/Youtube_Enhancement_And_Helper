@@ -18,7 +18,15 @@ const HOME_SECTIONS = HOME + " .ytd-rich-section-renderer";
 // selectors - watch
 const WATCH_MAIN = "#primary";
 
-const WATCH_MAIN_PLAYER = WATCH_MAIN + " #player";
+const WATCH_MAIN_PLRCONT = WATCH_MAIN + " #player";
+const WATCH_MAIN_PLRCONT_PLAYER = WATCH_MAIN_PLRCONT + " #movie_player";
+const WATCH_MAIN_PLRCONT_PLAYER_GRADTOP = WATCH_MAIN_PLRCONT_PLAYER + " .ytp-gradient-top";
+const WATCH_MAIN_PLRCONT_PLAYER_GRADBOTTOM = WATCH_MAIN_PLRCONT_PLAYER + " .ytp-gradient-bottom";
+
+const WATCH_MAIN_BIGMODE = "#full-bleed-container";
+const WATCH_MAIN_BIGMODE_PLRCONT_PLAYER = WATCH_MAIN_BIGMODE + " #movie_player";
+const WATCH_MAIN_BIGMODE_PLRCONT_PLAYER_GRADTOP = WATCH_MAIN_BIGMODE + " .ytp-gradient-top";
+const WATCH_MAIN_BIGMODE_PLRCONT_PLAYER_GRADBOTTOM = WATCH_MAIN_BIGMODE + " .ytp-gradient-bottom";
 
 const WATCH_MAIN_BELOW = WATCH_MAIN + " #below";
 const WATCH_MAIN_BELOW_METADATA = WATCH_MAIN_BELOW + " ytd-watch-metadata";

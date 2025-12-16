@@ -1,13 +1,13 @@
 // ui: default settings
 const UI_DEFAULT_SETTINGS = {
-    "ui-videosPerRow-home-toggle": true,
-    "ui-videosPerRow-home": 3,
-    "ui-shortsPerRow-home-toggle": true,
-    "ui-shortsPerRow-home": 5,
-    "ui-postsPerRow-home-toggle": true,
-    "ui-postsPerRow-home": 3,
-    "ui-newsPerRow-home-toggle": true,
-    "ui-newsPerRow-home": 3,
+    "ui-videosPerRow-home": true,
+    "ui-videosPerRow-home-count": 3,    
+    "ui-shortsPerRow-home": true,
+    "ui-shortsPerRow-home-count": 5,    
+    "ui-postsPerRow-home": true,
+    "ui-postsPerRow-home-count": 3,    
+    "ui-newsPerRow-home": true,
+    "ui-newsPerRow-home-count": 3,
 };
 
 // texts: default settings
@@ -24,12 +24,15 @@ const TEXTS_DEFAULT_SETTINGS = {
 
 // player: default settings
 const PLAYER_DEFAULT_SETTINGS = {
-    "player-controlsBgHeight-toggle": true,
-    "player-controlsBgHeight": 12,
-    "player-controlsBgHeight-unit": "px",
-    "player-controlsBgClr-toggle": true,
-    "player-controlsBgClr": "#484848",
-    "player-controlsBgClrAlpha": 0.3,
+    "player-controlsBgCustom": true,
+    "player-controlsBgCustom-color": "#484848",
+    "player-controlsBgCustom-colorAlpha": 0.3,
+    "player-controlsBgCustom-height": 12,
+    "player-controlsBgCustom-heightUnit": "px",
+    "player-persistentProgressBar": true,
+    "player-persistentProgressBar-color": "#B2071D",
+    "player-persistentProgressBar-height": 3,
+    "player-persistentProgressBar-delay": 1000,
 };
 
 // utilities: default settings

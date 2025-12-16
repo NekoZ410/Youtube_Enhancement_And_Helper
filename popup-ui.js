@@ -2,41 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // ui: initialize settings
     initPopupSettings(UI_DEFAULT_SETTINGS);
 
-    // ui: reset buttons
-    const attachResetListener = (id) => {
-        const resetButton = document.getElementById(`${id}-reset`);
-        if (resetButton) {
-            resetButton.addEventListener("click", () => {
-                const defaultToggle = UI_DEFAULT_SETTINGS[`${id}-toggle`];
-                const defaultValue = UI_DEFAULT_SETTINGS[id];
+    // ui: setup reset buttons
+    setupResetButton("ui-videosPerRow-home-reset", ["ui-videosPerRow-home", "ui-videosPerRow-home-count"], UI_DEFAULT_SETTINGS);
+    setupResetButton("ui-shortsPerRow-home-reset", ["ui-shortsPerRow-home", "ui-shortsPerRow-home-count"], UI_DEFAULT_SETTINGS);
+    setupResetButton("ui-postsPerRow-home-reset", ["ui-postsPerRow-home", "ui-postsPerRow-home-count"], UI_DEFAULT_SETTINGS);
+    setupResetButton("ui-newsPerRow-home-reset", ["ui-newsPerRow-home", "ui-newsPerRow-home-count"], UI_DEFAULT_SETTINGS);
 
-                // update storage
-                chrome.storage.local.set(
-                    {
-                        [`${id}-toggle`]: defaultToggle,
-                        [id]: defaultValue,
-                    },
-                    () => {
-                        // update UI manually
-                        const enabledCheckbox = document.getElementById(`${id}-toggle`);
-                        const inputElement = document.getElementById(id);
-
-                        if (enabledCheckbox) enabledCheckbox.checked = defaultToggle;
-                        if (inputElement) {
-                            inputElement.value = defaultValue;
-                            inputElement.disabled = !defaultToggle;
-                        }
-
-                        // send update
-                        sendUpdateStylesMessage(id);
-                    }
-                );
-            });
-        }
-    };
-
-    attachResetListener("ui-videosPerRow-home");
-    attachResetListener("ui-shortsPerRow-home");
-    attachResetListener("ui-postsPerRow-home");
-    attachResetListener("ui-newsPerRow-home");
+    // ui: setup toggle interactions
+    setupToggleInteraction("ui-videosPerRow-home", ["ui-videosPerRow-home-count"]);
+    setupToggleInteraction("ui-shortsPerRow-home", ["ui-shortsPerRow-home-count"]);
+    setupToggleInteraction("ui-postsPerRow-home", ["ui-postsPerRow-home-count"]);
+    setupToggleInteraction("ui-newsPerRow-home", ["ui-newsPerRow-home-count"]);
 });

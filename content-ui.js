@@ -1,44 +1,40 @@
 // ui: style settings
 const uiStyleSettings = {
     "ui-videosPerRow-home": {
-        toggleKey: "ui-videosPerRow-home-toggle",
         styleIdDynamic: "ui-videosPerRow-home-custom",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
-            const videosPerRow = settings["ui-videosPerRow-home"];
+            const videosPerRow = settings["ui-videosPerRow-home-count"];
             return `#contents.ytd-rich-grid-renderer {
                         --ytd-rich-grid-items-per-row: ${videosPerRow} !important;
                     }`;
         },
     },
     "ui-shortsPerRow-home": {
-        toggleKey: "ui-shortsPerRow-home-toggle",
         styleIdDynamic: "ui-shortsPerRow-home-custom",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
-            const shortsPerRow = settings["ui-shortsPerRow-home"];
+            const shortsPerRow = settings["ui-shortsPerRow-home-count"];
             return `ytd-rich-shelf-renderer[is-shorts] {
                         --ytd-rich-grid-items-per-row: ${shortsPerRow} !important;
                     }`;
         },
     },
     "ui-postsPerRow-home": {
-        toggleKey: "ui-postsPerRow-home-toggle",
         styleIdDynamic: "ui-postsPerRow-home-custom",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
-            const postsPerRow = settings["ui-postsPerRow-home"];
+            const postsPerRow = settings["ui-postsPerRow-home-count"];
             return `ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) {
                         --ytd-rich-grid-items-per-row: ${postsPerRow} !important;
                     }`;
         },
     },
     "ui-newsPerRow-home": {
-        toggleKey: "ui-newsPerRow-home-toggle",
         styleIdDynamic: "ui-newsPerRow-home-custom",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
-            const newsPerRow = settings["ui-newsPerRow-home"];
+            const newsPerRow = settings["ui-newsPerRow-home-count"];
             return `ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) {
                         --ytd-rich-grid-items-per-row: ${newsPerRow} !important;
                     }`;
@@ -51,11 +47,10 @@ function processDynamicShortsDisplay(settings) {
     try {
         const SHORTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer[is-shorts] #contents";
         const SHORTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
-        const shortsPerRowValue = parseInt(settings["ui-shortsPerRow-home"], 10); // get setting value
+        const shortsPerRowValue = parseInt(settings["ui-shortsPerRow-home-count"], 10); // get setting value
 
         // only run if setting enabled
-        if (!settings["ui-shortsPerRow-home-toggle"] || isNaN(shortsPerRowValue) || shortsPerRowValue < 1) {
-            // else show all
+        if (!settings["ui-shortsPerRow-home"] || isNaN(shortsPerRowValue) || shortsPerRowValue < 1) {
             document.querySelectorAll(`${SHORTS_SHELVES_SELECTOR} ${SHORTS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
                 item.removeAttribute("hidden");
             });
@@ -88,59 +83,30 @@ function processDynamicPostsDisplay(settings) {
         const POSTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) #contents";
         const POSTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
         const POSTS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) [aria-label="Show less"]';
-        const postsPerRowValue = parseInt(settings["ui-postsPerRow-home"], 10); // get setting value
-
-        // console.log("DEBUG: dynamicPostsDisplay called with value:", postsPerRowValue);
+        const postsPerRowValue = parseInt(settings["ui-postsPerRow-home-count"], 10); // get setting value
 
         // only run if setting enabled
-        if (!settings["ui-postsPerRow-home-toggle"] || isNaN(postsPerRowValue) || postsPerRowValue < 1) {
-            // else show all
+        if (!settings["ui-postsPerRow-home"] || isNaN(postsPerRowValue) || postsPerRowValue < 1) {
             document.querySelectorAll(`${POSTS_SHELVES_SELECTOR} ${POSTS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
                 item.removeAttribute("hidden");
             });
-            // console.log("DEBUG: Posts toggle off or invalid value, showing all");
             return;
         }
 
         const postsShelves = document.querySelectorAll(`${POSTS_SHELVES_SELECTOR}`); // get all posts shelves
-        // console.log("DEBUG: Posts shelves found:", postsShelves.length);
-        postsShelves.forEach((shelf, shelfIndex) => {
+        postsShelves.forEach((shelf) => {
             const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
             const showLessButton = shelfRenderer ? shelfRenderer.querySelector(POSTS_SHOW_LESS_SELECTOR) : null;
-            const hasShowLess = !!showLessButton;
-            // console.log(`DEBUG: Posts shelf ${shelfIndex}: has show less button: ${hasShowLess}`);
-
-            // only apply hidden limit if not expanded
-            if (hasShowLess) {
-                // console.log(`DEBUG: Posts shelf ${shelfIndex} is expanded (has show less), skipping limit`);
-                return; // else show all
-            }
+            if (showLessButton) return;
 
             const shelfChildren = shelf.querySelectorAll(`${POSTS_ITEMS_SELECTOR}`);
-            // console.log(`DEBUG: Posts shelf ${shelfIndex} children count: ${shelfChildren.length}`);
-            let hiddenCountBefore = 0;
-            shelfChildren.forEach((item) => {
-                if (item.hasAttribute("hidden")) hiddenCountBefore++;
-            });
-            // console.log(`DEBUG: Posts shelf ${shelfIndex} hidden before: ${hiddenCountBefore}`);
-
             shelfChildren.forEach((item, itemIndex) => {
                 if (itemIndex < postsPerRowValue) {
-                    if (item.hasAttribute("hidden")) {
-                        item.removeAttribute("hidden"); // from 0 to N-1
-                    }
+                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
                 } else {
-                    if (!item.hasAttribute("hidden")) {
-                        item.setAttribute("hidden", ""); // the rest
-                    }
+                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
                 }
             });
-
-            let hiddenCountAfter = 0;
-            shelfChildren.forEach((item) => {
-                if (item.hasAttribute("hidden")) hiddenCountAfter++;
-            });
-            // console.log(`DEBUG: Posts shelf ${shelfIndex} hidden after: ${hiddenCountAfter}, expected hidden: ${shelfChildren.length - postsPerRowValue}`);
         });
     } catch (error) {
         console.error("Failed to apply Posts display.", error);
@@ -153,91 +119,33 @@ function processDynamicNewsDisplay(settings) {
         const NEWS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) #contents";
         const NEWS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
         const NEWS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) [aria-label="Show less"]';
-        const newsPerRowValue = parseInt(settings["ui-newsPerRow-home"], 10); // get setting value
-
-        // console.log("DEBUG: dynamicNewsDisplay called with value:", newsPerRowValue);
+        const newsPerRowValue = parseInt(settings["ui-newsPerRow-home-count"], 10); // get setting value
 
         // only run if setting enabled
-        if (!settings["ui-newsPerRow-home-toggle"] || isNaN(newsPerRowValue) || newsPerRowValue < 1) {
-            // else show all
+        if (!settings["ui-newsPerRow-home"] || isNaN(newsPerRowValue) || newsPerRowValue < 1) {
             document.querySelectorAll(`${NEWS_SHELVES_SELECTOR} ${NEWS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
                 item.removeAttribute("hidden");
             });
-            // console.log("DEBUG: News toggle off or invalid value, showing all");
             return;
         }
 
         const newsShelves = document.querySelectorAll(`${NEWS_SHELVES_SELECTOR}`); // get all news shelves
-        // console.log("DEBUG: News shelves found:", newsShelves.length);
-        newsShelves.forEach((shelf, shelfIndex) => {
+        newsShelves.forEach((shelf) => {
             const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
             const showLessButton = shelfRenderer ? shelfRenderer.querySelector(NEWS_SHOW_LESS_SELECTOR) : null;
-            const hasShowLess = !!showLessButton;
-            // console.log(`DEBUG: News shelf ${shelfIndex}: has show less button: ${hasShowLess}`);
-
-            // only apply hidden limit if not expanded
-            if (hasShowLess) {
-                // console.log(`DEBUG: News shelf ${shelfIndex} is expanded (has show less), skipping limit`);
-                return; // else show all
-            }
+            if (showLessButton) return;
 
             const shelfChildren = shelf.querySelectorAll(`${NEWS_ITEMS_SELECTOR}`);
-            // console.log(`DEBUG: News shelf ${shelfIndex} children count: ${shelfChildren.length}`);
-            let hiddenCountBefore = 0;
-            shelfChildren.forEach((item) => {
-                if (item.hasAttribute("hidden")) hiddenCountBefore++;
-            });
-            // console.log(`DEBUG: News shelf ${shelfIndex} hidden before: ${hiddenCountBefore}`);
-
             shelfChildren.forEach((item, itemIndex) => {
                 if (itemIndex < newsPerRowValue) {
-                    if (item.hasAttribute("hidden")) {
-                        item.removeAttribute("hidden"); // from 0 to N-1
-                    }
+                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
                 } else {
-                    if (!item.hasAttribute("hidden")) {
-                        item.setAttribute("hidden", ""); // the rest
-                    }
+                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
                 }
             });
-
-            let hiddenCountAfter = 0;
-            shelfChildren.forEach((item) => {
-                if (item.hasAttribute("hidden")) hiddenCountAfter++;
-            });
-            // console.log(`DEBUG: News shelf ${shelfIndex} hidden after: ${hiddenCountAfter}, expected hidden: ${shelfChildren.length - newsPerRowValue}`);
         });
     } catch (error) {
         console.error("Failed to apply News display.", error);
-    }
-}
-
-// ui: check and apply dynamic display
-function checkAndApplyDynamicDisplay() {
-    try {
-        // console.log("DEBUG: Starting checkAndApplyDynamicDisplay");
-        chrome.storage.local.get(
-            ["ui-shortsPerRow-home-toggle", "ui-shortsPerRow-home", "ui-postsPerRow-home-toggle", "ui-postsPerRow-home", "ui-newsPerRow-home-toggle", "ui-newsPerRow-home"],
-            (settings) => {
-                const defaultSettings = {
-                    "ui-shortsPerRow-home-toggle": true,
-                    "ui-shortsPerRow-home": 5,
-                    "ui-postsPerRow-home-toggle": true,
-                    "ui-postsPerRow-home": 3,
-                    "ui-newsPerRow-home-toggle": true,
-                    "ui-newsPerRow-home": 3,
-                };
-                const currentSettings = { ...defaultSettings, ...settings };
-
-                // console.log("DEBUG: Applying dynamic display with settings:", currentSettings);
-                processDynamicShortsDisplay(currentSettings);
-                processDynamicPostsDisplay(currentSettings);
-                processDynamicNewsDisplay(currentSettings);
-                // console.log("DEBUG: Finished applying dynamic display");
-            }
-        );
-    } catch (error) {
-        console.error("Failed to apply dynamic display due to extension context issue:", error);
     }
 }
 
@@ -530,24 +438,30 @@ function setupDynamicDisplayObserver() {
 }
 setupDynamicDisplayObserver();
 
+// ui: check and apply dynamic display
+function checkAndApplyDynamicDisplay() {
+    initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
+        processDynamicShortsDisplay(settings);
+        processDynamicPostsDisplay(settings);
+        processDynamicNewsDisplay(settings);
+    });
+}
+
 // ui: apply all UI logic based on settings
 function applyUILogic(settings) {
-    // apply styles
     applyModuleStyles(settings, uiStyleSettings);
 
-    // handle dynamic display
     processDynamicShortsDisplay(settings);
     processDynamicPostsDisplay(settings);
     processDynamicNewsDisplay(settings);
 
-    // init listeners
-    if (settings["ui-shortsPerRow-home-toggle"]) {
+    if (settings["ui-shortsPerRow-home"]) {
         waitForElementToRender("ytd-rich-shelf-renderer[is-shorts]");
     }
-    if (settings["ui-postsPerRow-home-toggle"]) {
+    if (settings["ui-postsPerRow-home"]) {
         waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):has([is-post])");
     }
-    if (settings["ui-newsPerRow-home-toggle"]) {
+    if (settings["ui-newsPerRow-home"]) {
         waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post]))");
     }
 }
@@ -566,12 +480,3 @@ initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
 setupModuleStorageListener(UI_DEFAULT_SETTINGS, (settings) => {
     applyUILogic(settings);
 });
-
-// ui: check and apply dynamic display
-function checkAndApplyDynamicDisplay() {
-    initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
-        processDynamicShortsDisplay(settings);
-        processDynamicPostsDisplay(settings);
-        processDynamicNewsDisplay(settings);
-    });
-}
