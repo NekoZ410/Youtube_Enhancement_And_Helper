@@ -223,7 +223,7 @@ function processChannelRedirImprove() {
     const homeNodes = document.querySelectorAll(HOME_ITEMS_VIDEOS);
     homeNodes.forEach((node) => {
         const channelLinkEl = node.querySelector(".yt-core-attributed-string__link");
-        const avatarEl = node.querySelector(".ytDecoratedAvatarViewModelHost");
+        const avatarEl = node.querySelector(".yt-spec-avatar-shape > div");
 
         if (channelLinkEl && avatarEl && channelLinkEl.href) {
             if (avatarEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
@@ -242,19 +242,18 @@ function processChannelRedirImprove() {
     const sidebarNodes = document.querySelectorAll(WATCH_SIDEBAR_VIDEOS);
     sidebarNodes.forEach(async (node) => {
         const videoLinkEl = node.querySelector(".yt-lockup-view-model__content-image");
-        const textElements = node.querySelectorAll(".yt-core-attributed-string");
-        const channelNameEl = textElements[1];
+        const channelNameEl = node.querySelectorAll(".yt-core-attributed-string")[1];
 
         if (videoLinkEl && videoLinkEl.href && channelNameEl) {
             if (channelNameEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
-
-            const videoUrl = videoLinkEl.href;
-
             if (node.dataset.processingRedir) return; // prevent duplicates
             node.dataset.processingRedir = "true";
 
+            const videoUrl = videoLinkEl.href;
             const channelUrl = await getChannelUrlFromOembed(videoUrl);
             if (channelUrl) {
+                if (!isChannelRedirImproveEnabled) return;
+
                 const wrapper = document.createElement("a");
                 wrapper.href = channelUrl;
                 wrapper.className = "utilities-channelRedirImprove-a";
@@ -270,27 +269,46 @@ function processChannelRedirImprove() {
     const plPanelNodes = document.querySelectorAll(WATCH_SIDEBAR_PLPANEL_VIDEOS);
     plPanelNodes.forEach(async (node) => {
         const videoLinkEl = node.querySelector("#wc-endpoint");
-        const bylineEl = node.querySelector("#byline");
+        const channelNameEl = node.querySelector("#byline");
 
-        if (videoLinkEl && videoLinkEl.href && bylineEl) {
-            if (bylineEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
-
-            const videoUrl = videoLinkEl.href;
-
+        if (videoLinkEl && videoLinkEl.href && channelNameEl) {
+            if (channelNameEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
             if (node.dataset.processingRedir) return; // prevent duplicates
             node.dataset.processingRedir = "true";
 
+            const videoUrl = videoLinkEl.href;
             const channelUrl = await getChannelUrlFromOembed(videoUrl);
             if (channelUrl) {
+                if (!isChannelRedirImproveEnabled) return;
+
                 const wrapper = document.createElement("a");
                 wrapper.href = channelUrl;
                 wrapper.className = "utilities-channelRedirImprove-a";
                 wrapper.onclick = (e) => e.stopPropagation();
 
-                bylineEl.parentNode.insertBefore(wrapper, bylineEl);
-                wrapper.appendChild(bylineEl);
+                channelNameEl.parentNode.insertBefore(wrapper, channelNameEl);
+                wrapper.appendChild(channelNameEl);
             }
         }
+    });
+}
+
+// utilities - channelRedirImprove: remove elements when disabled
+function removeChannelRedirImprove() {
+    // reposition original elements
+    const wrappers = document.querySelectorAll("a.utilities-channelRedirImprove-a");
+    wrappers.forEach((wrapper) => {
+        const parent = wrapper.parentNode;
+        while (wrapper.firstChild) {
+            parent.insertBefore(wrapper.firstChild, wrapper);
+        }
+        wrapper.remove();
+    });
+
+    // clean up flags
+    const processedNodes = document.querySelectorAll('[data-processing-redir="true"]');
+    processedNodes.forEach((node) => {
+        delete node.dataset.processingRedir;
     });
 }
 
@@ -353,8 +371,12 @@ setupModuleStorageListener(UTILITIES_DEFAULT_SETTINGS, (settings) => {
     // update global variable
     if (settings["utilities-channelRedirImprove"] !== undefined) {
         isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"];
-        // re-process if enabled
-        if (isChannelRedirImproveEnabled) processChannelRedirImprove();
+
+        if (isChannelRedirImproveEnabled) {
+            processChannelRedirImprove();
+        } else {
+            removeChannelRedirImprove();
+        }
     }
 
     applyModuleStyles(settings, utilityStyleSettings);
