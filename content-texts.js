@@ -36,6 +36,19 @@ const textStyleSettings = {
             }`;
         },
     },
+    "texts-videoChannelNameFull-all": {
+        styleIdDynamic: "texts-videoChannelNameFull-all-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
+            if (!isEnabled) return "";
+            return `${HOME_ITEMS_VIDEOS} .yt-core-attributed-string__link,
+            ${WATCH_SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-text:nth-of-type(1),
+            ${WATCH_SIDEBAR_PLPANEL_VIDEOS} #byline {
+                max-height: unset !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }`;
+        },
+    },
 
     "texts-plTitleFull-home": {
         styleIdDynamic: "texts-plTitleFull-home-inject-dynamic",
