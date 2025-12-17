@@ -1,7 +1,7 @@
 // texts: style settings
 const textStyleSettings = {
-    "text-videoTitleFull-home": {
-        styleIdDynamic: "text-videoTitleFull-home-inject-dynamic",
+    "texts-videoTitleFull-home": {
+        styleIdDynamic: "texts-videoTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${HOME_ITEMS_VIDEOS} .yt-lockup-metadata-view-model__title {
@@ -10,8 +10,8 @@ const textStyleSettings = {
             }`;
         },
     },
-    "text-videoTitleFull-sidebar": {
-        styleIdDynamic: "text-videoTitleFull-sidebar-inject-dynamic",
+    "texts-videoTitleFull-sidebar": {
+        styleIdDynamic: "texts-videoTitleFull-sidebar-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${WATCH_SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__title {
@@ -23,8 +23,8 @@ const textStyleSettings = {
             }`;
         },
     },
-    "text-videoTitleFull-plPanel": {
-        styleIdDynamic: "text-videoTitleFull-plPanel-inject-dynamic",
+    "texts-videoTitleFull-plPanel": {
+        styleIdDynamic: "texts-videoTitleFull-plPanel-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${WATCH_SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #video-title {
@@ -37,8 +37,8 @@ const textStyleSettings = {
         },
     },
 
-    "text-plTitleFull-home": {
-        styleIdDynamic: "text-plTitleFull-home-inject-dynamic",
+    "texts-plTitleFull-home": {
+        styleIdDynamic: "texts-plTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__title {
@@ -47,8 +47,8 @@ const textStyleSettings = {
             }`;
         },
     },
-    "text-plInfoFull-all": {
-        styleIdDynamic: "text-plInfoFull-all-inject-dynamic",
+    "texts-plInfoFull-all": {
+        styleIdDynamic: "texts-plInfoFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${HOME_ITEMS_PLAYLIST} .yt-content-metadata-view-model__metadata-text{
@@ -68,8 +68,8 @@ const textStyleSettings = {
         },
     },
 
-    "text-shortsTitleFull-all": {
-        styleIdDynamic: "text-shortsTitleFull-all-inject-dynamic",
+    "texts-shortsTitleFull-all": {
+        styleIdDynamic: "texts-shortsTitleFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${HOME_ITEMS_SHORTS} .shortsLockupViewModelHostMetadataTitle,
@@ -80,8 +80,8 @@ const textStyleSettings = {
         },
     },
 
-    "text-channelInfoFull-player": {
-        styleIdDynamic: "text-channelInfoFull-player-inject-dynamic",
+    "texts-channelInfoFull-player": {
+        styleIdDynamic: "texts-channelInfoFull-player-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `#upload-info {
@@ -97,8 +97,8 @@ const textStyleSettings = {
             }`;
         },
     },
-    "text-joinMbsBtnFix-player": {
-        styleIdDynamic: "text-joinMbsBtnFix-player-inject-dynamic",
+    "texts-joinMbsBtnFix-player": {
+        styleIdDynamic: "texts-joinMbsBtnFix-player-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `#owner {

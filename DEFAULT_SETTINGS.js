@@ -1,25 +1,25 @@
 // ui: default settings
 const UI_DEFAULT_SETTINGS = {
     "ui-videosPerRow-home": true,
-    "ui-videosPerRow-home-count": 3,    
+    "ui-videosPerRow-home-count": 3,
     "ui-shortsPerRow-home": true,
-    "ui-shortsPerRow-home-count": 5,    
+    "ui-shortsPerRow-home-count": 5,
     "ui-postsPerRow-home": true,
-    "ui-postsPerRow-home-count": 3,    
+    "ui-postsPerRow-home-count": 3,
     "ui-newsPerRow-home": true,
     "ui-newsPerRow-home-count": 3,
 };
 
 // texts: default settings
 const TEXTS_DEFAULT_SETTINGS = {
-    "text-videoTitleFull-home": true,
-    "text-videoTitleFull-sidebar": true,
-    "text-videoTitleFull-plPanel": true,
-    "text-plTitleFull-home": true,
-    "text-plInfoFull-all": true,
-    "text-shortsTitleFull-all": true,
-    "text-channelInfoFull-player": false,
-    "text-joinMbsBtnFix-player": false,
+    "texts-videoTitleFull-home": true,
+    "texts-videoTitleFull-sidebar": true,
+    "texts-videoTitleFull-plPanel": true,
+    "texts-plTitleFull-home": true,
+    "texts-plInfoFull-all": true,
+    "texts-shortsTitleFull-all": true,
+    "texts-channelInfoFull-player": false,
+    "texts-joinMbsBtnFix-player": false,
 };
 
 // player: default settings
