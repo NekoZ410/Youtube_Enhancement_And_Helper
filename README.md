@@ -8,7 +8,7 @@
 
 A self-made Chromium extension that add some enhancements and helper features to [YouTube](https://www.youtube.com/).
 
-> If you like this extension, please give me a [star](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper#:~:text=Star).
+> If you like this extension, please give me a [star](#:~:text=Star).
 
 ## Install
 1. Clone or [download this repo as zip](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/archive/refs/heads/main.zip) then extract.
