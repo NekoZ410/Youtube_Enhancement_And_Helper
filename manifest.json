@@ -1,14 +1,20 @@
 {
     "manifest_version": 3,
     "name": "Youtube Enhancement And Helper",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "description": "Customize some aspects of YouTube display.",
     "homepage_url": "https://github.com/NekoZ410/Youtube_Enhancement_And_Helper",
     "permissions": ["activeTab", "storage"],
     "host_permissions": ["*://*.youtube.com/*"],
     "action": {
         "default_popup": "popup.html",
-        "default_icon": {}
+        "default_icon": {
+            "16": "images/icons/icon16.png",
+            "32": "images/icons/icon32.png",
+            "48": "images/icons/icon64.png",
+            "64": "images/icons/icon64.png",
+            "128": "images/icons/icon128.png"
+        }
     },
     "content_scripts": [
         {

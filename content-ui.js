@@ -42,7 +42,7 @@ const uiStyleSettings = {
     },
 };
 
-// ui: dynamic shorts display based on setting value
+// ui - shortsPerRow-home: main process
 function processDynamicShortsDisplay(settings) {
     try {
         const SHORTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer[is-shorts] #contents";
@@ -62,13 +62,9 @@ function processDynamicShortsDisplay(settings) {
             const shelfChildren = shelf.querySelectorAll(`${SHORTS_ITEMS_SELECTOR}`);
             shelfChildren.forEach((item, itemIndex) => {
                 if (itemIndex < shortsPerRowValue) {
-                    if (item.hasAttribute("hidden")) {
-                        item.removeAttribute("hidden"); // from 0 to N-1
-                    }
+                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
                 } else {
-                    if (!item.hasAttribute("hidden")) {
-                        item.setAttribute("hidden", ""); // the rest
-                    }
+                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
                 }
             });
         });
@@ -77,7 +73,7 @@ function processDynamicShortsDisplay(settings) {
     }
 }
 
-// ui: dynamic posts display based on setting value
+// ui - postsPerRow-home: main process
 function processDynamicPostsDisplay(settings) {
     try {
         const POSTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) #contents";
@@ -95,10 +91,6 @@ function processDynamicPostsDisplay(settings) {
 
         const postsShelves = document.querySelectorAll(`${POSTS_SHELVES_SELECTOR}`); // get all posts shelves
         postsShelves.forEach((shelf) => {
-            const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
-            const showLessButton = shelfRenderer ? shelfRenderer.querySelector(POSTS_SHOW_LESS_SELECTOR) : null;
-            if (showLessButton) return;
-
             const shelfChildren = shelf.querySelectorAll(`${POSTS_ITEMS_SELECTOR}`);
             shelfChildren.forEach((item, itemIndex) => {
                 if (itemIndex < postsPerRowValue) {
@@ -113,7 +105,7 @@ function processDynamicPostsDisplay(settings) {
     }
 }
 
-// ui: dynamic news display based on setting value
+// ui - newsPerRow-home: main process
 function processDynamicNewsDisplay(settings) {
     try {
         const NEWS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) #contents";
@@ -131,10 +123,6 @@ function processDynamicNewsDisplay(settings) {
 
         const newsShelves = document.querySelectorAll(`${NEWS_SHELVES_SELECTOR}`); // get all news shelves
         newsShelves.forEach((shelf) => {
-            const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
-            const showLessButton = shelfRenderer ? shelfRenderer.querySelector(NEWS_SHOW_LESS_SELECTOR) : null;
-            if (showLessButton) return;
-
             const shelfChildren = shelf.querySelectorAll(`${NEWS_ITEMS_SELECTOR}`);
             shelfChildren.forEach((item, itemIndex) => {
                 if (itemIndex < newsPerRowValue) {
@@ -149,7 +137,7 @@ function processDynamicNewsDisplay(settings) {
     }
 }
 
-// ui: handle posts "show less" button
+// ui - postsPerRow-home: handle "show less" button
 function setupPostsShowLessListener() {
     // wait for page to load before adding listener
     if (document.readyState === "loading") {
@@ -159,9 +147,7 @@ function setupPostsShowLessListener() {
     }
 
     function initPostsListener() {
-        // console.log("DEBUG: Initializing posts show less listener after page load");
         const POSTS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) [aria-label="Show less"]';
-        // console.log("DEBUG: Using posts show less selector:", POSTS_SHOW_LESS_SELECTOR);
 
         // set up mutation observer for posts
         const buttonObserver = new MutationObserver((mutationsList) => {
@@ -181,17 +167,15 @@ function setupPostsShowLessListener() {
                                 }
                             }
 
+                            // attach listener
                             if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                                // console.log("DEBUG: Detected new posts show less button:", button);
                                 try {
                                     button.addEventListener("click", (event) => {
-                                        // console.log("DEBUG: Posts show less button clicked:", button, event);
                                         setTimeout(() => {
                                             checkAndApplyDynamicDisplay();
                                         }, 5000); // delay 5s to apply limit to avoid false positives
                                     });
                                     button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                                    // console.log("DEBUG: Attached listener to posts show less button:", button);
                                 } catch (error) {
                                     console.error("Failed to attach listener to posts button:", button, error);
                                 }
@@ -212,8 +196,9 @@ function setupPostsShowLessListener() {
                                     console.error("Error querying selector on removed node for posts:", error);
                                 }
                             }
+
+                            // remove listener
                             if (button && button instanceof Element) {
-                                // console.log("DEBUG: Posts show less button removed:", button);
                                 setTimeout(() => {
                                     checkAndApplyDynamicDisplay();
                                 }, 1000); // delay 1s to apply limit to avoid false positives
@@ -227,18 +212,15 @@ function setupPostsShowLessListener() {
 
         // check for existing buttons immediately
         const existingButtons = document.querySelectorAll(POSTS_SHOW_LESS_SELECTOR);
-        // console.log("DEBUG: Found existing posts show less buttons:", existingButtons.length);
         existingButtons.forEach((button) => {
             if (button && button instanceof Element && !button.dataset.listenerAttached) {
                 try {
                     button.addEventListener("click", (event) => {
-                        // console.log("DEBUG: Existing posts show less button clicked:", button, event);
                         setTimeout(() => {
                             checkAndApplyDynamicDisplay();
                         }, 5000); // delay 5s to apply limit to avoid false positives
                     });
                     button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                    // console.log("DEBUG: Attached listener to existing posts show less button:", button);
                 } catch (error) {
                     console.error("Failed to attach listener to existing posts button:", button, error);
                 }
@@ -247,7 +229,7 @@ function setupPostsShowLessListener() {
     }
 }
 
-// ui: handle news "show less" button
+// ui - newsPerRow-home: handle "show less" button
 function setupNewsShowLessListener() {
     // wait for page to load before adding listener
     if (document.readyState === "loading") {
@@ -257,9 +239,7 @@ function setupNewsShowLessListener() {
     }
 
     function initNewsListener() {
-        // console.log("DEBUG: Initializing news show less listener after page load");
         const NEWS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) [aria-label="Show less"]';
-        // console.log("DEBUG: Using news show less selector:", NEWS_SHOW_LESS_SELECTOR);
 
         // set up mutation observer for news
         const buttonObserver = new MutationObserver((mutationsList) => {
@@ -279,17 +259,15 @@ function setupNewsShowLessListener() {
                                 }
                             }
 
+                            // attach listener
                             if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                                // console.log("DEBUG: Detected new news show less button:", button);
                                 try {
                                     button.addEventListener("click", (event) => {
-                                        // console.log("DEBUG: News show less button clicked:", button, event);
                                         setTimeout(() => {
                                             checkAndApplyDynamicDisplay();
                                         }, 5000); // delay 5s to apply limit to avoid false positives
                                     });
                                     button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                                    // console.log("DEBUG: Attached listener to news show less button:", button);
                                 } catch (error) {
                                     console.error("Failed to attach listener to news button:", button, error);
                                 }
@@ -311,8 +289,8 @@ function setupNewsShowLessListener() {
                                 }
                             }
 
+                            // remove listener
                             if (button && button instanceof Element) {
-                                // console.log("DEBUG: News show less button removed:", button);
                                 setTimeout(() => {
                                     checkAndApplyDynamicDisplay();
                                 }, 1000); // delay 1s to apply limit to avoid false positives
@@ -326,18 +304,15 @@ function setupNewsShowLessListener() {
 
         // check for existing buttons immediately
         const existingButtons = document.querySelectorAll(NEWS_SHOW_LESS_SELECTOR);
-        // console.log("DEBUG: Found existing news show less buttons:", existingButtons.length);
         existingButtons.forEach((button) => {
             if (button && button instanceof Element && !button.dataset.listenerAttached) {
                 try {
                     button.addEventListener("click", (event) => {
-                        // console.log("DEBUG: Existing news show less button clicked:", button, event);
                         setTimeout(() => {
                             checkAndApplyDynamicDisplay();
                         }, 5000); // delay 5s to apply limit to avoid false positives
                     });
                     button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                    // console.log("DEBUG: Attached listener to existing news show less button:", button);
                 } catch (error) {
                     console.error("Failed to attach listener to existing news button:", button, error);
                 }
@@ -399,29 +374,23 @@ function setupDynamicDisplayObserver() {
                 }
             }
 
+            // detect attribute changes
             if (mutation.type === "attributes" && mutation.attributeName === "hidden") {
                 const target = mutation.target;
                 if (target.nodeType === 1 && target.matches(ITEMS_SELECTOR)) {
                     const shelf = target.closest("ytd-rich-shelf-renderer");
-                    if (
-                        shelf &&
-                        ((shelf.matches("ytd-rich-shelf-renderer:not([is-shorts]):has([is-post])") && mutation.target.closest(POSTS_SHELVES_SELECTOR)) ||
-                            (shelf.matches("ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post]))") && mutation.target.closest(NEWS_SHELVES_SELECTOR)))
-                    ) {
-                        if (mutation.oldValue === null && target.hasAttribute("hidden")) {
+                    if (shelf) {
+                        if (target.hasAttribute("hidden")) {
                             shouldApplyDisplay = true;
-                            // console.log("DEBUG: Hidden attribute added to item, triggering apply");
                         }
                     }
                 }
             }
-            if (shouldApplyDisplay) {
-                break;
-            }
+
+            if (shouldApplyDisplay) break;
         }
 
         if (shouldApplyDisplay) {
-            // console.log("DEBUG: Observer triggered apply");
             setTimeout(checkAndApplyDynamicDisplay, 500);
             setTimeout(checkAndApplyDynamicDisplay, 2000);
         }
@@ -433,6 +402,7 @@ function setupDynamicDisplayObserver() {
         subtree: true,
         attributes: true,
         attributeFilter: ["hidden"],
+        attributeOldValue: true,
     };
     dynamicDisplayObserver.observe(targetNode, config);
 }
