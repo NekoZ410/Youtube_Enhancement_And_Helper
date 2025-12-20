@@ -4,7 +4,9 @@ const textStyleSettings = {
         styleIdDynamic: "texts-videoTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${HOME_ITEMS_VIDEOS} .yt-lockup-metadata-view-model__title {
+            return `${CELLS_VIDEOS} .yt-lockup-metadata-view-model__title,
+                    ${CELLS_VIDEOS_COLLAB} .yt-lockup-metadata-view-model__title,
+                    ${SECTION_OTHERS_VIDEOS} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
             }`;
@@ -40,7 +42,9 @@ const textStyleSettings = {
         styleIdDynamic: "texts-videoChannelNameFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${HOME_ITEMS_VIDEOS} .yt-core-attributed-string__link,
+            return `${CELLS_VIDEOS} .yt-core-attributed-string__link,
+            ${CELLS_VIDEOS_COLLAB} .yt-core-attributed-string__link,
+            ${SECTION_OTHERS_VIDEOS} .yt-core-attributed-string__link,
             ${WATCH_SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-text:nth-of-type(1),
             ${WATCH_SIDEBAR_PLPANEL_VIDEOS} #byline {
                 max-height: unset !important;
@@ -54,7 +58,7 @@ const textStyleSettings = {
         styleIdDynamic: "texts-plTitleFull-home-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__title {
+            return `${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
             }`;
@@ -64,7 +68,7 @@ const textStyleSettings = {
         styleIdDynamic: "texts-plInfoFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${HOME_ITEMS_PLAYLIST} .yt-content-metadata-view-model__metadata-text{
+            return `${CELLS_PLAYLISTS} .yt-content-metadata-view-model__metadata-text{
                 white-space: unset !important;
             }
             ${WATCH_SIDEBAR_PLPANEL} #header-description h3:has([link-inherit-color]) yt-formatted-string {
@@ -85,7 +89,7 @@ const textStyleSettings = {
         styleIdDynamic: "texts-shortsTitleFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${HOME_ITEMS_SHORTS} .shortsLockupViewModelHostMetadataTitle,
+            return `${SECTION_SHORTSSHELVES_SHORTS} .shortsLockupViewModelHostMetadataTitle,
             ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} .shortsLockupViewModelHostMetadataTitle {
                 display: block !important;
                 max-height: unset !important;

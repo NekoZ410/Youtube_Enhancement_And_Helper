@@ -3,7 +3,7 @@ const utilityStyleSettings = {
     "utilities-shortsToWatch": {
         styleIdStatic: "utilities-shortsToWatch-inject-static",
         cssStatic: `
-            ${HOME_ITEMS_SHORTS} div[role="presentation"],
+            ${SECTION_SHORTSSHELVES_SHORTS} div[role="presentation"],
             ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} div[role="presentation"] {
                 min-height: 72px !important;
             }
@@ -18,13 +18,13 @@ const utilityStyleSettings = {
     "utilities-noPlaylistTrap": {
         styleIdStatic: "utilities-noPlaylistTrap-inject-static",
         cssStatic: `
-            ${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__menu-button,
-            ${HOME_ITEMS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
+            ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button,
+            ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
             ${WATCH_SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button {
                 position: relative !important;
             }
-            ${HOME_ITEMS_PLAYLIST} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
-            ${HOME_ITEMS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
+            ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
+            ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
             ${WATCH_SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost {
                 flex-direction: column !important;
                 align-items: center;
@@ -129,7 +129,7 @@ async function getChannelUrlFromOembed(videoUrl) {
 
 // utilities - shortsToWatch: main processing
 function processShortsToWatch() {
-    const shortsContainerEl = `${HOME_ITEMS_SHORTS}, ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS}`;
+    const shortsContainerEl = `${SECTION_SHORTSSHELVES_SHORTS}, ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS}`;
     const targetNodes = document.querySelectorAll(shortsContainerEl);
 
     targetNodes.forEach((node) => {
@@ -173,7 +173,7 @@ function processShortsToWatch() {
 
 // utilities - noPlaylistTrap: main processing
 function processNoPlaylistTrap() {
-    const plContainerEl = `${HOME_ITEMS_PLAYLIST}, ${HOME_ITEMS_VIDEOS_PLTRAP}, ${WATCH_SIDEBAR_VIDEOS_PLTRAP}`;
+    const plContainerEl = `${CELLS_PLAYLISTS}, ${CELLS_VIDEOS_PLTRAP}, ${WATCH_SIDEBAR_VIDEOS_PLTRAP}`;
     const targetNodes = document.querySelectorAll(plContainerEl);
 
     targetNodes.forEach((node) => {
@@ -220,7 +220,7 @@ function processNoPlaylistTrap() {
 // utilities - channelRedirImprove: main processing
 function processChannelRedirImprove() {
     // process home avatars
-    const homeNodes = document.querySelectorAll(HOME_ITEMS_VIDEOS);
+    const homeNodes = document.querySelectorAll(`${CELLS_VIDEOS}, ${CELLS_VIDEOS_COLLAB}, ${SECTION_OTHERS_VIDEOS}`);
     homeNodes.forEach((node) => {
         const channelLinkEl = node.querySelector(".yt-core-attributed-string__link");
         const avatarEl = node.querySelector(".yt-spec-avatar-shape > div");

@@ -2,18 +2,31 @@
 const PATTERN_YT_VIDEO_URL = /https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}/;
 
 // selectors - home
-const HOME = "#contents #content:not(.ytd-expander):not(:has(ytd-ad-slot-renderer))";
+const MAIN_HOME = "#contents.ytd-rich-grid-renderer";
 
-const HOME_ITEMS = HOME + ":not(.ytd-rich-section-renderer)";
-const HOME_ITEMS_VIDEOS = HOME_ITEMS + ":not(:has(ytm-shorts-lockup-view-model)):not(:has(ytd-post-renderer)):has(.yt-core-attributed-string__link)";
-const HOME_ITEMS_VIDEOS_NORMAL = HOME_ITEMS_VIDEOS + ':not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
-const HOME_ITEMS_VIDEOS_PLTRAP = HOME_ITEMS_VIDEOS + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
-const HOME_ITEMS_PLAYLIST = HOME_ITEMS + ":not(:has(ytm-shorts-lockup-view-model)):not(:has(ytd-post-renderer)):not(:has(.yt-core-attributed-string__link))";
+// ==================================================
+const HOME_ITEMS = MAIN_HOME + " ytd-rich-item-renderer:not(:has(ytd-ad-slot-renderer)):not(ytd-continuation-item-renderer)";
+const ITEMS_CELLS = HOME_ITEMS + ":has(yt-lockup-view-model):not(.ytd-rich-shelf-renderer)";
 
-const HOME_ITEMS_SHORTS = HOME_ITEMS + " ytm-shorts-lockup-view-model";
-const HOME_ITEMS_POSTS = HOME_ITEMS + " ytd-post-renderer";
+const CELLS_VIDEOS = ITEMS_CELLS + ":has(.yt-core-attributed-string__link)";
+const CELLS_VIDEOS_NORMAL = CELLS_VIDEOS + ':not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
+const CELLS_VIDEOS_PLTRAP = CELLS_VIDEOS + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
 
-const HOME_SECTIONS = HOME + " .ytd-rich-section-renderer";
+const CELLS_VIDEOS_COLLAB = ITEMS_CELLS + ':not(:has(.yt-core-attributed-string__link)):not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
+
+const CELLS_PLAYLISTS = ITEMS_CELLS + ':not(:has(.yt-core-attributed-string__link)):has(.yt-lockup-view-model__content-image[href*="&list="])';
+
+// ==================================================
+const HOME_SECTIONS = MAIN_HOME + " ytd-rich-section-renderer";
+
+const SECTION_SHORTSSHELVES = HOME_SECTIONS + ":has([is-shorts])";
+const SECTION_SHORTSSHELVES_SHORTS = SECTION_SHORTSSHELVES + " ytd-rich-item-renderer";
+
+const SECTION_POSTSSHELVES = HOME_SECTIONS + ":has([is-post])";
+const SECTION_POSTSSHELVES_POSTS = SECTION_POSTSSHELVES + " ytd-rich-item-renderer";
+
+const SECTION_OTHERS = HOME_SECTIONS + ":not(:has([is-shorts])):not(:has([is-post]))";
+const SECTION_OTHERS_VIDEOS = SECTION_OTHERS + " ytd-rich-item-renderer";
 
 // selectors - watch
 const WATCH_MAIN = "#primary";
