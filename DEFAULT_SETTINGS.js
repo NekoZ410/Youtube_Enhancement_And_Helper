@@ -6,8 +6,8 @@ const UI_DEFAULT_SETTINGS = {
     "ui-shortsPerRow-home-count": 5,
     "ui-postsPerRow-home": true,
     "ui-postsPerRow-home-count": 3,
-    "ui-newsPerRow-home": true,
-    "ui-newsPerRow-home-count": 3,
+    "ui-othersPerRow-home": true,
+    "ui-othersPerRow-home-count": 3,
 };
 
 // texts: default settings

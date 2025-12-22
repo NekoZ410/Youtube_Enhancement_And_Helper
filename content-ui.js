@@ -5,7 +5,7 @@ const uiStyleSettings = {
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const videosPerRow = settings["ui-videosPerRow-home-count"];
-            return `#contents.ytd-rich-grid-renderer {
+            return `${MAIN_HOME} {
                         --ytd-rich-grid-items-per-row: ${videosPerRow} !important;
                     }`;
         },
@@ -15,7 +15,7 @@ const uiStyleSettings = {
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const shortsPerRow = settings["ui-shortsPerRow-home-count"];
-            return `ytd-rich-shelf-renderer[is-shorts] {
+            return `${SECTION_SHORTSSHELVES} ytd-rich-shelf-renderer {
                         --ytd-rich-grid-items-per-row: ${shortsPerRow} !important;
                     }`;
         },
@@ -25,300 +25,240 @@ const uiStyleSettings = {
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const postsPerRow = settings["ui-postsPerRow-home-count"];
-            return `ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) {
+            return `${SECTION_POSTSSHELVES} ytd-rich-shelf-renderer {
                         --ytd-rich-grid-items-per-row: ${postsPerRow} !important;
                     }`;
         },
     },
-    "ui-newsPerRow-home": {
-        styleIdDynamic: "ui-newsPerRow-home-custom",
+    "ui-othersPerRow-home": {
+        styleIdDynamic: "ui-othersPerRow-home-custom",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
-            const newsPerRow = settings["ui-newsPerRow-home-count"];
-            return `ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) {
-                        --ytd-rich-grid-items-per-row: ${newsPerRow} !important;
+            const othersPerRow = settings["ui-othersPerRow-home-count"];
+            return `${SECTION_OTHERS} ytd-rich-shelf-renderer {
+                        --ytd-rich-grid-items-per-row: ${othersPerRow} !important;
                     }`;
         },
     },
 };
 
 // ui - shortsPerRow-home: main process
-function processDynamicShortsDisplay(settings) {
-    try {
-        const SHORTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer[is-shorts] #contents";
-        const SHORTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
-        const shortsPerRowValue = parseInt(settings["ui-shortsPerRow-home-count"], 10); // get setting value
-
-        // only run if setting enabled
-        if (!settings["ui-shortsPerRow-home"] || isNaN(shortsPerRowValue) || shortsPerRowValue < 1) {
-            document.querySelectorAll(`${SHORTS_SHELVES_SELECTOR} ${SHORTS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
-                item.removeAttribute("hidden");
-            });
-            return;
-        }
-
-        const shortsShelves = document.querySelectorAll(`${SHORTS_SHELVES_SELECTOR}`); // get all shorts shelves
-        shortsShelves.forEach((shelf) => {
-            const shelfChildren = shelf.querySelectorAll(`${SHORTS_ITEMS_SELECTOR}`);
-            shelfChildren.forEach((item, itemIndex) => {
-                if (itemIndex < shortsPerRowValue) {
-                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
-                } else {
-                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
-                }
-            });
-        });
-    } catch (error) {
-        console.error("Failed to apply Shorts display.", error);
-    }
+function processShortsPerRow_Home(settings) {
+    setItemsPerRow(settings, SECTION_SHORTSSHELVES, "ui-shortsPerRow-home-count", "ui-shortsPerRow-home");
 }
 
 // ui - postsPerRow-home: main process
-function processDynamicPostsDisplay(settings) {
-    try {
-        const POSTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) #contents";
-        const POSTS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
-        const POSTS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) [aria-label="Show less"]';
-        const postsPerRowValue = parseInt(settings["ui-postsPerRow-home-count"], 10); // get setting value
+function processPostsPerRow_Home(settings) {
+    setItemsPerRow(settings, SECTION_POSTSSHELVES, "ui-postsPerRow-home-count", "ui-postsPerRow-home");
+}
 
-        // only run if setting enabled
-        if (!settings["ui-postsPerRow-home"] || isNaN(postsPerRowValue) || postsPerRowValue < 1) {
-            document.querySelectorAll(`${POSTS_SHELVES_SELECTOR} ${POSTS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
+// ui - othersPerRow-home: main process
+function processOthersPerRow_Home(settings) {
+    setItemsPerRow(settings, SECTION_OTHERS, "ui-othersPerRow-home-count", "ui-othersPerRow-home");
+}
+
+// ui - shortsPerRow-home, postsPerRow-home, othersPerRow-home: process items per row
+function setItemsPerRow(settings, shelfSelector, countKey, toggleKey) {
+    try {
+        const contentsSelector = `${shelfSelector} ytd-rich-shelf-renderer #contents`;
+        const limit = parseInt(settings[countKey], 10);
+        const isEnabled = settings[toggleKey];
+
+        // if disabled or error, show all
+        if (!isEnabled || isNaN(limit) || limit < 1) {
+            document.querySelectorAll(`${contentsSelector} ytd-rich-item-renderer[hidden]`).forEach((item) => {
                 item.removeAttribute("hidden");
             });
             return;
         }
 
-        const postsShelves = document.querySelectorAll(`${POSTS_SHELVES_SELECTOR}`); // get all posts shelves
-        postsShelves.forEach((shelf) => {
-            const shelfChildren = shelf.querySelectorAll(`${POSTS_ITEMS_SELECTOR}`);
-            shelfChildren.forEach((item, itemIndex) => {
-                if (itemIndex < postsPerRowValue) {
-                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
+        const shelves = document.querySelectorAll(contentsSelector);
+        shelves.forEach((shelf) => {
+            const children = shelf.querySelectorAll("ytd-rich-item-renderer");
+            children.forEach((item, index) => {
+                if (index < limit) {
+                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden");
                 } else {
-                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
+                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", "");
                 }
             });
+
+            // hide/show "show more" and "show less" buttons
+            if (limit > 0 && (shelfSelector === SECTION_POSTSSHELVES || shelfSelector === SECTION_OTHERS)) {
+                const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
+                if (shelfRenderer) {
+                    const cssItemsCount = parseInt(window.getComputedStyle(shelfRenderer).getPropertyValue("--ytd-rich-shelf-items-count"), 10);
+                    // CHANGE: Use actual children length as fallback if CSS variable is not ready or 0
+                    const itemsLoaded = isNaN(cssItemsCount) || cssItemsCount === 0 ? children.length : cssItemsCount; 
+
+                    if (itemsLoaded > 0) {
+                        const BTN_SHOW_MORE = 'button:has(path[d*="M18.70"])';
+                        const BTN_SHOW_LESS = 'button:has(path[d*="M5.293"])';
+                        const showMoreBtn = shelfRenderer.querySelector(BTN_SHOW_MORE);
+                        const showLessBtn = shelfRenderer.querySelector(BTN_SHOW_LESS);
+
+                        const shouldHideButtons = itemsLoaded <= limit;
+                        if (showMoreBtn) showMoreBtn.style.display = shouldHideButtons ? "none" : "";
+                        if (showLessBtn) showLessBtn.style.display = shouldHideButtons ? "none" : "";
+                    }
+                }
+            }
         });
     } catch (error) {
-        console.error("Failed to apply Posts display.", error);
+        console.error(`Failed to apply limit for ${shelfSelector}:`, error);
     }
 }
 
-// ui - newsPerRow-home: main process
-function processDynamicNewsDisplay(settings) {
-    try {
-        const NEWS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) #contents";
-        const NEWS_ITEMS_SELECTOR = "ytd-rich-item-renderer";
-        const NEWS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) [aria-label="Show less"]';
-        const newsPerRowValue = parseInt(settings["ui-newsPerRow-home-count"], 10); // get setting value
+// ui - postsPerRow-home, othersPerRow-home: handle "show more" and "show less" buttons
+function processShelfButtonListener(shelfSelector, moduleName) {
+    if (document.readyState === "loading") {
+        window.addEventListener("load", () => initListener(shelfSelector, moduleName));
+    } else {
+        initListener(shelfSelector, moduleName);
+    }
 
-        // only run if setting enabled
-        if (!settings["ui-newsPerRow-home"] || isNaN(newsPerRowValue) || newsPerRowValue < 1) {
-            document.querySelectorAll(`${NEWS_SHELVES_SELECTOR} ${NEWS_ITEMS_SELECTOR}[hidden]`).forEach((item) => {
-                item.removeAttribute("hidden");
+    function initListener(selector, name) {
+        const BTN_SHOW_MORE = 'button:has(path[d*="M18.70"])';
+        const BTN_SHOW_LESS = 'button:has(path[d*="M5.293"])';
+        const BTN_SELECTOR = `${selector} ytd-rich-shelf-renderer ${BTN_SHOW_MORE}, ${selector} ytd-rich-shelf-renderer ${BTN_SHOW_LESS}`;
+
+        const attachListener = (button) => {
+            if (!button || button.dataset.listenerAttached) return;
+
+            button.addEventListener("click", () => {
+                if (button.matches(BTN_SHOW_LESS)) {
+                    setTimeout(() => {
+                        checkAndApplyDynamicDisplay();
+                    }, 1500); // delay after click
+                } else if (button.matches(BTN_SHOW_MORE)) {
+                    const shelf = button.closest("ytd-rich-shelf-renderer");
+                    if (shelf) {
+                        shelf.querySelectorAll("ytd-rich-item-renderer[hidden]").forEach((item) => item.removeAttribute("hidden"));
+                    }
+                }
             });
-            return;
+            button.dataset.listenerAttached = "true";
+        };
+
+        const buttonObserver = new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "childList") {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1 && node instanceof Element) {
+                            const btns = node.matches(BTN_SELECTOR) ? [node] : node.querySelectorAll(BTN_SELECTOR);
+                            btns.forEach(attachListener);
+                        }
+                    });
+
+                    mutation.removedNodes.forEach((node) => {
+                        if (node.nodeType === 1 && node instanceof Element) {
+                            if (node.matches(BTN_SELECTOR) || node.querySelector(BTN_SELECTOR)) {
+                                setTimeout(checkAndApplyDynamicDisplay, 1000);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        buttonObserver.observe(document.body, { childList: true, subtree: true });
+        document.querySelectorAll(BTN_SELECTOR).forEach(attachListener);
+    }
+}
+
+// ui: observer for dynamic settings
+function setupDynamicDisplayObserver() {
+    if (!document.body) {
+        requestAnimationFrame(setupDynamicDisplayObserver);
+        return;
+    }
+
+    const POSTS_SHELVES_SELECTOR = `${SECTION_POSTSSHELVES} ytd-rich-shelf-renderer #contents`;
+    const OTHERS_SHELVES_SELECTOR = `${SECTION_OTHERS} ytd-rich-shelf-renderer #contents`;
+
+    const dynamicDisplayObserver = new MutationObserver((mutationsList, observer) => {
+        let shouldApplyDisplay = false;
+
+        for (const mutation of mutationsList) {
+            if (mutation.type === "childList") {
+                // detect added nodes, shelf added
+                if (mutation.addedNodes.length > 0) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType === 1 && node.matches("ytd-rich-shelf-renderer")) {
+                            shouldApplyDisplay = true;
+                            break;
+                        }
+                    }
+                }
+
+                // detect removed nodes, item removed
+                if (mutation.removedNodes.length > 0) {
+                    for (const node of mutation.removedNodes) {
+                        if (
+                            node.nodeType === 1 &&
+                            node.matches("ytd-rich-item-renderer") &&
+                            mutation.target.matches(`${POSTS_SHELVES_SELECTOR}, ${OTHERS_SHELVES_SELECTOR}`)
+                        ) {
+                            shouldApplyDisplay = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // detect attribute changes
+            if (mutation.type === "attributes" && mutation.attributeName === "hidden") {
+                const target = mutation.target;
+                if (target.nodeType === 1 && target.matches("ytd-rich-item-renderer")) {
+                    const shelf = target.closest("ytd-rich-shelf-renderer");
+                    if (shelf) {
+                        if (target.hasAttribute("hidden")) {
+                            shouldApplyDisplay = true;
+                        }
+                    }
+                }
+            }
+
+            if (shouldApplyDisplay) break;
         }
 
-        const newsShelves = document.querySelectorAll(`${NEWS_SHELVES_SELECTOR}`); // get all news shelves
-        newsShelves.forEach((shelf) => {
-            const shelfChildren = shelf.querySelectorAll(`${NEWS_ITEMS_SELECTOR}`);
-            shelfChildren.forEach((item, itemIndex) => {
-                if (itemIndex < newsPerRowValue) {
-                    if (item.hasAttribute("hidden")) item.removeAttribute("hidden"); // from 0 to N-1
-                } else {
-                    if (!item.hasAttribute("hidden")) item.setAttribute("hidden", ""); // the rest
-                }
-            });
-        });
-    } catch (error) {
-        console.error("Failed to apply News display.", error);
-    }
+        if (shouldApplyDisplay) {
+            // dual delay for SPA reliability
+            setTimeout(checkAndApplyDynamicDisplay, 500);
+            setTimeout(checkAndApplyDynamicDisplay, 1500);
+        }
+    });
+
+    const targetNode = document.body;
+    const config = { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"], attributeOldValue: true };
+    dynamicDisplayObserver.observe(targetNode, config);
 }
 
-// ui - postsPerRow-home: handle "show less" button
-function setupPostsShowLessListener() {
-    // wait for page to load before adding listener
-    if (document.readyState === "loading") {
-        window.addEventListener("load", initPostsListener);
-    } else {
-        initPostsListener();
-    }
+// ui: check and apply dynamic display
+let isApplyingDisplay = false;
+function checkAndApplyDynamicDisplay() {
+    if (isApplyingDisplay) return;
+    isApplyingDisplay = true;
 
-    function initPostsListener() {
-        const POSTS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) [aria-label="Show less"]';
-
-        // set up mutation observer for posts
-        const buttonObserver = new MutationObserver((mutationsList) => {
-            for (const mutation of mutationsList) {
-                if (mutation.type === "childList") {
-                    // detect added nodes
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType === 1 && node instanceof Element) {
-                            let button = null;
-                            if (node.matches(POSTS_SHOW_LESS_SELECTOR)) {
-                                button = node;
-                            } else if (node.querySelector) {
-                                try {
-                                    button = node.querySelector(POSTS_SHOW_LESS_SELECTOR);
-                                } catch (error) {
-                                    console.error("Error querying selector on added node for posts:", error);
-                                }
-                            }
-
-                            // attach listener
-                            if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                                try {
-                                    button.addEventListener("click", (event) => {
-                                        setTimeout(() => {
-                                            checkAndApplyDynamicDisplay();
-                                        }, 5000); // delay 5s to apply limit to avoid false positives
-                                    });
-                                    button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                                } catch (error) {
-                                    console.error("Failed to attach listener to posts button:", button, error);
-                                }
-                            }
-                        }
-                    });
-
-                    // detect removed nodes
-                    mutation.removedNodes.forEach((node) => {
-                        if (node.nodeType === 1 && node instanceof Element) {
-                            let button = null;
-                            if (node.matches(POSTS_SHOW_LESS_SELECTOR)) {
-                                button = node;
-                            } else if (node.querySelector) {
-                                try {
-                                    button = node.querySelector(POSTS_SHOW_LESS_SELECTOR);
-                                } catch (error) {
-                                    console.error("Error querying selector on removed node for posts:", error);
-                                }
-                            }
-
-                            // remove listener
-                            if (button && button instanceof Element) {
-                                setTimeout(() => {
-                                    checkAndApplyDynamicDisplay();
-                                }, 1000); // delay 1s to apply limit to avoid false positives
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        buttonObserver.observe(document.body, { childList: true, subtree: true });
-
-        // check for existing buttons immediately
-        const existingButtons = document.querySelectorAll(POSTS_SHOW_LESS_SELECTOR);
-        existingButtons.forEach((button) => {
-            if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                try {
-                    button.addEventListener("click", (event) => {
-                        setTimeout(() => {
-                            checkAndApplyDynamicDisplay();
-                        }, 5000); // delay 5s to apply limit to avoid false positives
-                    });
-                    button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                } catch (error) {
-                    console.error("Failed to attach listener to existing posts button:", button, error);
-                }
-            }
-        });
-    }
+    initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
+        processShortsPerRow_Home(settings);
+        processPostsPerRow_Home(settings);
+        processOthersPerRow_Home(settings);
+        isApplyingDisplay = false;
+    });
 }
 
-// ui - newsPerRow-home: handle "show less" button
-function setupNewsShowLessListener() {
-    // wait for page to load before adding listener
-    if (document.readyState === "loading") {
-        window.addEventListener("load", initNewsListener);
-    } else {
-        initNewsListener();
-    }
+// ui: apply all UI logic based on settings
+function applyUILogic(settings) {
+    applyModuleStyles(settings, uiStyleSettings);
 
-    function initNewsListener() {
-        const NEWS_SHOW_LESS_SELECTOR = 'ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) [aria-label="Show less"]';
+    processShortsPerRow_Home(settings);
+    processPostsPerRow_Home(settings);
+    processOthersPerRow_Home(settings);
 
-        // set up mutation observer for news
-        const buttonObserver = new MutationObserver((mutationsList) => {
-            for (const mutation of mutationsList) {
-                if (mutation.type === "childList") {
-                    // detect added nodes
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType === 1 && node instanceof Element) {
-                            let button = null;
-                            if (node.matches(NEWS_SHOW_LESS_SELECTOR)) {
-                                button = node;
-                            } else if (node.querySelector) {
-                                try {
-                                    button = node.querySelector(NEWS_SHOW_LESS_SELECTOR);
-                                } catch (error) {
-                                    console.error("Error querying selector on added node for news:", error);
-                                }
-                            }
-
-                            // attach listener
-                            if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                                try {
-                                    button.addEventListener("click", (event) => {
-                                        setTimeout(() => {
-                                            checkAndApplyDynamicDisplay();
-                                        }, 5000); // delay 5s to apply limit to avoid false positives
-                                    });
-                                    button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                                } catch (error) {
-                                    console.error("Failed to attach listener to news button:", button, error);
-                                }
-                            }
-                        }
-                    });
-
-                    // detect removed nodes
-                    mutation.removedNodes.forEach((node) => {
-                        if (node.nodeType === 1 && node instanceof Element) {
-                            let button = null;
-                            if (node.matches(NEWS_SHOW_LESS_SELECTOR)) {
-                                button = node;
-                            } else if (node.querySelector) {
-                                try {
-                                    button = node.querySelector(NEWS_SHOW_LESS_SELECTOR);
-                                } catch (error) {
-                                    console.error("Error querying selector on removed node for news:", error);
-                                }
-                            }
-
-                            // remove listener
-                            if (button && button instanceof Element) {
-                                setTimeout(() => {
-                                    checkAndApplyDynamicDisplay();
-                                }, 1000); // delay 1s to apply limit to avoid false positives
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        buttonObserver.observe(document.body, { childList: true, subtree: true });
-
-        // check for existing buttons immediately
-        const existingButtons = document.querySelectorAll(NEWS_SHOW_LESS_SELECTOR);
-        existingButtons.forEach((button) => {
-            if (button && button instanceof Element && !button.dataset.listenerAttached) {
-                try {
-                    button.addEventListener("click", (event) => {
-                        setTimeout(() => {
-                            checkAndApplyDynamicDisplay();
-                        }, 5000); // delay 5s to apply limit to avoid false positives
-                    });
-                    button.dataset.listenerAttached = "true"; // raise flag to avoid attaching listener multiple times
-                } catch (error) {
-                    console.error("Failed to attach listener to existing news button:", button, error);
-                }
-            }
-        });
-    }
+    if (settings["ui-shortsPerRow-home"]) waitForElementToRender(`${SECTION_SHORTSSHELVES} ytd-rich-shelf-renderer`, checkAndApplyDynamicDisplay);
+    if (settings["ui-postsPerRow-home"]) waitForElementToRender(`${SECTION_POSTSSHELVES} ytd-rich-shelf-renderer`, checkAndApplyDynamicDisplay);
+    if (settings["ui-othersPerRow-home"]) waitForElementToRender(`${SECTION_OTHERS} ytd-rich-shelf-renderer`, checkAndApplyDynamicDisplay);
 }
 
 // ui: wait for element to render
@@ -336,113 +276,14 @@ function waitForElementToRender(selector, callback = null, maxAttempts = 50, int
     }, interval);
 }
 
-// ui: observer for dynamic settings
-function setupDynamicDisplayObserver() {
-    if (!document.body) {
-        requestAnimationFrame(setupDynamicDisplayObserver);
-        return;
-    }
-
-    const SHELVES_SELECTOR = "ytd-rich-shelf-renderer";
-    const ITEMS_SELECTOR = "ytd-rich-item-renderer";
-    const POSTS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):has([is-post]) #contents";
-    const NEWS_SHELVES_SELECTOR = "ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post])) #contents";
-
-    const dynamicDisplayObserver = new MutationObserver((mutationsList, observer) => {
-        let shouldApplyDisplay = false;
-
-        for (const mutation of mutationsList) {
-            if (mutation.type === "childList") {
-                // detect added nodes, shelf added
-                if (mutation.addedNodes.length > 0) {
-                    for (const node of mutation.addedNodes) {
-                        if (node.nodeType === 1 && node.matches(SHELVES_SELECTOR)) {
-                            shouldApplyDisplay = true;
-                            break;
-                        }
-                    }
-                }
-
-                // detect removed nodes, item removed
-                if (mutation.removedNodes.length > 0) {
-                    for (const node of mutation.removedNodes) {
-                        if (node.nodeType === 1 && node.matches(ITEMS_SELECTOR) && mutation.target.matches(`${POSTS_SHELVES_SELECTOR}, ${NEWS_SHELVES_SELECTOR}`)) {
-                            shouldApplyDisplay = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // detect attribute changes
-            if (mutation.type === "attributes" && mutation.attributeName === "hidden") {
-                const target = mutation.target;
-                if (target.nodeType === 1 && target.matches(ITEMS_SELECTOR)) {
-                    const shelf = target.closest("ytd-rich-shelf-renderer");
-                    if (shelf) {
-                        if (target.hasAttribute("hidden")) {
-                            shouldApplyDisplay = true;
-                        }
-                    }
-                }
-            }
-
-            if (shouldApplyDisplay) break;
-        }
-
-        if (shouldApplyDisplay) {
-            setTimeout(checkAndApplyDynamicDisplay, 500);
-            setTimeout(checkAndApplyDynamicDisplay, 2000);
-        }
-    });
-
-    const targetNode = document.body;
-    const config = {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ["hidden"],
-        attributeOldValue: true,
-    };
-    dynamicDisplayObserver.observe(targetNode, config);
-}
-setupDynamicDisplayObserver();
-
-// ui: check and apply dynamic display
-function checkAndApplyDynamicDisplay() {
-    initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
-        processDynamicShortsDisplay(settings);
-        processDynamicPostsDisplay(settings);
-        processDynamicNewsDisplay(settings);
-    });
-}
-
-// ui: apply all UI logic based on settings
-function applyUILogic(settings) {
-    applyModuleStyles(settings, uiStyleSettings);
-
-    processDynamicShortsDisplay(settings);
-    processDynamicPostsDisplay(settings);
-    processDynamicNewsDisplay(settings);
-
-    if (settings["ui-shortsPerRow-home"]) {
-        waitForElementToRender("ytd-rich-shelf-renderer[is-shorts]");
-    }
-    if (settings["ui-postsPerRow-home"]) {
-        waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):has([is-post])");
-    }
-    if (settings["ui-newsPerRow-home"]) {
-        waitForElementToRender("ytd-rich-shelf-renderer:not([is-shorts]):not(:has([is-post]))");
-    }
-}
-
 // ui: init settings on load
 initModuleSettings(UI_DEFAULT_SETTINGS, (settings) => {
     applyUILogic(settings);
 
     // setup listeners
-    setupPostsShowLessListener();
-    setupNewsShowLessListener();
+    processShelfButtonListener(SECTION_POSTSSHELVES, "Posts");
+    processShelfButtonListener(SECTION_OTHERS, "Others");
+
     setupDynamicDisplayObserver();
 });
 

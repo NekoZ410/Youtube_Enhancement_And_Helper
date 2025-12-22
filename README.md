@@ -46,14 +46,14 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ![ui-postsPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-postsPerRow-home_enabled.png?raw=true)
 
-### 4. Custom number of news per row (in Home page) (no image due to randomness appearance of this shelf, update later)
-- Disabled: Default with 3 news per row.
+### 4. Custom number of others per row (in Home page)
+- Disabled: Default with 3 videos per row.
 
-![ui-newsPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-newsPerRow-home_disabled.png?raw=true)
+![ui-othersPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-othersPerRow-home_disabled.png?raw=true)
 
-- Enabled: Customized with n news per row.
+- Enabled: Customized with 5 videos per row.
 
-![ui-newsPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-newsPerRow-home_enabled.png?raw=true)
+![ui-othersPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-othersPerRow-home_enabled.png?raw=true)
 
 ## Texts Features
 ### 1. Display full video title (Home page)
