@@ -55,6 +55,25 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ![ui-othersPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-othersPerRow-home_enabled.png?raw=true)
 
+### 5. Fix menu buttons position
+- Disabled: Default menu buttons may shrink inward of true position if videos title is too short sometimes.
+  - Home:
+
+  ![ui-menuBtnPosFix-all_home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-menuBtnPosFix-all_home_disabled.png?raw=true)
+
+  - Sidebar:
+
+  ![ui-menuBtnPosFix-all_sidebar_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-menuBtnPosFix-all_sidebar_disabled.png?raw=true)
+
+- Enabled: Customized menu buttons fixed to their true position.
+  - Home:
+  
+  ![ui-menuBtnPosFix-all_home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-menuBtnPosFix-all_home_enabled.png?raw=true)
+
+  - Sidebar:
+
+  ![ui-menuBtnPosFix-all_sidebar_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-menuBtnPosFix-all_sidebar_enabled.png?raw=true)
+
 ## Texts Features
 ### 1. Display full video title (Home page)
 - Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.

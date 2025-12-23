@@ -40,6 +40,20 @@ const uiStyleSettings = {
                     }`;
         },
     },
+
+    "ui-menuBtnPosFix-all": {
+        styleIdDynamic: "ui-menuBtnPosFix-all-custom",
+        cssDynamicGen: (isEnabled) => {
+            if (!isEnabled) return "";
+            return `${CELLS_VIDEOS} .yt-lockup-metadata-view-model__menu-button,
+                    ${CELLS_VIDEOS_COLLAB} .yt-lockup-metadata-view-model__menu-button,
+                    ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button,
+                    ${SECTION_OTHERS_VIDEOS} .yt-lockup-metadata-view-model__menu-button,
+                    ${WATCH_SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__menu-button {
+                        margin-left: auto !important;
+                    }`;
+        },
+    },
 };
 
 // ui - shortsPerRow-home: main process
@@ -89,7 +103,7 @@ function setItemsPerRow(settings, shelfSelector, countKey, toggleKey) {
                 if (shelfRenderer) {
                     const cssItemsCount = parseInt(window.getComputedStyle(shelfRenderer).getPropertyValue("--ytd-rich-shelf-items-count"), 10);
                     // CHANGE: Use actual children length as fallback if CSS variable is not ready or 0
-                    const itemsLoaded = isNaN(cssItemsCount) || cssItemsCount === 0 ? children.length : cssItemsCount; 
+                    const itemsLoaded = isNaN(cssItemsCount) || cssItemsCount === 0 ? children.length : cssItemsCount;
 
                     if (itemsLoaded > 0) {
                         const BTN_SHOW_MORE = 'button:has(path[d*="M18.70"])';
