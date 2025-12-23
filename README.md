@@ -18,33 +18,58 @@ A self-made Chromium extension that add some enhancements and helper features to
 ## Usage
 Just click this extension icon to open popup menu when you're on [Youtube](https://www.youtube.com/).
 
+## Table of Contents
+- [YouTube Enhancement And Helper (YEAH)](#youtube-enhancement-and-helper-yeah)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Table of Contents](#table-of-contents)
+  - [UI Features](#ui-features)
+    - [1. Custom number of videos per row (in Home page)](#1-custom-number-of-videos-per-row-in-home-page)
+    - [2. Custom number of shorts per row (in Home page)](#2-custom-number-of-shorts-per-row-in-home-page)
+    - [3. Custom number of posts per row (in Home page)](#3-custom-number-of-posts-per-row-in-home-page)
+    - [4. Custom number of others per row (in Home page)](#4-custom-number-of-others-per-row-in-home-page)
+    - [5. Fix menu buttons position](#5-fix-menu-buttons-position)
+  - [Texts Features](#texts-features)
+    - [1. Display full video title (Home page)](#1-display-full-video-title-home-page)
+    - [2. Display full video title (Player sidebar)](#2-display-full-video-title-player-sidebar)
+    - [3. Display full video title (Playlist panel)](#3-display-full-video-title-playlist-panel)
+    - [4. Display full channel name](#4-display-full-channel-name)
+    - [5. Display full playlist title (Home page)](#5-display-full-playlist-title-home-page)
+    - [6. Display full playlist info](#6-display-full-playlist-info)
+    - [7. Display full shorts title](#7-display-full-shorts-title)
+    - [8. Display full channel info](#8-display-full-channel-info)
+    - [9. Fix "Join" Membership button](#9-fix-join-membership-button)
+  - [Player Features](#player-features)
+    - [1. Custom controls bar background](#1-custom-controls-bar-background)
+    - [2. Persistent progress bar](#2-persistent-progress-bar)
+  - [Utilities Features](#utilities-features)
+    - [1. Watch shorts in '/watch' view](#1-watch-shorts-in-watch-view)
+    - [2. Watch video without trapped into a playlist](#2-watch-video-without-trapped-into-a-playlist)
+    - [3. Improve channel redirection](#3-improve-channel-redirection)
+  - [Issues](#issues)
+
 ## UI Features
-### 1. Custom number of videos per row (in Home page) [^1]
+### 1. Custom number of videos per row (in Home page)
 - Disabled: Default with 3 videos per row.
 
 ![ui-videosPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-videosPerRow-home_disabled.png?raw=true)
 
-- Enabled: Customized with 5 videos per row.
+- Enabled: Customized with 5 videos per row. [^1]
 
 ![ui-videosPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-videosPerRow-home_enabled.png?raw=true)
 
-### 2. Custom number of shorts per row (in Home page) [^2]
+### 2. Custom number of shorts per row (in Home page)
 - Disabled: Default with 5 shorts per row
 
 ![ui-shortsPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-shortsPerRow-home_disabled.png?raw=true)
 
-- Enabled: Customized with 9 shorts per row.
+- Enabled: Customized with 9 shorts per row. [^2]
 
 ![ui-shortsPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-shortsPerRow-home_enabled.png?raw=true)
 
-### 3. Custom number of posts per row (in Home page) (no image due to randomness appearance of this shelf, update later)
-- Disabled: Default with 3 posts per row.
+### 3. Custom number of posts per row (in Home page)
 
-![ui-postsPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-postsPerRow-home_disabled.png?raw=true)
-
-- Enabled: Customized with n posts per row.
-
-![ui-postsPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-postsPerRow-home_enabled.png?raw=true)
+> (no image due to randomness behavior of this shelf, update later)
 
 ### 4. Custom number of others per row (in Home page)
 - Disabled: Default with 3 videos per row.
@@ -76,7 +101,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ## Texts Features
 ### 1. Display full video title (Home page)
-- Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![texts-videoTitleFull-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-home_disabled.png?raw=true)
 
@@ -85,7 +110,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![texts-videoTitleFull-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-home_enabled.png?raw=true)
 
 ### 2. Display full video title (Player sidebar)
-- Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![texts-videoTitleFull-sidebar_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-sidebar_disabled.png?raw=true)
 
@@ -94,7 +119,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![texts-videoTitleFull-sidebar_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-sidebar_enabled.png?raw=true)
 
 ### 3. Display full video title (Playlist panel)
-- Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![texts-videoTitleFull-plPanel_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-plPanel_disabled.png?raw=true)
 
@@ -103,7 +128,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![texts-videoTitleFull-plPanel_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoTitleFull-plPanel_enabled.png?raw=true)
 
 ### 4. Display full channel name
-- Disabled: Defaults only displays 1 line, overflow or an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 1 line, overflow or an ellipsis at the end when the name is too long.
   - Home:
 
   ![texts-videoChannelNameFull-all_home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_home_disabled.png?raw=true)
@@ -130,7 +155,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
   ![texts-videoChannelNameFull-all_plPanel_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_plPanel_enabled.png?raw=true)
 
 ### 5. Display full playlist title (Home page)
-- Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![texts-plTitleFull-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plTitleFull-home_disabled.png?raw=true)
 
@@ -139,7 +164,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![texts-plTitleFull-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plTitleFull-home_enabled.png?raw=true)
 
 ### 6. Display full playlist info
-- Disabled: Defaults only displays 1 line and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 1 line and an ellipsis at the end when the name is too long.
   - Home:
 
   ![texts-plInfoFull-all_home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plInfoFull-all_home_disabled.png?raw=true)
@@ -167,7 +192,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 
 ### 7. Display full shorts title
-- Disabled: Defaults only displays 2 lines and an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![player-shortsTitleFull-all_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-shortsTitleFull-all_disabled.png?raw=true)
 
@@ -175,8 +200,11 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ![player-shortsTitleFull-all_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-shortsTitleFull-all_enabled.png?raw=true)
 
-### 8. Display full channel info (under testing, temporary disabled)
-### 9. Fix "Join" Membership button (under testing, temporary disabled)
+### 8. Display full channel info
+> (under testing, temporary disabled)
+
+### 9. Fix "Join" Membership button 
+> (under testing, temporary disabled)
 
 ## Player Features
 ### 1. Custom controls bar background
