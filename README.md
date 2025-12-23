@@ -19,10 +19,6 @@ A self-made Chromium extension that add some enhancements and helper features to
 Just click this extension icon to open popup menu when you're on [Youtube](https://www.youtube.com/).
 
 ## Table of Contents
-- [YouTube Enhancement And Helper (YEAH)](#youtube-enhancement-and-helper-yeah)
-  - [Install](#install)
-  - [Usage](#usage)
-  - [Table of Contents](#table-of-contents)
   - [UI Features](#ui-features)
     - [1. Custom number of videos per row (in Home page)](#1-custom-number-of-videos-per-row-in-home-page)
     - [2. Custom number of shorts per row (in Home page)](#2-custom-number-of-shorts-per-row-in-home-page)
@@ -46,7 +42,6 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
     - [1. Watch shorts in '/watch' view](#1-watch-shorts-in-watch-view)
     - [2. Watch video without trapped into a playlist](#2-watch-video-without-trapped-into-a-playlist)
     - [3. Improve channel redirection](#3-improve-channel-redirection)
-  - [Issues](#issues)
 
 ## UI Features
 ### 1. Custom number of videos per row (in Home page)
