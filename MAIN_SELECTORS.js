@@ -31,29 +31,29 @@ const SECTION_OTHERS_VIDEOS = SECTION_OTHERS + " ytd-rich-item-renderer";
 // selectors - watch
 const WATCH_MAIN = "#primary";
 
-const WATCH_MAIN_PLRCTN = WATCH_MAIN + " #player";
-const WATCH_MAIN_PLRCTN_PLAYER = WATCH_MAIN_PLRCTN + " #movie_player";
+const MAIN_PLRCTN = WATCH_MAIN + " #player";
+const MAIN_PLRCTN_PLAYER = MAIN_PLRCTN + " #movie_player";
 
-const WATCH_MAIN_BIGMODE = "#full-bleed-container";
-const WATCH_MAIN_BIGMODE_PLRCONT_PLAYER = WATCH_MAIN_BIGMODE + " #movie_player";
+const MAIN_BIGMODE = "#full-bleed-container";
+const MAIN_BIGMODE_PLRCTN_PLAYER = MAIN_BIGMODE + " #movie_player";
 
-const WATCH_MAIN_BELOW = WATCH_MAIN + " #below";
-const WATCH_MAIN_BELOW_METADATA = WATCH_MAIN_BELOW + " ytd-watch-metadata";
-const WATCH_MAIN_BELOW_TOPROW = WATCH_MAIN_BELOW_METADATA + " #top-row";
+const MAIN_BELOW = WATCH_MAIN + " #below";
+const MAIN_BELOW_METADATA = MAIN_BELOW + " ytd-watch-metadata";
+const MAIN_BELOW_TOPROW = MAIN_BELOW_METADATA + " #top-row";
 
-const WATCH_MAIN_BELOW_COMMENTS = WATCH_MAIN_BELOW + " #comments";
+const MAIN_BELOW_COMMENTS = MAIN_BELOW + " #comments";
 
 // ==================================================
 const WATCH_SIDEBAR = "#secondary";
 
-const WATCH_SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents .yt-lockup-view-model--wrapper";
-const WATCH_SIDEBAR_VIDEOS_NORMAL = WATCH_SIDEBAR_VIDEOS + ':not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
-const WATCH_SIDEBAR_VIDEOS_PLTRAP = WATCH_SIDEBAR_VIDEOS + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
+const SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents .yt-lockup-view-model--wrapper";
+const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ':not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
+const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
 
-const WATCH_SIDEBAR_SHELVES_SHORTS = WATCH_SIDEBAR + " #related #contents ytd-reel-shelf-renderer";
-const WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS = WATCH_SIDEBAR_SHELVES_SHORTS + " ytm-shorts-lockup-view-model";
+const SIDEBAR_SHORTSSHELVES = WATCH_SIDEBAR + " #related #contents ytd-reel-shelf-renderer";
+const SIDEBAR_SHORTSSHELVES_SHORTS = SIDEBAR_SHORTSSHELVES + " ytm-shorts-lockup-view-model";
 
-const WATCH_SIDEBAR_PLPANEL = WATCH_SIDEBAR + " #playlist";
-const WATCH_SIDEBAR_PLPANEL_VIDEOS = WATCH_SIDEBAR_PLPANEL + " .playlist-items ytd-playlist-panel-video-renderer";
-const WATCH_SIDEBAR_PLPANEL_VIDEOS_NORMAL = WATCH_SIDEBAR_PLPANEL_VIDEOS + ':not(:has(#wc-endpoint[href*="&list="]))';
-const WATCH_SIDEBAR_PLPANEL_VIDEOS_PLTRAP = WATCH_SIDEBAR_PLPANEL_VIDEOS + ':has(#wc-endpoint[href*="&list="])';
+const SIDEBAR_PLPANEL = WATCH_SIDEBAR + " #playlist";
+const SIDEBAR_PLPANEL_VIDEOS = SIDEBAR_PLPANEL + " .playlist-items ytd-playlist-panel-video-renderer";
+const SIDEBAR_PLPANEL_VIDEOS_NORMAL = SIDEBAR_PLPANEL_VIDEOS + ':not(:has(#wc-endpoint[href*="&list="]))';
+const SIDEBAR_PLPANEL_VIDEOS_PLTRAP = SIDEBAR_PLPANEL_VIDEOS + ':has(#wc-endpoint[href*="&list="])';

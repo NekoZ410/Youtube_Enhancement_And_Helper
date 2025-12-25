@@ -49,7 +49,7 @@ const uiStyleSettings = {
                     ${CELLS_VIDEOS_COLLAB} .yt-lockup-metadata-view-model__menu-button,
                     ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button,
                     ${SECTION_OTHERS_VIDEOS} .yt-lockup-metadata-view-model__menu-button,
-                    ${WATCH_SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__menu-button {
+                    ${SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__menu-button {
                         margin-left: auto !important;
                     }`;
         },

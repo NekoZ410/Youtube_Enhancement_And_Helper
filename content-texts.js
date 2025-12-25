@@ -16,11 +16,11 @@ const textStyleSettings = {
         styleIdDynamic: "texts-videoTitleFull-sidebar-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${WATCH_SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__title {
+            return `${SIDEBAR_VIDEOS} .yt-lockup-metadata-view-model__title {
                 display: block !important;
                 max-height: unset !important;
             }
-            ${WATCH_SIDEBAR_VIDEOS} .yt-lockup-view-model__content-image .ytThumbnailViewModelHost {
+            ${SIDEBAR_VIDEOS} .yt-lockup-view-model__content-image .ytThumbnailViewModelHost {
                 align-self: center !important;
             }`;
         },
@@ -29,11 +29,11 @@ const textStyleSettings = {
         styleIdDynamic: "texts-videoTitleFull-plPanel-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${WATCH_SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #video-title {
+            return `${SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #video-title {
                 display: block !important;
                 max-height: unset !important;
             }                
-            ${WATCH_SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #thumbnail-container {
+            ${SIDEBAR_PLPANEL_VIDEOS} #wc-endpoint #thumbnail-container {
                 align-self: center !important;
             }`;
         },
@@ -45,8 +45,8 @@ const textStyleSettings = {
             return `${CELLS_VIDEOS} .yt-core-attributed-string__link,
             ${CELLS_VIDEOS_COLLAB} .yt-core-attributed-string__link,
             ${SECTION_OTHERS_VIDEOS} .yt-core-attributed-string__link,
-            ${WATCH_SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-text:nth-of-type(1),
-            ${WATCH_SIDEBAR_PLPANEL_VIDEOS} #byline {
+            ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-text:nth-of-type(1),
+            ${SIDEBAR_PLPANEL_VIDEOS} #byline {
                 max-height: unset !important;
                 white-space: normal !important;
                 word-break: break-word !important;
@@ -71,14 +71,14 @@ const textStyleSettings = {
             return `${CELLS_PLAYLISTS} .yt-content-metadata-view-model__metadata-text{
                 white-space: unset !important;
             }
-            ${WATCH_SIDEBAR_PLPANEL} #header-description h3:has([link-inherit-color]) yt-formatted-string {
+            ${SIDEBAR_PLPANEL} #header-description h3:has([link-inherit-color]) yt-formatted-string {
                 display: block !important;
                 max-height: unset !important;
             }
-            ${WATCH_SIDEBAR_PLPANEL} #header-description h3:not(:has([link-inherit-color])) yt-formatted-string {
+            ${SIDEBAR_PLPANEL} #header-description h3:not(:has([link-inherit-color])) yt-formatted-string {
                 white-space: unset !important;
             }
-            ${WATCH_SIDEBAR_PLPANEL} #publisher-container yt-formatted-string.byline-title {
+            ${SIDEBAR_PLPANEL} #publisher-container yt-formatted-string.byline-title {
                 white-space: unset !important;
                 max-height: unset !important;
             }`;
@@ -90,7 +90,7 @@ const textStyleSettings = {
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${SECTION_SHORTSSHELVES_SHORTS} .shortsLockupViewModelHostMetadataTitle,
-            ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} .shortsLockupViewModelHostMetadataTitle {
+            ${SIDEBAR_SHORTSSHELVES_SHORTS} .shortsLockupViewModelHostMetadataTitle {
                 display: block !important;
                 max-height: unset !important;
             }`;

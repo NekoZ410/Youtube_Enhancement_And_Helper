@@ -4,7 +4,7 @@ const utilityStyleSettings = {
         styleIdStatic: "utilities-shortsToWatch-inject-static",
         cssStatic: `
             ${SECTION_SHORTSSHELVES_SHORTS} div[role="presentation"],
-            ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS} div[role="presentation"] {
+            ${SIDEBAR_SHORTSSHELVES_SHORTS} div[role="presentation"] {
                 min-height: 72px !important;
             }
             .utilities-shortsToWatch-btn {
@@ -20,12 +20,12 @@ const utilityStyleSettings = {
         cssStatic: `
             ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button,
             ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
-            ${WATCH_SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button {
+            ${SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button {
                 position: relative !important;
             }
             ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
             ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
-            ${WATCH_SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost {
+            ${SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost {
                 flex-direction: column !important;
                 align-items: center;
             }
@@ -129,7 +129,7 @@ async function getChannelUrlFromOembed(videoUrl) {
 
 // utilities - shortsToWatch: main processing
 function processShortsToWatch() {
-    const shortsContainerEl = `${SECTION_SHORTSSHELVES_SHORTS}, ${WATCH_SIDEBAR_SHELVES_SHORTS_VIDEOS}`;
+    const shortsContainerEl = `${SECTION_SHORTSSHELVES_SHORTS}, ${SIDEBAR_SHORTSSHELVES_SHORTS}`;
     const targetNodes = document.querySelectorAll(shortsContainerEl);
 
     targetNodes.forEach((node) => {
@@ -173,7 +173,7 @@ function processShortsToWatch() {
 
 // utilities - noPlaylistTrap: main processing
 function processNoPlaylistTrap() {
-    const plContainerEl = `${CELLS_PLAYLISTS}, ${CELLS_VIDEOS_PLTRAP}, ${WATCH_SIDEBAR_VIDEOS_PLTRAP}`;
+    const plContainerEl = `${CELLS_PLAYLISTS}, ${CELLS_VIDEOS_PLTRAP}, ${SIDEBAR_VIDEOS_PLTRAP}`;
     const targetNodes = document.querySelectorAll(plContainerEl);
 
     targetNodes.forEach((node) => {
@@ -239,7 +239,7 @@ function processChannelRedirImprove() {
     });
 
     // process watch sidebar channel names
-    const sidebarNodes = document.querySelectorAll(WATCH_SIDEBAR_VIDEOS);
+    const sidebarNodes = document.querySelectorAll(SIDEBAR_VIDEOS);
     sidebarNodes.forEach(async (node) => {
         const videoLinkEl = node.querySelector(".yt-lockup-view-model__content-image");
         const channelNameEl = node.querySelectorAll(".yt-core-attributed-string")[1];
@@ -266,7 +266,7 @@ function processChannelRedirImprove() {
     });
 
     // process playlist panel channel names
-    const plPanelNodes = document.querySelectorAll(WATCH_SIDEBAR_PLPANEL_VIDEOS);
+    const plPanelNodes = document.querySelectorAll(SIDEBAR_PLPANEL_VIDEOS);
     plPanelNodes.forEach(async (node) => {
         const videoLinkEl = node.querySelector("#wc-endpoint");
         const channelNameEl = node.querySelector("#byline");

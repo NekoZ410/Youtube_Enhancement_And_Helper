@@ -18,15 +18,15 @@ const playerStyleSettings = {
             const rgbColor = hexToRgb(color);
 
             return `
-                ${WATCH_MAIN_PLRCTN_PLAYER} .ytp-gradient-top, ${WATCH_MAIN_BIGMODE} .ytp-gradient-top {
+                ${MAIN_PLRCTN_PLAYER} .ytp-gradient-top, ${MAIN_BIGMODE} .ytp-gradient-top {
                     background-image: none !important;
                 }
-                ${WATCH_MAIN_PLRCTN_PLAYER} .ytp-gradient-bottom, ${WATCH_MAIN_BIGMODE} .ytp-gradient-bottom {
+                ${MAIN_PLRCTN_PLAYER} .ytp-gradient-bottom, ${MAIN_BIGMODE} .ytp-gradient-bottom {
                     background-image: none !important;
                     background-color: rgba(${rgbColor}, ${colorAlpha}) !important;
                     height: ${height}${heightUnit} !important;
                 }
-                ${WATCH_MAIN_BIGMODE} .ytp-gradient-bottom {
+                ${MAIN_BIGMODE} .ytp-gradient-bottom {
                     padding-top: 45px !important;
                 }`;
         },
@@ -44,8 +44,8 @@ const playerStyleSettings = {
                 position: absolute;
                 width: 100%;
             }
-            ${WATCH_MAIN_PLRCTN_PLAYER}.ytp-autohide .player-persistentProgressBar,
-            ${WATCH_MAIN_BIGMODE_PLRCONT_PLAYER}.ytp-autohide .player-persistentProgressBar {
+            ${MAIN_PLRCTN_PLAYER}.ytp-autohide .player-persistentProgressBar,
+            ${MAIN_BIGMODE_PLRCTN_PLAYER}.ytp-autohide .player-persistentProgressBar {
                 opacity: 1 !important;
             }
             .player-persistentProgressBar-fill {
@@ -75,7 +75,7 @@ const playerStyleSettings = {
 // player: wait for player
 function waitForPlayer(callback) {
     const checkExist = setInterval(() => {
-        const player = document.querySelector(WATCH_MAIN_PLRCTN_PLAYER) || document.querySelector(WATCH_MAIN_BIGMODE_PLRCONT_PLAYER);
+        const player = document.querySelector(MAIN_PLRCTN_PLAYER) || document.querySelector(MAIN_BIGMODE_PLRCTN_PLAYER);
         if (player) {
             clearInterval(checkExist);
             callback(player);
@@ -155,7 +155,7 @@ function setupPlayerObserver(settings) {
                 for (const node of mutation.addedNodes) {
                     if (node.nodeType === 1) {
                         // if node is player container
-                        if (node.querySelector && (node.querySelector(WATCH_MAIN_PLRCTN_PLAYER) || node.querySelector(WATCH_MAIN_BIGMODE_PLRCONT_PLAYER))) {
+                        if (node.querySelector && (node.querySelector(MAIN_PLRCTN_PLAYER) || node.querySelector(MAIN_BIGMODE_PLRCTN_PLAYER))) {
                             shouldProcess = true;
                             break;
                         }
