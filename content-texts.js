@@ -45,7 +45,7 @@ const textStyleSettings = {
             return `${CELLS_VIDEOS} .yt-core-attributed-string__link,
             ${CELLS_VIDEOS_COLLAB} .yt-core-attributed-string__link,
             ${SECTION_OTHERS_VIDEOS} .yt-core-attributed-string__link,
-            ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-text:nth-of-type(1),
+            ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text,
             ${SIDEBAR_PLPANEL_VIDEOS} #byline {
                 max-height: unset !important;
                 white-space: normal !important;
