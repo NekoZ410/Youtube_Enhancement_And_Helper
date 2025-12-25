@@ -8,6 +8,8 @@ const UI_DEFAULT_SETTINGS = {
     "ui-postsPerRow-home-count": 3,
     "ui-othersPerRow-home": true,
     "ui-othersPerRow-home-count": 3,
+    "ui-relatedVideosPerRow-player": true,
+    "ui-relatedVideosPerRow-player-count": 3,
     "ui-menuBtnPosFix-all": true,
 };
 

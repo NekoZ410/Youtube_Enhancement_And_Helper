@@ -24,7 +24,8 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
     - [2. Custom number of shorts per row (in Home page)](#2-custom-number-of-shorts-per-row-in-home-page)
     - [3. Custom number of posts per row (in Home page)](#3-custom-number-of-posts-per-row-in-home-page)
     - [4. Custom number of others per row (in Home page)](#4-custom-number-of-others-per-row-in-home-page)
-    - [5. Fix menu buttons position](#5-fix-menu-buttons-position)
+    - [5. Custom number of related videos per row (in Player)](#5-custom-number-of-related-videos-per-row-in-player)
+    - [6. Fix menu buttons position](#6-fix-menu-buttons-position)
   - [Texts Features](#texts-features)
     - [1. Display full video title (Home page)](#1-display-full-video-title-home-page)
     - [2. Display full video title (Player sidebar)](#2-display-full-video-title-player-sidebar)
@@ -75,7 +76,11 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ![ui-othersPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-othersPerRow-home_enabled.png?raw=true)
 
-### 5. Fix menu buttons position
+### 5. Custom number of related videos per row (in Player)
+
+> (no image yet, update later)
+
+### 6. Fix menu buttons position
 - Disabled: Default menu buttons may shrink inward of true position if videos title is too short sometimes.
   - Home:
 
