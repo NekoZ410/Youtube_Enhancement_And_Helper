@@ -57,7 +57,9 @@ const textStyleSettings = {
             ${CELLS_VIDEOS_COLLAB} .yt-core-attributed-string__link,
             ${SECTION_OTHERS_VIDEOS} .yt-core-attributed-string__link,
             ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text,
-            ${SIDEBAR_PLPANEL_VIDEOS} #byline {
+            ${SIDEBAR_PLPANEL_VIDEOS} #byline,
+            ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author {
                 max-height: unset !important;
                 white-space: normal !important;
                 word-break: break-word !important;
@@ -78,8 +80,6 @@ const textStyleSettings = {
             ${CELLS_VIDEOS_COLLAB} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
             ${SECTION_OTHERS_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
             ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
-            ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
-            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
             ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-view-count-and-date-info, 
             ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-view-count-and-date-info {
                 max-height: unset !important;
