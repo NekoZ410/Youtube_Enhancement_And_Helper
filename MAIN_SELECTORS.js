@@ -35,11 +35,13 @@ const MAIN_PLRCTN = WATCH_MAIN + " #player";
 const MAIN_PLRCTN_PLAYER = MAIN_PLRCTN + " #movie_player";
 
 const PLRCTN_PLAYER_RELATEDVIDEOSCTN = MAIN_PLRCTN_PLAYER + " .ytp-fullscreen-grid-main-content";
+const PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS = PLRCTN_PLAYER_RELATEDVIDEOSCTN + " .ytp-modern-videowall-still";
 
 const MAIN_BIGMODE = "#full-bleed-container";
 const MAIN_BIGMODE_PLRCTN_PLAYER = MAIN_BIGMODE + " #movie_player";
 
 const BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN = MAIN_BIGMODE_PLRCTN_PLAYER + " .ytp-fullscreen-grid-main-content";
+const BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS = BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN + " .ytp-modern-videowall-still";
 
 const MAIN_BELOW = WATCH_MAIN + " #below";
 const MAIN_BELOW_METADATA = MAIN_BELOW + " ytd-watch-metadata";

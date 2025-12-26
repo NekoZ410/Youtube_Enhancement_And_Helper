@@ -19,6 +19,7 @@ const TEXTS_DEFAULT_SETTINGS = {
     "texts-videoTitleFull-sidebar": true,
     "texts-videoTitleFull-plPanel": true,
     "texts-videoChannelNameFull-all": true,
+    "texts-relatedVideoTitleFull-player": true,
     "texts-plTitleFull-home": true,
     "texts-plInfoFull-all": true,
     "texts-shortsTitleFull-all": true,

@@ -53,6 +53,17 @@ const textStyleSettings = {
             }`;
         },
     },
+    "texts-relatedVideoTitleFull-player": {
+        styleIdDynamic: "texts-relatedVideoTitleFull-player-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
+            if (!isEnabled) return "";
+            return `${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title {
+                display: block !important;
+                white-space: normal !important;
+            }`;
+        },
+    },
 
     "texts-plTitleFull-home": {
         styleIdDynamic: "texts-plTitleFull-home-inject-dynamic",
@@ -124,8 +135,7 @@ const textStyleSettings = {
                 gap: 10px !important;
                 display: flex !important;
             }
-            ytd-video-owner-renderer,
-            #subscribe-button {
+            ytd-video-owner-renderer, #subscribe-button {
                 flex: 0 0 auto !important;
             }`;
         },
