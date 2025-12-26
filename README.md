@@ -19,6 +19,10 @@ A self-made Chromium extension that add some enhancements and helper features to
 Just click this extension icon to open popup menu when you're on [Youtube](https://www.youtube.com/).
 
 ## Table of Contents
+- [YouTube Enhancement And Helper (YEAH)](#youtube-enhancement-and-helper-yeah)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Table of Contents](#table-of-contents)
   - [UI Features](#ui-features)
     - [1. Custom number of videos per row (Home page)](#1-custom-number-of-videos-per-row-home-page)
     - [2. Custom number of shorts per row (Home page)](#2-custom-number-of-shorts-per-row-home-page)
@@ -44,6 +48,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
     - [1. Watch shorts in '/watch' view](#1-watch-shorts-in-watch-view)
     - [2. Watch video without trapped into a playlist](#2-watch-video-without-trapped-into-a-playlist)
     - [3. Improve channel redirection](#3-improve-channel-redirection)
+  - [Issues](#issues)
 
 ## UI Features
 ### 1. Custom number of videos per row (Home page)
@@ -78,8 +83,13 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![ui-othersPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-othersPerRow-home_enabled.png?raw=true)
 
 ### 5. Custom number of related videos per row (Player)
+- Disabled: Default with 3 videos per row.
 
-> (no image yet, update later)
+![ui-relatedPerRow-player_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-relatedPerRow-player_disabled.png?raw=true)
+
+- Enabled: Customized with 4 videos per row (bonus show all hidden ones).
+
+![ui-relatedPerRow-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-relatedPerRow-player_enabled.png?raw=true)
 
 ### 6. Fix menu buttons position
 - Disabled: Default menu buttons may shrink inward of true position if videos title is too short sometimes.
