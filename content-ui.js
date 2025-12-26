@@ -56,8 +56,7 @@ const uiStyleSettings = {
                         padding: 24px !important;
                         grid-template-columns: repeat(${relatedVideosPerRow}, 1fr) !important;
                     }
-                    ${PLRCTN_PLAYER_RELATEDVIDEOSCTN} .ytp-fullscreen-grid-stills-container .ytp-modern-videowall-still, 
-                    ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN} .ytp-fullscreen-grid-stills-container .ytp-modern-videowall-still {
+                    ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS}, ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} {
                         display: flex !important;
                     }`;
         },
