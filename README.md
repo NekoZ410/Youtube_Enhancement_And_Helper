@@ -176,7 +176,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
   - Player:
 
-  ![texts-videoChannelNameFull-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_player_disabled.png)
+  ![texts-videoChannelNameFull-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_player_enabled.png)
 
 ### 6. Display full video info
 - Disabled: Default only displays 1 line, overflows or an ellipsis at the end when the info is too long (in some languages).
