@@ -1,7 +1,7 @@
 // ui: style settings
 const uiStyleSettings = {
     "ui-videosPerRow-home": {
-        styleIdDynamic: "ui-videosPerRow-home-custom",
+        styleIdDynamic: "ui-videosPerRow-home-inject-dynamic",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const videosPerRow = settings["ui-videosPerRow-home-count"];
@@ -11,7 +11,7 @@ const uiStyleSettings = {
         },
     },
     "ui-shortsPerRow-home": {
-        styleIdDynamic: "ui-shortsPerRow-home-custom",
+        styleIdDynamic: "ui-shortsPerRow-home-inject-dynamic",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const shortsPerRow = settings["ui-shortsPerRow-home-count"];
@@ -21,7 +21,7 @@ const uiStyleSettings = {
         },
     },
     "ui-postsPerRow-home": {
-        styleIdDynamic: "ui-postsPerRow-home-custom",
+        styleIdDynamic: "ui-postsPerRow-home-inject-dynamic",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const postsPerRow = settings["ui-postsPerRow-home-count"];
@@ -31,7 +31,7 @@ const uiStyleSettings = {
         },
     },
     "ui-othersPerRow-home": {
-        styleIdDynamic: "ui-othersPerRow-home-custom",
+        styleIdDynamic: "ui-othersPerRow-home-inject-dynamic",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const othersPerRow = settings["ui-othersPerRow-home-count"];
@@ -41,7 +41,7 @@ const uiStyleSettings = {
         },
     },
     "ui-relatedVideosPerRow-player": {
-        styleIdDynamic: "ui-relatedVideosPerRow-player-custom",
+        styleIdDynamic: "ui-relatedVideosPerRow-player-inject-dynamic",
         cssDynamicGen: (isEnabled, settings) => {
             if (!isEnabled) return "";
             const relatedVideosPerRow = settings["ui-relatedVideosPerRow-player-count"];
@@ -63,7 +63,7 @@ const uiStyleSettings = {
     },
 
     "ui-menuBtnPosFix-all": {
-        styleIdDynamic: "ui-menuBtnPosFix-all-custom",
+        styleIdDynamic: "ui-menuBtnPosFix-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `${CELLS_VIDEOS} .yt-lockup-metadata-view-model__menu-button,
@@ -123,7 +123,6 @@ function setItemsPerRow(settings, shelfSelector, countKey, toggleKey) {
                 const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
                 if (shelfRenderer) {
                     const cssItemsCount = parseInt(window.getComputedStyle(shelfRenderer).getPropertyValue("--ytd-rich-shelf-items-count"), 10);
-                    // CHANGE: Use actual children length as fallback if CSS variable is not ready or 0
                     const itemsLoaded = isNaN(cssItemsCount) || cssItemsCount === 0 ? children.length : cssItemsCount;
 
                     if (itemsLoaded > 0) {
