@@ -159,7 +159,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
   - Player:
 
-  ![texts-videoChannelNameFull-player_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-player_disabled.png?raw=true)
+  ![texts-videoChannelNameFull-player_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_player_disabled.png)
 
 - Enabled: Customized to display the entire channel name with automatic spacing and line breaks based on length.
   - Home:
@@ -176,7 +176,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
   - Player:
 
-  ![texts-videoChannelNameFull-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-player_enabled.png?raw=true)
+  ![texts-videoChannelNameFull-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_player_disabled.png)
 
 ### 6. Display full video info
 - Disabled: Default only displays 1 line, overflows or an ellipsis at the end when the info is too long (in some languages).
