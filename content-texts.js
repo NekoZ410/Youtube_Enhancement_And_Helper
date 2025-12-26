@@ -38,6 +38,17 @@ const textStyleSettings = {
             }`;
         },
     },
+    "texts-relatedVideoTitleFull-player": {
+        styleIdDynamic: "texts-relatedVideoTitleFull-player-inject-dynamic",
+        cssDynamicGen: (isEnabled) => {
+            if (!isEnabled) return "";
+            return `${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title {
+                display: block !important;
+                white-space: normal !important;
+            }`;
+        },
+    },
     "texts-videoChannelNameFull-all": {
         styleIdDynamic: "texts-videoChannelNameFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
@@ -53,14 +64,33 @@ const textStyleSettings = {
             }`;
         },
     },
-    "texts-relatedVideoTitleFull-player": {
-        styleIdDynamic: "texts-relatedVideoTitleFull-player-inject-dynamic",
+    "texts-videoInfoFull-all": {
+        styleIdDynamic: "texts-videoInfoFull-all-inject-dynamic",
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
-            return `${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title, 
-            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-title {
-                display: block !important;
+            return `${CELLS_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2),
+            ${CELLS_VIDEOS_COLLAB} .yt-content-metadata-view-model__metadata-row:nth-of-type(2), 
+            ${SECTION_OTHERS_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2), 
+            ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) {
+                flex-wrap: wrap;
+            }
+            ${CELLS_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text,
+            ${CELLS_VIDEOS_COLLAB} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
+            ${SECTION_OTHERS_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
+            ${SIDEBAR_VIDEOS} .yt-content-metadata-view-model__metadata-row:nth-of-type(2) .yt-content-metadata-view-model__metadata-text, 
+            ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
+            ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-view-count-and-date-info, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-view-count-and-date-info {
+                max-height: unset !important;
                 white-space: normal !important;
+                word-break: break-word !important;
+            }
+            ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-live, 
+            ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-live {
+                position: unset;
+                width: fit-content;
+                padding: 4px 2px 2px;
             }`;
         },
     },

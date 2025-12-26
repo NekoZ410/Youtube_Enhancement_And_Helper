@@ -32,9 +32,10 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
     - [3. Display full video title (Playlist panel)](#3-display-full-video-title-playlist-panel)
     - [4. Display full related video title (Player)](#4-display-full-related-video-title-player)
     - [5. Display full channel name](#5-display-full-channel-name)
-    - [6. Display full playlist title (Home page)](#6-display-full-playlist-title-home-page)
-    - [7. Display full playlist info](#7-display-full-playlist-info)
-    - [8. Display full shorts title](#8-display-full-shorts-title)
+    - [6. Display full video info](#6-display-full-video-info)
+    - [7. Display full playlist title (Home page)](#7-display-full-playlist-title-home-page)
+    - [8. Display full playlist info](#8-display-full-playlist-info)
+    - [9. Display full shorts title](#9-display-full-shorts-title)
     - [0. Display full channel info](#0-display-full-channel-info)
     - [0. Fix "Join" Membership button](#0-fix-join-membership-button)
   - [Player Features](#player-features)
@@ -143,7 +144,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 ![texts-relatedVideoTitleFull-player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-relatedVideoTitleFull-player_enabled.png?raw=true)
 
 ### 5. Display full channel name
-- Disabled: Default only displays 2 line, overflows or an ellipsis at the end when the name is too long.
+- Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
   - Home:
 
   ![texts-videoChannelNameFull-all_home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_home_disabled.png?raw=true)
@@ -169,7 +170,34 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
   ![texts-videoChannelNameFull-all_plPanel_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoChannelNameFull-all_plPanel_enabled.png?raw=true)
 
-### 6. Display full playlist title (Home page)
+### 6. Display full video info
+- Disabled: Default only displays 1 line and an ellipsis at the end when the info is too long (in some languages).
+  - Home:
+
+  ![texts-videoInfoFull-all_home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_home_disabled.png?raw=true)
+
+  - Sidebar:
+
+  ![texts-videoInfoFull-all_sidebar_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_sidebar_disabled.png?raw=true)
+
+  - Player:
+
+  ![texts-videoInfoFull-all_player_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_player_disabled.png?raw=true)
+
+- Enabled: Customized to display the entire info with automatic spacing and line breaks based on length.
+  - Home:
+  
+  ![texts-videoInfoFull-all_home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_home_enabled.png?raw=true)
+
+  - Sidebar:
+
+  ![texts-videoInfoFull-all_sidebar_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_sidebar_enabled.png?raw=true)
+
+  - Player:
+
+  ![texts-videoInfoFull-all_player_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-videoInfoFull-all_player_enabled.png?raw=true)
+
+### 7. Display full playlist title (Home page)
 - Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![texts-plTitleFull-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plTitleFull-home_disabled.png?raw=true)
@@ -178,7 +206,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ![texts-plTitleFull-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plTitleFull-home_enabled.png?raw=true)
 
-### 7. Display full playlist info
+### 8. Display full playlist info
 - Disabled: Default only displays 1 line and an ellipsis at the end when the name is too long.
   - Home:
 
@@ -206,7 +234,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
   ![texts-plInfoFull-all_plPanel_expand_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-plInfoFull-all_plPanel_expand_enabled.png?raw=true)
 
 
-### 8. Display full shorts title
+### 9. Display full shorts title
 - Disabled: Default only displays 2 lines and an ellipsis at the end when the name is too long.
 
 ![player-shortsTitleFull-all_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/texts-shortsTitleFull-all_disabled.png?raw=true)
