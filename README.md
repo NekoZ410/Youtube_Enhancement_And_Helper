@@ -67,7 +67,13 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ### 3. Custom number of posts per row (Home page)
 
-> (no image due to randomness behavior of this shelf, update later)
+- Disabled: Default with 3 posts per row.
+
+![ui-postsPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-postsPerRow-home_disabled.png?raw=true)
+
+- Enabled: Customized with 4 posts per row.
+
+![ui-postsPerRow-home_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/ui-postsPerRow-home_enabled.png?raw=true)
 
 ### 4. Custom number of others per row (Home page)
 - Disabled: Default with 3 videos per row.
