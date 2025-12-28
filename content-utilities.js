@@ -63,9 +63,9 @@ const SHORTS_TO_VIEW_BTN = `
             <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
                 <span class="yt-icon-shape ytSpecIconShapeHost">
                     <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" aria-hidden="true" style="pointer-events:none;display:inherit;width:100%;height:100%">
-                            <path d="m13.467 1.19-8 4.7a5 5 0 0 0-.255 8.46 5 5 0 0 0 5.32 8.462l8-4.7a5 5 0 0 0 .258-8.462 5 5 0 0 0 1.641-6.464l-.12-.217a5 5 0 0 0-6.844-1.78m5.12 2.79a3 3 0 0 1-1.067 4.107l-1.327.78a1 1 0 0 0 .096 1.775l.943.423a3 3 0 0 1 .288 5.323l-8 4.7a3 3 0 0 1-3.039-5.173l1.327-.78a1 1 0 0 0-.097-1.775l-.942-.423a3 3 0 0 1-.288-5.323l8-4.7a3 3 0 0 1 4.106 1.066M15 12l-5-3v6z"></path>
-                            <path stroke="#000" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%">
+                            <path d="m13.467 1.19-8 4.7a5 5 0 0 0-.255 8.46 5 5 0 0 0 5.32 8.462l8-4.7a5 5 0 0 0 .258-8.462 5 5 0 0 0 1.641-6.464l-.12-.217a5 5 0 0 0-6.844-1.78m5.12 2.79a3 3 0 0 1-1.067 4.107l-1.327.78a1 1 0 0 0 .096 1.775l.943.423a3 3 0 0 1 .288 5.323l-8 4.7a3 3 0 0 1-3.039-5.173l1.327-.78a1 1 0 0 0-.097-1.775l-.942-.423a3 3 0 0 1-.288-5.323l8-4.7a3 3 0 0 1 4.106 1.066M15 12l-5-3v6z"/>
+                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"/>
                         </svg>
                     </div>
                 </span>
@@ -84,9 +84,9 @@ const NO_PLAYLIST_TRAP_BTN = `
             <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
                 <span class="yt-icon-shape ytSpecIconShapeHost">
                     <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
                             <path d="M16 15.395a.5.5 0 0 1 .762-.426L22.5 18.5l-5.738 3.531a.5.5 0 0 1-.762-.425v-6.212ZM14 19H4a1 1 0 1 1 0-2h10zm6-8a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm0-6a1 1 0 1 1 0 2H4a1 1 0 0 1 0-2z"/>
-                            <path stroke="#000" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"/>
+                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"/>
                         </svg>
                     </div>
                 </span>
