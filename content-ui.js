@@ -99,10 +99,30 @@ function setItemsPerRow(settings, shelfSelector, countKey, toggleKey) {
         const limit = parseInt(settings[countKey], 10);
         const isEnabled = settings[toggleKey];
 
-        // if disabled or error, show all
+        // if disabled or error, stop processing and recover original
         if (!isEnabled || isNaN(limit) || limit < 1) {
-            document.querySelectorAll(`${contentsSelector} ytd-rich-item-renderer[hidden]`).forEach((item) => {
-                item.removeAttribute("hidden");
+            const shelves = document.querySelectorAll(contentsSelector);
+            shelves.forEach((shelf) => {
+                const shelfRenderer = shelf.closest("ytd-rich-shelf-renderer");
+                if (shelfRenderer) {
+                    const itemsDefaultLimit = parseInt(window.getComputedStyle(shelfRenderer).getPropertyValue("--ytd-rich-grid-items-per-row"), 10);
+                    if (!isNaN(itemsDefaultLimit) && itemsDefaultLimit > 0) {
+                        const children = shelf.querySelectorAll("ytd-rich-item-renderer");
+                        children.forEach((item, index) => {
+                            if (index < itemsDefaultLimit) {
+                                if (item.hasAttribute("hidden")) item.removeAttribute("hidden");
+                            } else {
+                                if (!item.hasAttribute("hidden")) item.setAttribute("hidden", "");
+                            }
+                        });
+                    }
+
+                    const showMoreBtn = shelfRenderer.querySelector('button:has(path[d*="M18.70"])');
+                    const showLessBtn = shelfRenderer.querySelector('button:has(path[d*="M5.293"])');
+
+                    if (showMoreBtn) showMoreBtn.style.display = "";
+                    if (showLessBtn) showLessBtn.style.display = "";
+                }
             });
             return;
         }
@@ -126,10 +146,8 @@ function setItemsPerRow(settings, shelfSelector, countKey, toggleKey) {
                     const itemsLoaded = isNaN(cssItemsCount) || cssItemsCount === 0 ? children.length : cssItemsCount;
 
                     if (itemsLoaded > 0) {
-                        const BTN_SHOW_MORE = 'button:has(path[d*="M18.70"])';
-                        const BTN_SHOW_LESS = 'button:has(path[d*="M5.293"])';
-                        const showMoreBtn = shelfRenderer.querySelector(BTN_SHOW_MORE);
-                        const showLessBtn = shelfRenderer.querySelector(BTN_SHOW_LESS);
+                        const showMoreBtn = shelfRenderer.querySelector('button:has(path[d*="M18.70"])');
+                        const showLessBtn = shelfRenderer.querySelector('button:has(path[d*="M5.293"])');
 
                         const shouldHideButtons = itemsLoaded <= limit;
                         if (showMoreBtn) showMoreBtn.style.display = shouldHideButtons ? "none" : "";
