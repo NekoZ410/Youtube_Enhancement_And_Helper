@@ -1,10 +1,8 @@
 # YouTube Enhancement And Helper (YEAH)
 
-<center>
-
-![ui-videosPerRow-home_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/icons/icon64.png?raw=true)
-
-</center>
+<div align="center">
+  <img src="https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/icons/icon64.png?raw=true" alt="icon64.png">
+</div>
 
 A self-made Chromium extension that add some enhancements and helper features to [YouTube](https://www.youtube.com/).
 
@@ -284,13 +282,9 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ## Utilities Features
 ### 1. Watch shorts in '/watch' view
-- Disabled: Default with no functional button.
+- Disabled: Shorts will open in '/shorts' view.
 
-![utilities-shortsToWatch_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-shortsToWatch_disabled.png?raw=true)
-
-- Enabled: Customized with a functional button that redirect to '/watch' view.
-
-![utilities-shortsToWatch_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-shortsToWatch_enabled.png?raw=true)
+- Enabled: Shorts will be redirected to '/watch' view.
 
 ### 2. Watch video without trapped into a playlist
 - Disabled: Default with no functional button.

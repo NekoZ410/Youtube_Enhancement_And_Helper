@@ -2,7 +2,7 @@
 const PATTERN_YT_VIDEO_URL = /https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}/;
 
 // selectors - home
-const MAIN_HOME = "#contents.ytd-rich-grid-renderer";
+const MAIN_HOME = "ytd-browse #contents.ytd-rich-grid-renderer";
 
 // ==================================================
 const HOME_ITEMS = MAIN_HOME + " ytd-rich-item-renderer:not(:has(ytd-ad-slot-renderer)):not(ytd-continuation-item-renderer)";
@@ -28,6 +28,12 @@ const SECTION_POSTSSHELVES_POSTS = SECTION_POSTSSHELVES + " ytd-rich-item-render
 const SECTION_OTHERS = HOME_SECTIONS + ":not(:has([is-shorts])):not(:has([is-post]))";
 const SECTION_OTHERS_VIDEOS = SECTION_OTHERS + " ytd-rich-item-renderer";
 
+// selectors - search
+const SEARCH_MAIN = "ytd-search #contents.ytd-item-section-renderer";
+
+const SEARCH_SECTIONS_SHORTSSHELVES = SEARCH_MAIN + " grid-shelf-view-model";
+const SEARCH_SECTIONS_SHORTSSHELVES_SHORTS = SEARCH_SECTIONS_SHORTSSHELVES + " .ytGridShelfViewModelGridShelfItem";
+
 // selectors - watch
 const WATCH_MAIN = "#primary";
 
@@ -52,9 +58,10 @@ const MAIN_BELOW_COMMENTS = MAIN_BELOW + " #comments";
 // ==================================================
 const WATCH_SIDEBAR = "#secondary";
 
-const SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents .yt-lockup-view-model--wrapper";
-const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ':not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
-const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ':has(.yt-lockup-view-model__content-image[href*="&list="])';
+const SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents";
+const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
+const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:has(.yt-lockup-view-model__content-image[href*="&list="])';
+const SIDEBAR_VIDEOS_SHORTS = SIDEBAR_VIDEOS + ' ytd-compact-video-renderer';
 
 const SIDEBAR_SHORTSSHELVES = WATCH_SIDEBAR + " #related #contents ytd-reel-shelf-renderer";
 const SIDEBAR_SHORTSSHELVES_SHORTS = SIDEBAR_SHORTSSHELVES + " ytm-shorts-lockup-view-model";

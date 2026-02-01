@@ -1,20 +1,5 @@
 // utilities: style settings
 const utilityStyleSettings = {
-    "utilities-shortsToWatch": {
-        styleIdStatic: "utilities-shortsToWatch-inject-static",
-        cssStatic: `
-            ${SECTION_SHORTSSHELVES_SHORTS} div[role="presentation"],
-            ${SIDEBAR_SHORTSSHELVES_SHORTS} div[role="presentation"] {
-                min-height: 72px !important;
-            }
-            .utilities-shortsToWatch-btn {
-                cursor: help !important;
-            }`,
-        styleIdDynamic: "utilities-shortsToWatch-inject-dynamic",
-        cssDynamicGen: (isEnabled) => {
-            return isEnabled ? `.utilities-shortsToWatch-btn { display: inline-flex !important; }` : `.utilities-shortsToWatch-btn { display: none !important; }`;
-        },
-    },
     "utilities-noPlaylistTrap": {
         styleIdStatic: "utilities-noPlaylistTrap-inject-static",
         cssStatic: `
@@ -55,27 +40,6 @@ const utilityStyleSettings = {
         },
     },
 };
-
-// utilities - shortsToWatch: custom button HTML
-const SHORTS_TO_VIEW_BTN = `
-    <button class="yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment utilities-shortsToWatch-btn" title="[Youtube Enhancement And Helper]&#10;Click to watch shorts in '/watch' view.&#10;Middle mouse click to open in new tab.">
-        <div aria-hidden="true" class="yt-spec-button-shape-next__icon">
-            <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
-                <span class="yt-icon-shape ytSpecIconShapeHost">
-                    <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%">
-                            <path d="m13.467 1.19-8 4.7a5 5 0 0 0-.255 8.46 5 5 0 0 0 5.32 8.462l8-4.7a5 5 0 0 0 .258-8.462 5 5 0 0 0 1.641-6.464l-.12-.217a5 5 0 0 0-6.844-1.78m5.12 2.79a3 3 0 0 1-1.067 4.107l-1.327.78a1 1 0 0 0 .096 1.775l.943.423a3 3 0 0 1 .288 5.323l-8 4.7a3 3 0 0 1-3.039-5.173l1.327-.78a1 1 0 0 0-.097-1.775l-.942-.423a3 3 0 0 1-.288-5.323l8-4.7a3 3 0 0 1 4.106 1.066M15 12l-5-3v6z"/>
-                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"/>
-                        </svg>
-                    </div>
-                </span>
-            </span>
-        </div>
-        <yt-touch-feedback-shape aria-hidden="true" class="yt-spec-touch-feedback-shape yt-spec-touch-feedback-shape--touch-response">
-            <div class="yt-spec-touch-feedback-shape__stroke"></div>
-            <div class="yt-spec-touch-feedback-shape__fill"></div>
-        </yt-touch-feedback-shape>
-    </button>`;
 
 // utilities - noPlaylistTrap: custom button HTML
 const NO_PLAYLIST_TRAP_BTN = `
@@ -128,47 +92,13 @@ async function getChannelUrlFromOembed(videoUrl) {
 }
 
 // utilities - shortsToWatch: main processing
-function processShortsToWatch() {
-    const shortsContainerEl = `${SECTION_SHORTSSHELVES_SHORTS}, ${SIDEBAR_SHORTSSHELVES_SHORTS}`;
-    const targetNodes = document.querySelectorAll(shortsContainerEl);
+function processShortsToWatch(settings) {
+    const isEnabled = settings["utilities-shortsToWatch"];
 
-    targetNodes.forEach((node) => {
-        // find and convert video URL
-        const linkSource = node.querySelector(".reel-item-endpoint");
-        if (!linkSource || !linkSource.href) return;
-        const cleanUrl = linkSource.href.replace(/\/shorts\//, "/watch/");
-
-        // find menu container
-        const menuContainer = node.querySelector(".shortsLockupViewModelHostOutsideMetadataMenu");
-        if (!menuContainer) return;
-
-        // process button
-        if (menuContainer.querySelector(".utilities-shortsToWatch-btn")) return; // prevent duplicates
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = SHORTS_TO_VIEW_BTN.trim();
-        const customButton = tempDiv.firstChild;
-
-        customButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = cleanUrl;
-        });
-
-        customButton.addEventListener("mousedown", (e) => {
-            // middle mouse
-            if (e.button === 1) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                chrome.runtime.sendMessage({
-                    action: "openBackgroundTab",
-                    url: cleanUrl,
-                });
-            }
-        });
-
-        menuContainer.appendChild(customButton);
+    const event = new CustomEvent("YEAH_shortsToWatch_transformURLs", {
+        detail: { isEnabled: isEnabled },
     });
+    window.dispatchEvent(event);
 }
 
 // utilities - noPlaylistTrap: main processing
@@ -320,47 +250,24 @@ function setupUtilitiesObserver() {
     }
 
     const observer = new MutationObserver((mutations) => {
-        let shouldProcess = false;
-        for (const mutation of mutations) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                shouldProcess = true;
-                break;
-            }
-        }
-
-        if (shouldProcess) {
+        if (mutations.some((m) => m.addedNodes.length > 0)) {
             setTimeout(() => {
-                try {
-                    if (!chrome.runtime.id) throw new Error("Context invalidated");
-                } catch (e) {
-                    observer.disconnect();
-                    return;
-                }
-
-                processShortsToWatch();
                 processNoPlaylistTrap();
-                if (isChannelRedirImproveEnabled) {
-                    processChannelRedirImprove();
-                }
+                if (isChannelRedirImproveEnabled) processChannelRedirImprove();
             }, 100); // wait for DOM to settle
         }
     });
 
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-    });
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 
 // utilities: init settings on load
 initModuleSettings(UTILITIES_DEFAULT_SETTINGS, (settings) => {
     // update global variable
-    if (settings["utilities-channelRedirImprove"] !== undefined) {
-        isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"];
-    }
+    isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"] || false;
 
     applyModuleStyles(settings, utilityStyleSettings);
-    processShortsToWatch();
+    processShortsToWatch(settings);
     processNoPlaylistTrap();
     if (isChannelRedirImproveEnabled) processChannelRedirImprove();
     setupUtilitiesObserver();
@@ -369,15 +276,9 @@ initModuleSettings(UTILITIES_DEFAULT_SETTINGS, (settings) => {
 // utilities: listen for storage changes
 setupModuleStorageListener(UTILITIES_DEFAULT_SETTINGS, (settings) => {
     // update global variable
-    if (settings["utilities-channelRedirImprove"] !== undefined) {
-        isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"];
-
-        if (isChannelRedirImproveEnabled) {
-            processChannelRedirImprove();
-        } else {
-            removeChannelRedirImprove();
-        }
-    }
+    isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"] || false;
 
     applyModuleStyles(settings, utilityStyleSettings);
+    processShortsToWatch(settings);
+    if (!isChannelRedirImproveEnabled) removeChannelRedirImprove();
 });
