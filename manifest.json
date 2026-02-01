@@ -19,12 +19,7 @@
     "content_scripts": [
         {
             "matches": ["*://*.youtube.com/*"],
-            "js": ["DEFAULT_SETTINGS.js", "MAIN_SELECTORS.js", "content-core.js", "content-ui.js", "content-texts.js", "content-player.js"],
-            "run_at": "document_start"
-        },
-        {
-            "matches": ["*://*.youtube.com/*"],
-            "js": ["content-utilities.js"],
+            "js": ["DEFAULT_SETTINGS.js", "MAIN_SELECTORS.js", "content-core.js", "content-ui.js", "content-texts.js", "content-player.js", "content-utilities.js"],
             "run_at": "document_start"
         },
         {
