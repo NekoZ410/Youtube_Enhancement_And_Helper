@@ -12,8 +12,21 @@ const playerStyleSettings = {
 
             // hex to rgb helper
             const hexToRgb = (hex) => {
-                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
+                let cleanHex = hex.replace(/^#/, "");
+
+                if (cleanHex.length === 3) {
+                    cleanHex = cleanHex
+                        .split("")
+                        .map((char) => char + char)
+                        .join("");
+                }
+
+                const num = parseInt(cleanHex, 16);
+                const r = (num >> 16) & 255;
+                const g = (num >> 8) & 255;
+                const b = num & 255;
+
+                return `${r}, ${g}, ${b}`;
             };
             const rgbColor = hexToRgb(color);
 
@@ -72,52 +85,68 @@ const playerStyleSettings = {
     },
 };
 
-// player: wait for player
+let ppbRafId = null;
+let waitPlayerRafId = null;
+
+// player - persistentProgressBar: clear all tasks
+function clearAllPlayerTasks() {
+    if (ppbRafId) {
+        cancelAnimationFrame(ppbRafId);
+        ppbRafId = null;
+    }
+    if (waitPlayerRafId) {
+        cancelAnimationFrame(waitPlayerRafId);
+        waitPlayerRafId = null;
+    }
+}
+
+// player - persistentProgressBar: wait for player
 function waitForPlayer(callback) {
-    const checkExist = setInterval(() => {
+    if (waitPlayerRafId) cancelAnimationFrame(waitPlayerRafId);
+
+    const checkExist = () => {
         const player = document.querySelector(MAIN_PLRCTN_PLAYER) || document.querySelector(MAIN_BIGMODE_PLRCTN_PLAYER);
         if (player) {
-            clearInterval(checkExist);
-            callback(player);
+            waitPlayerRafId = null;
+            callback(player); // if found, run callback
+        } else {
+            waitPlayerRafId = requestAnimationFrame(checkExist); // if not found, check again
         }
-    }, 500);
+    };
+    waitPlayerRafId = requestAnimationFrame(checkExist); // start checking
 }
 
 // player - persistentProgressBar: main process
-let ppbInterval = null;
 function processPersistentProgressBar(settings) {
     const isEnabled = settings["player-persistentProgressBar"];
+
+    clearAllPlayerTasks(); // cleanup first
 
     waitForPlayer((playerContainer) => {
         // find bar container
         let barContainer = playerContainer.querySelector(".player-persistentProgressBar");
         if (!isEnabled) {
             if (barContainer) barContainer.remove();
-            if (ppbInterval) {
-                clearInterval(ppbInterval);
-                ppbInterval = null;
-            }
             return;
         }
         if (!barContainer) {
             barContainer = document.createElement("div");
             barContainer.className = "player-persistentProgressBar";
-
             const barFill = document.createElement("div");
-            barFill.className = "player-persistentProgressBar-fill";
-
+            barFill.className = "player-persistentProgressBar-fill"; // create bar fill element
             barContainer.appendChild(barFill);
             playerContainer.appendChild(barContainer);
         }
 
-        // clear interval
-        if (!ppbInterval) {
-            const delay = settings["player-persistentProgressBar-delay"] || 1000;
+        // update bar fill
+        const video = playerContainer.querySelector("video");
+        const fill = barContainer.querySelector(".player-persistentProgressBar-fill");
+        const delay = settings["player-persistentProgressBar-delay"] || 1000;
+        let lastUpdateTime = 0;
 
-            const updateBar = () => {
-                const video = playerContainer.querySelector("video");
-                const fill = barContainer.querySelector(".player-persistentProgressBar-fill");
-                if (!video || !fill) return;
+        const updateLoop = (timestamp) => {
+            if (!video || !fill) return;
+            if (timestamp - lastUpdateTime >= delay) {
                 const currentTime = video.currentTime;
                 const duration = video.duration;
                 const isLiveStream = duration === Infinity || playerContainer.classList.contains("ytp-live");
@@ -130,12 +159,14 @@ function processPersistentProgressBar(settings) {
                 } else {
                     fill.style.width = "0%";
                 }
-            };
+                lastUpdateTime = timestamp;
+            }
 
-            // run update bar continuously
-            updateBar();
-            ppbInterval = setInterval(updateBar, delay);
-        }
+            ppbRafId = requestAnimationFrame(updateLoop);
+        };
+
+        // start fresh loop
+        ppbRafId = requestAnimationFrame(updateLoop);
     });
 }
 
@@ -149,36 +180,17 @@ function setupPlayerObserver(settings) {
     processPersistentProgressBar(settings); // run once to init
 
     const observer = new MutationObserver((mutations) => {
-        let shouldProcess = false;
-        for (const mutation of mutations) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                for (const node of mutation.addedNodes) {
-                    if (node.nodeType === 1) {
-                        // if node is player container
-                        if (node.querySelector && (node.querySelector(MAIN_PLRCTN_PLAYER) || node.querySelector(MAIN_BIGMODE_PLRCTN_PLAYER))) {
-                            shouldProcess = true;
-                            break;
-                        }
-                        
-                        // if node is player
-                        if (node.id === "movie_player") {
-                            shouldProcess = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        if (shouldProcess) {
-            if (ppbInterval) {
-                clearInterval(ppbInterval);
-                ppbInterval = null;
-            }
+        const hasNewVideo = mutations.some((m) =>
+            Array.from(m.addedNodes).some((node) => node.nodeType === 1 && (node.id === "movie_player" || node.querySelector?.("#movie_player"))),
+        );
+
+        if (hasNewVideo) {
             processPersistentProgressBar(settings);
         }
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    const targetNode = document.querySelector("ytd-page-manager") || document.body; // narrow target first
+    observer.observe(targetNode, { childList: true, subtree: true });
 }
 
 // player: init settings on load
@@ -190,9 +202,6 @@ initModuleSettings(PLAYER_DEFAULT_SETTINGS, (settings) => {
 // player: listen for storage changes
 setupModuleStorageListener(PLAYER_DEFAULT_SETTINGS, (settings) => {
     applyModuleStyles(settings, playerStyleSettings);
-    if (ppbInterval) {
-        clearInterval(ppbInterval);
-        ppbInterval = null;
-    }
+    clearAllPlayerTasks();
     processPersistentProgressBar(settings);
 });
