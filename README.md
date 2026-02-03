@@ -332,6 +332,9 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
   ![utilities-channelRedirImprove_sidebar_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-channelRedirImprove_sidebar_enabled.png?raw=true)
 
+## Libraries
+- [<u>Bootstrap</u>](https://github.com/twbs/bootstrap)
+
 ## Issues
 If you encounter any bugs or have suggestions for new features, please submit an Issue.
 
