@@ -1,27 +1,5 @@
 // utilities: style settings
 const utilityStyleSettings = {
-    "utilities-noPlaylistTrap": {
-        styleIdStatic: "utilities-noPlaylistTrap-inject-static",
-        cssStatic: `
-            ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button,
-            ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button,
-            ${SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button {
-                position: relative !important;
-            }
-            ${CELLS_PLAYLISTS} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
-            ${CELLS_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost,
-            ${SIDEBAR_VIDEOS_PLTRAP} .yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost {
-                flex-direction: column !important;
-                align-items: center;
-            }
-            .utilities-noPlaylistTrap-btn {
-                cursor: help !important;
-            }`,
-        styleIdDynamic: "utilities-noPlaylistTrap-inject-dynamic",
-        cssDynamicGen: (isEnabled) => {
-            return isEnabled ? `.utilities-noPlaylistTrap-btn { display: inline-flex !important; }` : `.utilities-noPlaylistTrap-btn { display: none !important; }`;
-        },
-    },
     "utilities-channelRedirImprove": {
         styleIdStatic: "utilities-channelRedirImprove-inject-static",
         cssStatic: `
@@ -40,27 +18,6 @@ const utilityStyleSettings = {
         },
     },
 };
-
-// utilities - noPlaylistTrap: custom button HTML
-const NO_PLAYLIST_TRAP_BTN = `
-    <button class="yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment utilities-noPlaylistTrap-btn" title="[Youtube Enhancement And Helper]&#10;Click to watch video without trapped into a playlist.&#10;Middle mouse click to open in new tab." aria-disabled="false">
-        <div aria-hidden="true" class="yt-spec-button-shape-next__icon">
-            <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
-                <span class="yt-icon-shape ytSpecIconShapeHost">
-                    <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path d="M16 15.395a.5.5 0 0 1 .762-.426L22.5 18.5l-5.738 3.531a.5.5 0 0 1-.762-.425v-6.212ZM14 19H4a1 1 0 1 1 0-2h10zm6-8a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm0-6a1 1 0 1 1 0 2H4a1 1 0 0 1 0-2z"/>
-                            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m2 2 21 21"/>
-                        </svg>
-                    </div>
-                </span>
-            </span>
-        </div>
-        <yt-touch-feedback-shape aria-hidden="true" class="yt-spec-touch-feedback-shape yt-spec-touch-feedback-shape--touch-response">
-            <div class="yt-spec-touch-feedback-shape__stroke"></div>
-            <div class="yt-spec-touch-feedback-shape__fill"></div>
-        </yt-touch-feedback-shape>
-    </button>`;
 
 // utilities: oembed cache and fetcher
 const oembedCache = new Map();
@@ -102,49 +59,13 @@ function processShortsToWatch(settings) {
 }
 
 // utilities - noPlaylistTrap: main processing
-function processNoPlaylistTrap() {
-    const plContainerEl = `${CELLS_PLAYLISTS}, ${CELLS_VIDEOS_PLTRAP}, ${SIDEBAR_VIDEOS_PLTRAP}`;
-    const targetNodes = document.querySelectorAll(plContainerEl);
+function processNoPlaylistTrap(settings) {
+    const isEnabled = settings["utilities-noPlaylistTrap"];
 
-    targetNodes.forEach((node) => {
-        // find and extract video URL
-        const linkSource = node.querySelector(".yt-lockup-view-model__content-image");
-        if (!linkSource || !linkSource.href) return;
-        const match = linkSource.href.match(PATTERN_YT_VIDEO_URL);
-        const cleanUrl = match ? match[0] : null;
-        if (!cleanUrl) return;
-
-        // find menu container
-        const menuContainer = node.querySelector(".yt-lockup-metadata-view-model__menu-button .ytSpecButtonViewModelHost");
-        if (!menuContainer) return;
-
-        // process button
-        if (menuContainer.querySelector(".utilities-noPlaylistTrap-btn")) return; // prevent duplicates
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = NO_PLAYLIST_TRAP_BTN.trim();
-        const customButton = tempDiv.firstChild;
-
-        customButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = cleanUrl;
-        });
-
-        customButton.addEventListener("mousedown", (e) => {
-            // middle mouse
-            if (e.button === 1) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                chrome.runtime.sendMessage({
-                    action: "openBackgroundTab",
-                    url: cleanUrl,
-                });
-            }
-        });
-
-        menuContainer.appendChild(customButton);
+    const event = new CustomEvent("YEAH_noPlaylistTrap_cleanURLs", {
+        detail: { isEnabled: isEnabled },
     });
+    window.dispatchEvent(event);
 }
 
 // utilities - channelRedirImprove: main processing
@@ -252,7 +173,6 @@ function setupUtilitiesObserver() {
     const observer = new MutationObserver((mutations) => {
         if (mutations.some((m) => m.addedNodes.length > 0)) {
             setTimeout(() => {
-                processNoPlaylistTrap();
                 if (isChannelRedirImproveEnabled) processChannelRedirImprove();
             }, 100); // wait for DOM to settle
         }
@@ -268,7 +188,7 @@ initModuleSettings(UTILITIES_DEFAULT_SETTINGS, (settings) => {
 
     applyModuleStyles(settings, utilityStyleSettings);
     processShortsToWatch(settings);
-    processNoPlaylistTrap();
+    processNoPlaylistTrap(settings);
     if (isChannelRedirImproveEnabled) processChannelRedirImprove();
     setupUtilitiesObserver();
 });
@@ -280,5 +200,6 @@ setupModuleStorageListener(UTILITIES_DEFAULT_SETTINGS, (settings) => {
 
     applyModuleStyles(settings, utilityStyleSettings);
     processShortsToWatch(settings);
+    processNoPlaylistTrap(settings);
     if (!isChannelRedirImproveEnabled) removeChannelRedirImprove();
 });
