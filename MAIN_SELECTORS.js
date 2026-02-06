@@ -1,5 +1,5 @@
 // patterns
-const PATTERN_YT_VIDEO_URL = /https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}/;
+const VIDEO_WATCH_PATTERN = /(?:https:\/\/www\.youtube\.com)?\/watch(?:\?v=|\/)([a-zA-Z0-9_-]{11})/;
 
 // selectors - home
 const MAIN_HOME = "ytd-browse #contents.ytd-rich-grid-renderer";
@@ -61,7 +61,7 @@ const WATCH_SIDEBAR = "#secondary";
 const SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents";
 const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
 const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:has(.yt-lockup-view-model__content-image[href*="&list="])';
-const SIDEBAR_VIDEOS_SHORTS = SIDEBAR_VIDEOS + ' ytd-compact-video-renderer';
+const SIDEBAR_VIDEOS_SHORTS = SIDEBAR_VIDEOS + " ytd-compact-video-renderer";
 
 const SIDEBAR_SHORTSSHELVES = WATCH_SIDEBAR + " #related #contents ytd-reel-shelf-renderer";
 const SIDEBAR_SHORTSSHELVES_SHORTS = SIDEBAR_SHORTSSHELVES + " ytm-shorts-lockup-view-model";
