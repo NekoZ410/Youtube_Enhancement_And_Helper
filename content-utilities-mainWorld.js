@@ -1,4 +1,4 @@
-// [MAIN WORLD] shortsToWatch, noPlaylistTrap: URL transformer & Navigation interceptor
+// [MAIN WORLD] utilities - shortsToWatch, noPlaylistTrap: URL transformer & Navigation interceptor
 (function () {
     // settings values
     const settings = {
