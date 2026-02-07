@@ -59,8 +59,9 @@ const MAIN_BELOW_COMMENTS = MAIN_BELOW + " #comments";
 const WATCH_SIDEBAR = "#secondary";
 
 const SIDEBAR_VIDEOS = WATCH_SIDEBAR + " #related #contents";
-const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:not(:has(.yt-lockup-view-model__content-image[href*="&list="]))';
-const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:has(.yt-lockup-view-model__content-image[href*="&list="])';
+const SIDEBAR_VIDEOS_NORMAL = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:not(:has(.yt-lockup-view-model__content-image[href*="&list="])):not(:has(.yt-lockup-view-model--collection-stack-2))';
+const SIDEBAR_VIDEOS_PLTRAP = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:has(.yt-lockup-view-model__content-image[href*="&list="]):not(:has(.yt-lockup-view-model--collection-stack-2))';
+const SIDEBAR_VIDEOS_PLMIX = SIDEBAR_VIDEOS + ' .yt-lockup-view-model--wrapper:has(.yt-lockup-view-model--collection-stack-2)';
 const SIDEBAR_VIDEOS_SHORTS = SIDEBAR_VIDEOS + " ytd-compact-video-renderer";
 
 const SIDEBAR_SHORTSSHELVES = WATCH_SIDEBAR + " #related #contents ytd-reel-shelf-renderer";
