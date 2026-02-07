@@ -57,6 +57,7 @@ const textStyleSettings = {
             ${CELLS_VIDEOS_COLLAB} .yt-core-attributed-string__link,
             ${SECTION_OTHERS_VIDEOS} .yt-core-attributed-string__link,
             ${SIDEBAR_VIDEOS_NORMAL} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text,
+            ${SIDEBAR_VIDEOS_PLTRAP} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text,
             ${SIDEBAR_PLPANEL_VIDEOS} #byline,
             ${PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author, 
             ${BIGMODE_PLRCTN_PLAYER_RELATEDVIDEOSCTN_VIDEOS} .ytp-modern-videowall-still-info-author {
@@ -123,7 +124,7 @@ const textStyleSettings = {
                 white-space: unset !important;
                 max-height: unset !important;
             }
-            ${SIDEBAR_VIDEOS_PLTRAP} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text{
+            ${SIDEBAR_VIDEOS_PLMIX} .yt-content-metadata-view-model__metadata-row:nth-of-type(1) .yt-content-metadata-view-model__metadata-text {
                 max-height: unset !important;
                 white-space: normal !important;
                 word-break: break-word !important;
