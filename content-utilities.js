@@ -12,40 +12,31 @@ const utilityStyleSettings = {
         cssDynamicGen: (isEnabled) => {
             if (!isEnabled) return "";
             return `
-                a.utilities-channelRedirImprove-a span.yt-core-attributed-string {
-                    color: #327CC8 !important;
+                a.utilities-channelRedirImprove-a span.yt-core-attributed-string--link-inherit-color {
+                    color: var(--main-color) !important;
                 }`;
         },
     },
 };
 
-// utilities: oembed cache and fetcher
+// utilities: fetch and cache oembed data
 const oembedCache = new Map();
-let isChannelRedirImproveEnabled = true;
-
-async function getChannelUrlFromOembed(videoUrl) {
+async function getOEmbedData(videoUrl) {
     if (!videoUrl) return null;
+    if (oembedCache.has(videoUrl)) return oembedCache.get(videoUrl); // use cached data if available
 
-    if (oembedCache.has(videoUrl)) {
-        return oembedCache.get(videoUrl);
-    }
-
+    const endpoint = `https://www.youtube.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json`;
     try {
-        const oembedUrl = `https://www.youtube.com/oembed?url=${videoUrl}&format=json`;
-        const response = await fetch(oembedUrl);
+        const response = await fetch(endpoint);
         if (!response.ok) return null;
 
-        const json = await response.json();
-        const authorUrl = json.author_url;
-
-        if (authorUrl) {
-            oembedCache.set(videoUrl, authorUrl);
-            return authorUrl;
-        }
+        const data = await response.json();
+        oembedCache.set(videoUrl, data);
+        return data;
     } catch (error) {
-        console.warn("[YouTube Enhancement And Helper] Failed to fetch oembed:", error);
+        console.warn(`[YEAH] Failed to fetch oembed data for: ${videoUrl}`, error);
+        return null;
     }
-    return null;
 }
 
 // utilities - shortsToWatch: main processing
@@ -69,7 +60,27 @@ function processNoPlaylistTrap(settings) {
 }
 
 // utilities - channelRedirImprove: main processing
-function processChannelRedirImprove() {
+function processChannelRedirImprove(settings) {
+    const isEnabled = settings["utilities-channelRedirImprove"];
+
+    // if disabled, remove elements
+    if (!isEnabled) {
+        // reposition original elements
+        const wrappers = document.querySelectorAll("a.utilities-channelRedirImprove-a");
+        wrappers.forEach((wrapper) => {
+            const originalContent = wrapper.firstChild;
+            if (originalContent) {
+                wrapper.parentNode.insertBefore(originalContent, wrapper);
+            }
+            wrapper.remove();
+        });
+
+        // clean up flags
+        const processedNodes = document.querySelectorAll("[data-processing-redir]");
+        processedNodes.forEach((node) => node.removeAttribute("data-processing-redir"));
+        return;
+    }
+
     // process home avatars
     const homeNodes = document.querySelectorAll(`${CELLS_VIDEOS}, ${CELLS_VIDEOS_COLLAB}, ${SECTION_OTHERS_VIDEOS}`);
     homeNodes.forEach((node) => {
@@ -90,21 +101,19 @@ function processChannelRedirImprove() {
     });
 
     // process watch sidebar channel names
-    const sidebarNodes = document.querySelectorAll(SIDEBAR_VIDEOS);
+    const sidebarNodes = document.querySelectorAll(`${SIDEBAR_VIDEOS_NORMAL}, ${SIDEBAR_VIDEOS_PLTRAP}`);
     sidebarNodes.forEach(async (node) => {
-        const videoLinkEl = node.querySelector(".yt-lockup-view-model__content-image");
+        const videoUrlEl = node.querySelector(".yt-lockup-view-model__content-image");
         const channelNameEl = node.querySelectorAll(".yt-core-attributed-string")[1];
 
-        if (videoLinkEl && videoLinkEl.href && channelNameEl) {
+        if (videoUrlEl && videoUrlEl.href && channelNameEl) {
             if (channelNameEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
             if (node.dataset.processingRedir) return; // prevent duplicates
             node.dataset.processingRedir = "true";
 
-            const videoUrl = videoLinkEl.href;
-            const channelUrl = await getChannelUrlFromOembed(videoUrl);
+            const oEmbedData = await getOEmbedData(videoUrlEl.href);
+            const channelUrl = oEmbedData?.author_url;
             if (channelUrl) {
-                if (!isChannelRedirImproveEnabled) return;
-
                 const wrapper = document.createElement("a");
                 wrapper.href = channelUrl;
                 wrapper.className = "utilities-channelRedirImprove-a";
@@ -117,21 +126,19 @@ function processChannelRedirImprove() {
     });
 
     // process playlist panel channel names
-    const plPanelNodes = document.querySelectorAll(SIDEBAR_PLPANEL_VIDEOS);
+    const plPanelNodes = document.querySelectorAll(`${SIDEBAR_PLPANEL_VIDEOS}`);
     plPanelNodes.forEach(async (node) => {
-        const videoLinkEl = node.querySelector("#wc-endpoint");
+        const videoUrlEl = node.querySelector("#wc-endpoint");
         const channelNameEl = node.querySelector("#byline");
 
-        if (videoLinkEl && videoLinkEl.href && channelNameEl) {
+        if (videoUrlEl && videoUrlEl.href && channelNameEl) {
             if (channelNameEl.parentNode.classList.contains("utilities-channelRedirImprove-a")) return; // prevent duplicates
             if (node.dataset.processingRedir) return; // prevent duplicates
             node.dataset.processingRedir = "true";
 
-            const videoUrl = videoLinkEl.href;
-            const channelUrl = await getChannelUrlFromOembed(videoUrl);
+            const oEmbedData = await getOEmbedData(videoUrlEl.href);
+            const channelUrl = oEmbedData?.author_url;
             if (channelUrl) {
-                if (!isChannelRedirImproveEnabled) return;
-
                 const wrapper = document.createElement("a");
                 wrapper.href = channelUrl;
                 wrapper.className = "utilities-channelRedirImprove-a";
@@ -144,26 +151,8 @@ function processChannelRedirImprove() {
     });
 }
 
-// utilities - channelRedirImprove: remove elements when disabled
-function removeChannelRedirImprove() {
-    // reposition original elements
-    const wrappers = document.querySelectorAll("a.utilities-channelRedirImprove-a");
-    wrappers.forEach((wrapper) => {
-        const parent = wrapper.parentNode;
-        while (wrapper.firstChild) {
-            parent.insertBefore(wrapper.firstChild, wrapper);
-        }
-        wrapper.remove();
-    });
-
-    // clean up flags
-    const processedNodes = document.querySelectorAll('[data-processing-redir="true"]');
-    processedNodes.forEach((node) => {
-        delete node.dataset.processingRedir;
-    });
-}
-
 // utilities: observer to handle dynamic content
+let currentUtilsSettings = null;
 function setupUtilitiesObserver() {
     if (!document.body) {
         window.requestAnimationFrame(setupUtilitiesObserver);
@@ -173,7 +162,7 @@ function setupUtilitiesObserver() {
     const observer = new MutationObserver((mutations) => {
         if (mutations.some((m) => m.addedNodes.length > 0)) {
             setTimeout(() => {
-                if (isChannelRedirImproveEnabled) processChannelRedirImprove();
+                if (currentUtilsSettings) processChannelRedirImprove(currentUtilsSettings);
             }, 100); // wait for DOM to settle
         }
     });
@@ -184,22 +173,22 @@ function setupUtilitiesObserver() {
 // utilities: init settings on load
 initModuleSettings(UTILITIES_DEFAULT_SETTINGS, (settings) => {
     // update global variable
-    isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"] || false;
+    currentUtilsSettings = settings;
 
     applyModuleStyles(settings, utilityStyleSettings);
     processShortsToWatch(settings);
     processNoPlaylistTrap(settings);
-    if (isChannelRedirImproveEnabled) processChannelRedirImprove();
+    processChannelRedirImprove(settings);
     setupUtilitiesObserver();
 });
 
 // utilities: listen for storage changes
 setupModuleStorageListener(UTILITIES_DEFAULT_SETTINGS, (settings) => {
     // update global variable
-    isChannelRedirImproveEnabled = settings["utilities-channelRedirImprove"] || false;
+    currentUtilsSettings = settings;
 
     applyModuleStyles(settings, utilityStyleSettings);
     processShortsToWatch(settings);
     processNoPlaylistTrap(settings);
-    if (!isChannelRedirImproveEnabled) removeChannelRedirImprove();
+    processChannelRedirImprove(settings);
 });
