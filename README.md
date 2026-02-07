@@ -287,23 +287,9 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 - Enabled: Shorts will be redirected to '/watch' view.
 
 ### 2. Watch video without trapped into a playlist
-- Disabled: Default with no functional button.
-  - Normal playlist:
+- Disabled: Playlist/Playlist trap video will open with a playlist panel.
 
-  ![utilities-noPlaylistTrap_pl_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-noPlaylistTrap_pl_disabled.png?raw=true)
-
-  - Playlist trap video:
-
-  ![utilities-noPlaylistTrap_pltrap_disabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-noPlaylistTrap_pltrap_disabled.png?raw=true)
-
-- Enabled: Customized with a functional button that redirect to pure video URL.
-  - Normal playlist:
-
-  ![utilities-noPlaylistTrap_pl_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-noPlaylistTrap_pl_enabled.png?raw=true)
-  
-  - Playlist trap video:
-  
-  ![utilities-noPlaylistTrap_pltrap_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/utilities-noPlaylistTrap_pltrap_enabled.png?raw=true)
+- Enabled: Playlist/Playlist trap video will open as a normal video.
 
 ### 3. Improve channel redirection
 - Disabled: Default with no URL preview and no redirection to channel profile.
