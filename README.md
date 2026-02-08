@@ -287,9 +287,9 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 - Enabled: Shorts will be redirected to '/watch' view.
 
 ### 2. Watch video without trapped into a playlist
-- Disabled: Playlist/Playlist trap video will open with a playlist panel.
+- Disabled: Playlist/Playlist trap video will open with a playlist panel. Enabled will reload the page to open as a normal video.
 
-- Enabled: Playlist/Playlist trap video will open as a normal video.
+- Enabled: Playlist/Playlist trap video will open as a normal video. Disabled will reload the page to open with a playlist panel.
 
 ### 3. Improve channel redirection
 - Disabled: Default with no URL preview and no redirection to channel profile.
