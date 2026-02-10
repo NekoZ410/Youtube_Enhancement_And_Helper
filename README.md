@@ -320,6 +320,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 
 ## Libraries
 - [<u>Bootstrap</u>](https://github.com/twbs/bootstrap)
+- [<u>Font Awesome</u>](https://github.com/FortAwesome/Font-Awesome)
 
 ## Issues
 If you encounter any bugs or have suggestions for new features, please submit an Issue.
