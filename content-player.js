@@ -88,7 +88,7 @@ const playerStyleSettings = {
 let ppbRafId = null;
 let waitPlayerRafId = null;
 
-// player - persistentProgressBar: clear all tasks
+// player: clear all tasks
 function clearAllPlayerTasks() {
     if (ppbRafId) {
         cancelAnimationFrame(ppbRafId);
@@ -100,7 +100,7 @@ function clearAllPlayerTasks() {
     }
 }
 
-// player - persistentProgressBar: wait for player
+// player: wait for player
 function waitForPlayer(callback) {
     if (waitPlayerRafId) cancelAnimationFrame(waitPlayerRafId);
 
@@ -170,6 +170,69 @@ function processPersistentProgressBar(settings) {
     });
 }
 
+// player - pipPlayer: main process
+function processPipPlayer(settings) {
+    const isEnabled = settings["player-pipPlayer"];
+
+    waitForPlayer((playerContainer) => {
+        // find right controls right side container
+        const controlsRightRight = playerContainer.querySelector(".ytp-right-controls-right");
+        if (!controlsRightRight) return;
+
+        let pipBtn = controlsRightRight.querySelector(".yeah-player-pipPlayer-btn");
+        if (!pipBtn) {
+            const pipBtnHtml = `
+                <button class="yeah-player-pipPlayer-btn ytp-button" title="Pop-out player" aria-haspopup="true" data-priority="1400"
+                    data-tooltip-title="Pop-out player" data-title-no-tooltip="Pop-out player">
+                    <svg height="100%" viewBox="0 0 36 36" width="100%" style="padding: 0">
+                        <path fill="#fff" d="M29 25V11c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2m-2 0H9V11h18zm-2-7c0-.6-.4-1-1-1h-6c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1zm-2 1v2h-4v-2z"/>
+                    </svg>
+                </button>`;
+
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = pipBtnHtml.trim();
+            pipBtn = tempDiv.firstChild;
+            controlsRightRight.insertBefore(pipBtn, controlsRightRight.firstChild);
+
+            // add click event
+            pipBtn.addEventListener("click", () => {
+                const video = playerContainer.querySelector("video");
+                if (!video) return;
+
+                if (document.pictureInPictureElement) {
+                    document.exitPictureInPicture();
+                } else {
+                    video.requestPictureInPicture().catch((err) => console.warn("[YEAH] PiP failed:", err));
+                }
+            });
+        }
+
+        if (!isEnabled) {
+            if (pipBtn) pipBtn.style.display = "none";
+            return;
+        }
+        pipBtn.style.display = "unset";
+
+        // update tooltip text
+        const video = playerContainer.querySelector("video");
+        const updatePipTooltip = () => {
+            const isPip = !!document.pictureInPictureElement;
+            const label = isPip ? "Pop-in player" : "Pop-out player";
+            pipBtn.setAttribute("title", label);
+            pipBtn.setAttribute("data-tooltip-title", label);
+            pipBtn.setAttribute("data-title-no-tooltip", label);
+        };
+
+        if (video) {
+            video.removeEventListener("enterpictureinpicture", updatePipTooltip);
+            video.removeEventListener("leavepictureinpicture", updatePipTooltip);
+            video.addEventListener("enterpictureinpicture", updatePipTooltip);
+            video.addEventListener("leavepictureinpicture", updatePipTooltip);
+            updatePipTooltip();
+        }
+    });
+}
+
 // player: observer to handle dynamic content
 function setupPlayerObserver(settings) {
     if (!document.body) {
@@ -177,7 +240,8 @@ function setupPlayerObserver(settings) {
         return;
     }
 
-    processPersistentProgressBar(settings); // run once to init
+    processPersistentProgressBar(settings);
+    processPipPlayer(settings);
 
     const observer = new MutationObserver((mutations) => {
         const hasNewVideo = mutations.some((m) =>
@@ -186,6 +250,7 @@ function setupPlayerObserver(settings) {
 
         if (hasNewVideo) {
             processPersistentProgressBar(settings);
+            processPipPlayer(settings);
         }
     });
 
@@ -204,4 +269,5 @@ setupModuleStorageListener(PLAYER_DEFAULT_SETTINGS, (settings) => {
     applyModuleStyles(settings, playerStyleSettings);
     clearAllPlayerTasks();
     processPersistentProgressBar(settings);
+    processPipPlayer(settings);
 });

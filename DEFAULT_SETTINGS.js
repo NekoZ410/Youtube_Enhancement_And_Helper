@@ -39,6 +39,7 @@ const PLAYER_DEFAULT_SETTINGS = {
     "player-persistentProgressBar-color": "#B2071D",
     "player-persistentProgressBar-height": 3,
     "player-persistentProgressBar-delay": 1000,
+    "player-pipPlayer": true,
 };
 
 // utilities: default settings
