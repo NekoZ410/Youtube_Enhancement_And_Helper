@@ -39,6 +39,7 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
   - [Player Features](#player-features)
     - [1. Custom controls bar background](#1-custom-controls-bar-background)
     - [2. Persistent progress bar](#2-persistent-progress-bar)
+    - [3. Picture-in-Picture player](#3-picture-in-picture-player)
   - [Utilities Features](#utilities-features)
     - [1. Watch shorts in '/watch' view](#1-watch-shorts-in-watch-view)
     - [2. Watch video without trapped into a playlist](#2-watch-video-without-trapped-into-a-playlist)
@@ -279,6 +280,24 @@ Just click this extension icon to open popup menu when you're on [Youtube](https
 - Enabled: Customized with persistent progress bar in YouTube's signature red color.
 
 ![player-persistentProgressBar_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-persistentProgressBar_enabled.png?raw=true)
+
+### 3. Picture-in-Picture player
+- Disabled:
+  - No picture-in-picture button:
+
+  ![player-pipPlayer_disabled_1](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-pipPlayer_disabled_1.png?raw=true)
+
+  - Default picture-in-picture button with limited controls player
+
+  ![player-pipPlayer_disabled_2](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-pipPlayer_disabled_2.png?raw=true)
+  <br>
+  ![player-pipPlayer_disabled_2_preview](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-pipPlayer_disabled_2_preview.png?raw=true)
+
+- Enabled: Customized picture-in-picture button with various controls player
+
+  ![player-pipPlayer_enabled](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-pipPlayer_enabled.png?raw=true)
+  <br>
+  ![player-pipPlayer_enabled_preview](https://github.com/NekoZ410/Youtube_Enhancement_And_Helper/blob/main/images/readme/player-pipPlayer_enabled_preview.png?raw=true)
 
 ## Utilities Features
 ### 1. Watch shorts in '/watch' view
