@@ -273,8 +273,7 @@ const playerStyleSettings = {
 
 // player - persistentProgressBar: main process
 function processPersistentProgressBar(settings) {
-    const featureKey = "player-persistentProgressBar";
-    const isEnabled = settings[featureKey] === true; // force boolean
+    const isPpbEnabled = settings["player-persistentProgressBar"] === true; // force boolean
 
     // check player existence
     const player = document.querySelector("#movie_player");
@@ -292,7 +291,7 @@ function processPersistentProgressBar(settings) {
 
     // check bar existence to avoid duplicate
     const existingBar = player.querySelector(".player-persistentProgressBar");
-    if (!isEnabled) {
+    if (!isPpbEnabled) {
         if (existingBar) existingBar.remove();
         return;
     }
@@ -343,7 +342,8 @@ function processPersistentProgressBar(settings) {
 
 // player - pipPlayer: main process
 function processPipPlayer(settings) {
-    const isEnabled = settings["player-pipPlayer"];
+    const isPpEnabled = settings["player-pipPlayer"] === true; // force boolean
+    const isPpbEnabled = settings["player-persistentProgressBar"] === true; // force boolean
     const ppbColor = settings["player-persistentProgressBar-color"];
 
     // check player existence
@@ -369,13 +369,14 @@ function processPipPlayer(settings) {
     // check button existence to avoid duplicate
     const controlsContainer = settingsBtn.parentNode;
     let pipBtn = controlsContainer.querySelector(".yeah-player-pipPlayer-btn");
-    if (!isEnabled) {
+    if (!isPpEnabled) {
         if (pipBtn) pipBtn.remove();
         if (nativePipBtn) nativePipBtn.style.display = "";
         return;
     }
     if (pipBtn) {
         pipBtn.style.display = "unset";
+        pipBtn.dataset.ppbEnabled = isPpbEnabled;
         pipBtn.dataset.ppbColor = ppbColor;
         if (pipBtn.previousElementSibling !== settingsBtn) controlsContainer.insertBefore(pipBtn, settingsBtn.nextSibling);
         return;
@@ -392,6 +393,7 @@ function processPipPlayer(settings) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = pipBtnHtml.trim();
     pipBtn = tempDiv.firstChild;
+    pipBtn.dataset.ppbEnabled = isPpbEnabled;
     pipBtn.dataset.ppbColor = ppbColor;
     controlsContainer.insertBefore(pipBtn, settingsBtn.nextSibling); // right after settings button
 
@@ -429,6 +431,7 @@ function processPipPlayer(settings) {
             fontAwesomeLink.crossOrigin = "anonymous";
             pipWindow.document.head.appendChild(fontAwesomeLink);
 
+            const pipPpbEnabled = pipBtn.dataset.ppbEnabled === "true";
             const pipPpbColor = pipBtn.dataset.ppbColor || "#B2071D"; // inherit from persistentProgressBar, fallback to #B2071D
 
             // initialize PiP window body
@@ -444,7 +447,7 @@ function processPipPlayer(settings) {
                     </div>
                     <button class="yeah-pip-btn yeah-pip-fit-btn" title="Fit Window Ratio"><i class="fa-solid fa-crop-simple"></i></button>
                 </div>
-                <div class="yeah-pip-persistent-progress-bar">
+                <div class="yeah-pip-persistent-progress-bar" style="display: ${pipPpbEnabled ? "block" : "none"} !important;">
                     <div class="yeah-pip-persistent-progress-bar-fill"></div>
                 </div>
                 <div class="yeah-pip-bottom-controls">
@@ -490,6 +493,7 @@ function processPipPlayer(settings) {
             const volText = pipWindow.document.querySelector(".yeah-pip-volume-text");
             const timeDisp = pipWindow.document.querySelector(".yeah-pip-time");
             const progSlider = pipWindow.document.querySelector(".yeah-pip-progress-slider");
+            const persistContainer = pipWindow.document.querySelector(".yeah-pip-persistent-progress-bar");
             const persistFill = pipWindow.document.querySelector(".yeah-pip-persistent-progress-bar-fill");
             const seekBackBtn = pipWindow.document.querySelector(".seek-back-btn");
             const seekFwdBtn = pipWindow.document.querySelector(".seek-fwd-btn");
@@ -627,6 +631,9 @@ function processPipPlayer(settings) {
             const updateUI = () => {
                 if (!pipWindow || pipWindow.closed) return;
 
+                const pipPpbEnabled = pipBtn.dataset.ppbEnabled === "true";
+                if (persistContainer) persistContainer.style.display = pipPpbEnabled ? "block" : "none";
+
                 const pipPpbColor = pipBtn.dataset.ppbColor || "#B2071D";
                 pipWindow.document.body.style.setProperty("--yeah-pip-player-ppbColor", pipPpbColor);
 
@@ -644,7 +651,7 @@ function processPipPlayer(settings) {
                         const useHour = video.duration >= 3600;
                         timeDisp.textContent = `${formatTime(video.currentTime, useHour)} / ${formatTime(video.duration, useHour)}`;
                     }
-                    persistFill.style.width = `${percent}%`; // update persistent progress bar
+                    if (pipPpbEnabled) persistFill.style.width = `${percent}%`; // update persistent progress bar
                 }
 
                 // volume
